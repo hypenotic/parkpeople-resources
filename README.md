@@ -1,4 +1,4 @@
-# vue-cli
+# Park People
 
 > A Vue.js project
 
