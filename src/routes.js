@@ -1,13 +1,17 @@
-/*import Login from './components/Login.vue';
-import ClientDashboard from './components/Client/Client.vue';
-import AdminDashboard from './components/Admin/Admin.vue';
-import Config from './components/Admin/ClientSetup.vue';
+/* need to import the components for the 
+route*/
+
+import Home from './components/Home.vue';
+import CaseStudy from './components/CaseStudy.vue';
+
+/* export a const names routes with will 
+hold my routes. Holding routes means it has 
+an array which has objects which represent a route.
+*/
 
 export const routes = [
-	{ path: '', component: Login }, //Load the "Login" component at the root path
-	{ path: '/client', component: ClientDashboard },
-	{ path: '/client/:clientname', component: ClientDashboard },
-	{ path: '/admin', component: AdminDashboard },
-	{ path: '/admin/:clientname', component: AdminDashboard },
-	{ path: '/config', component: Config },
-];*/
+	/*path will be appended to URL,
+	then need the component to load*/
+	{ path:'/', component: Home },
+	{ path:'/case-study', component: CaseStudy }
+]
