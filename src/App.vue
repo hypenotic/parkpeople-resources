@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <h1>Routing </h1>  
-    <hr>
+  <div>
     <!--Mark the place where the route should load-->
     <app-header></app-header>
     <router-view></router-view>

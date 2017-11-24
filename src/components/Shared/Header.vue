@@ -1,18 +1,17 @@
 <template>
-    <section class="hero is-success">
-        <div class="hero-body">
-            <div class="container">
-            <h1 class="title">
-                Park People
-            </h1>
-            <h2 class="subtitle">
-                Summary
-            </h2>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/case-study">Case Study</router-link></li>
+    <nav class="navbar green">
+        <div class="navbar-brand">
+            <a><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px;"></a>
+        </div>
+        <div id="navbarExampleTransparentExample" class="navbar-menu">
+            <div class="navbar-end">
+                <router-link to="/" class="navbar-item" exact>Home</router-link>
+                <router-link to="/case-study/title" class="navbar-item">Case Studies</router-link>
+                <router-link to="/research/title" class="navbar-item">Research</router-link>
+                <router-link to="/resource/title" class="navbar-item">Resources</router-link>
             </div>
         </div>
-    </section>
+    </nav>
 </template>
 
 <script>
@@ -21,5 +20,12 @@
 	};
 </script>
 
-<style lang="sass" scoped>
+<style scoped>
+.green {
+    background-color: #067f1b;
+}
+
+.navbar-item {
+    color: white;
+}
 </style>
