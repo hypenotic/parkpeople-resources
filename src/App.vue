@@ -3,12 +3,17 @@
     <h1>Routing </h1>  
     <hr>
     <!--Mark the place where the route should load-->
+    <app-header></app-header>
     <router-view></router-view>
 </div>
 </template>
 
 <script>
-export default {
+  import Header from './components/Shared/Header.vue';
+  export default {
+    components: {
+      appHeader: Header
+    }
 }
 </script>
 
