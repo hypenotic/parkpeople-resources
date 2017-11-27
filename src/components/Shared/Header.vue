@@ -6,9 +6,6 @@
         <div id="navbarExampleTransparentExample" class="navbar-menu">
             <div class="navbar-end">
                 <router-link to="/" class="navbar-item" exact>Home</router-link>
-                <router-link to="/case-study/title" class="navbar-item">Case Studies</router-link>
-                <router-link to="/research/title" class="navbar-item">Research</router-link>
-                <router-link to="/resource/title" class="navbar-item">Resources</router-link>
             </div>
         </div>
     </nav>
