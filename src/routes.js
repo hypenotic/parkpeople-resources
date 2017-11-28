@@ -1,10 +1,10 @@
 /* need to import the components for the 
 route*/
 
-import Home from './components/Home.vue';
-import CaseStudy from './components/CaseStudy.vue';
-import Research from './components/Research.vue';
-import Resource from './components/Resource.vue';
+import Home from './views/Home.vue';
+import CaseStudy from './views/CaseStudy.vue';
+import Research from './views/Research.vue';
+import Resource from './views/Resource.vue';
 
 /* export a const names routes with will 
 hold my routes. Holding routes means it has 
