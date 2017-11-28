@@ -5,10 +5,10 @@
 </template>
 
 <script>
-    import Cards from '../components/Cards.vue';
+    import CardList from '../components/CardList.vue';
     export default {
     components: {
-        appCard: Cards
+        appCard: CardList
     }
 }
 </script>
