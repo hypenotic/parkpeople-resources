@@ -6,13 +6,13 @@
     				<div class="card">
   						<div class="card-image">
 							<figure class="image is-4by3">
-								<img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+								<img src="https://picsum.photos/400/300/?random">
 							</figure>
 						</div>
   						<div class="card-content">
 							<div class="content">
-								<h3><router-link :to="'/case-study/' + post.slug">{{ post.title.rendered }}</router-link></h3>
-								<p v-html="post.excerpt.rendered"></p>
+								<h3><router-link :to="post.type + '/' + post.slug">{{ post.title.rendered }}</router-link></h3>
+								<span v-html="post.excerpt.rendered"></span>
       							<time datetime="2016-1-1">{{ post.modified }}</time>
 								<br><small>(id: {{ post.id }})</small>
     						</div>
@@ -33,20 +33,29 @@
 	    		errors: [],
 			};
 		},
-		// Fetches posts when the component is created.
 	  	created() {
-		    axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/')
-		    .then(response => {
-				  this.posts = response.data
-				  console.log(response.data)
-		    })
-		    .catch(e => {
+			axios.all([
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/'),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/'),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/')
+			])
+			.then(axios.spread((response, response1, response2) => {
+				let allPosts  = response.data.concat(response1.data, response2.data);
+				//console.log(allPosts)
+				this.posts = allPosts
+				}
+			))
+			.catch(e => {
 		      	this.errors.push(e)
-		    })
+			})
 		}
 	};
 </script>
 
-<style lang="sass" scoped>
-
+<style scoped>
+.card {
+	display:flex;
+    flex-direction: column;
+	height: 100%;
+}
 </style>

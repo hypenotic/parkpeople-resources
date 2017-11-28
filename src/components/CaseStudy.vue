@@ -1,14 +1,26 @@
 <template>
 	<section class="section">
-		<div class="container">
-			<div v-if="posts.meta_box">
-				<h2 class="title" v-if="posts.title">{{posts.title.rendered}}</h2>
-				<h3 class="is-size-4">Context</h3>
-				<div v-html="posts.meta_box._casestudy_content_context"></div>
-				<h3 class="is-size-4">Vision</h3>
-				<div v-html="posts.meta_box._casestudy_content_vision"></div>
-				<h3 class="is-size-4">Approach</h3>
-				<div v-html="posts.meta_box._casestudy_content_approach"></div>
+		<div class="columns">
+			<div class="column is-8 is-offset-2">
+				<div v-if="posts.meta_box">
+					<h2 class="title" v-if="posts.title">{{posts.title.rendered}}</h2>
+					<h3 class="is-size-4">Context</h3>
+					<span v-html="posts.meta_box._casestudy_content_context"></span>
+					<h3 class="is-size-4">Vision</h3>
+					<div v-html="posts.meta_box._casestudy_content_vision"></div>
+					<h3 class="is-size-4">Approach</h3>
+					<div v-html="posts.meta_box._casestudy_content_approach"></div>
+					<h3 class="is-size-4">Impact</h3>
+					<div v-html="posts.meta_box._casestudy_content_impact"></div>
+					<h3 class="is-size-4">Takeaways</h3>
+					<div v-html="posts.meta_box._casestudy_content_takeaway"></div>
+					<h3 class="is-size-4">Tips and Ideas</h3>
+					<div v-html="posts.meta_box._casestudy_tips"></div>
+					<h3 class="is-size-4">Quote</h3>
+					<div v-html="posts.meta_box._casestudy_content_quote"></div>
+					<small v-html="posts.meta_box._casestudy_quote_name"></small>
+					<small v-html="posts.meta_box._casestudy_quote_group"></small>
+				</div>
 			</div>
 		</div>
 	</section>
