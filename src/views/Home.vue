@@ -9,11 +9,11 @@
     import Filter from '../components/Filter.vue';
     import CardList from '../components/CardList.vue';
     export default {
-    components: {
-        appCard: CardList,
-        appFilter: Filter
+        components: {
+            appCard: CardList,
+            appFilter: Filter
+        }
     }
-}
 </script>
 
 <style lang="scss">

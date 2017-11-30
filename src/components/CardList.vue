@@ -1,27 +1,30 @@
 <template>
+ 
 	<section class="section">
 		<div class="container">
+			<transition name="fade">
 			<div class="columns is-multiline" v-if="posts && posts.length">
   				<div class="column is-one-quarter" v-for="(post,index) in posts" :key='index'>
     				<div class="card">
   						<div class="card-image">
-							<figure class="image is-4by3">
-								<img src="https://picsum.photos/400/300/?random">
+							<figure class="image is-2by1">
+								<img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url">
 							</figure>
 						</div>
   						<div class="card-content">
 							<div class="content">
 								<h3><router-link :to="post.type + '/' + post.slug">{{ post.title.rendered }}</router-link></h3>
-								<span v-html="post.excerpt.rendered"></span>
-      							<time datetime="2016-1-1">{{ post.modified }}</time>
-								<br><small>(id: {{ post.id }})</small>
+								
+      							
     						</div>
   						</div>
 					</div>
   				</div>
 			</div>
+			</transition>
 		</div>
 	</section>
+
 </template>
 
 <script>
@@ -35,9 +38,9 @@
 		},
 	  	created() {
 			axios.all([
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/'),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/'),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/')
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/' + '?_embed'),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/' + '?_embed'),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + '?_embed')
 			])
 			.then(axios.spread((response, response1, response2) => {
 				let allPosts  = response.data.concat(response1.data, response2.data);
@@ -53,9 +56,24 @@
 </script>
 
 <style scoped>
+
+.section {
+	background-color: #ecebeb;
+}
+
+img {
+	object-fit: cover;
+}
 .card {
 	display:flex;
     flex-direction: column;
 	height: 100%;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0
 }
 </style>
