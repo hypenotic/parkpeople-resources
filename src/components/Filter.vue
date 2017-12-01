@@ -3,12 +3,12 @@
     	<div class="container">
 			<div class="columns">
 				<div class="column is-12">
-      				<h2>Stand on the shoulders of Park People</h2>
+      				<h4>Stand on the shoulders of Park People</h4>
 			  	</div>
 			</div>
 			<div class="columns">
 			  	<div class="column is-6">
-					<p>Doing things in Parks</p>
+					<h6>Doing things in Parks</h6>
 					<p>Lessons, inspiration and practical guides, oh my!</p>
 				  	<ul>
 					  	<li><a href="" class="bt-filter active">All</a></li>
@@ -22,7 +22,7 @@
 				</div>
 				
 				<div class="column is-6">
-					<p>Know about Parks</p>
+					<h6>Know about Parks</h6>
 					<p>Reports, case studies, analysis and adminstrative principles</p>
 				  	<ul>
 					  	<li><a href="" class="bt-filter active">All</a></li>
@@ -70,7 +70,7 @@
 <style scoped>
 	.bg-filter {
 		background-color: #4a4a4a;
-		padding: 30px 0;
+		padding: 40px 0 50px 0;
 	}
 
 	.hero {

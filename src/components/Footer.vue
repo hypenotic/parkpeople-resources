@@ -1,6 +1,6 @@
 <template>
     <div>   
-        <app-form></app-form> 
+        <app-form></app-form>
         <footer>
             <div class="columns">
                 <div class="column is-6" style="background-color: white;">
@@ -11,9 +11,11 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="column is-6" style="background-color: green; color: white; padding: 40px;">
                     <div class="columns">
                         <div class="column is-6">
+                            
                             <ul>
                                 <li>Park People</li>
                                 <li>401 Richmond Street West</li>
@@ -52,4 +54,13 @@
         height: auto;
         padding-top: 40px;
     }
+
+    .skewed-bg{
+  	background: #ecebeb;
+ 	padding: 100px 0;
+	transform: skew(0deg, -5deg);
+  	margin-top: -120px;
+	position: relative;
+	z-index: -1;
+}
 </style>
