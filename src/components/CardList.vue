@@ -66,7 +66,7 @@
   	background: #ecebeb;
  	padding: 100px 0;
 	transform: skew(0deg, -5deg);
-  	margin-top: -120px;
+  	margin-top: -130px;
 	position: relative;
 	z-index: -1;
 }
