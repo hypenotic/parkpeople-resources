@@ -12,12 +12,7 @@
 					<p>Lessons, inspiration and practical guides, oh my!</p>
 				  	<ul>
 					  	<li><a href="" class="bt-filter active">All</a></li>
-						<li><a href="" class="bt-filter">Admin</a></li>
-						<li><a href="" class="bt-filter">Sports/Recreation</a></li>
-						<li><a href="" class="bt-filter">Arts & Culture</a></li>
-						<li><a href="" class="bt-filter">Food</a></li>
-						<li><a href="" class="bt-filter">Nature/Environment</a></li>
-						<li><a href="" class="bt-filter">Enhancing Spaces</a></li>
+						<li v-for="item in activity"><a href="" class="bt-filter">{{ item }}</a></li>
 					</ul>
 				</div>
 				
@@ -26,12 +21,7 @@
 					<p>Reports, case studies, analysis and adminstrative principles</p>
 				  	<ul>
 					  	<li><a href="" class="bt-filter active">All</a></li>
-						<li><a href="" class="bt-filter">Admin</a></li>
-						<li><a href="" class="bt-filter">Sports/Recreation</a></li>
-						<li><a href="" class="bt-filter">Arts & Culture</a></li>
-						<li><a href="" class="bt-filter">Food</a></li>
-						<li><a href="" class="bt-filter">Nature/Environment</a></li>
-						<li><a href="" class="bt-filter">Enhancing Spaces</a></li>
+						<li v-for="item in learn" v-if="item.count > 0"><a href="" class="bt-filter">{{ item.name }}</a></li>
 					</ul>
 				</div>
     		</div>
@@ -40,31 +30,46 @@
 </template>
 
 <script>
-	import axios from 'axios';
-	export default {
-		data() {
-			return {
-	    		posts: [],
-	    		errors: [],
-			};
-		},
-	  	created() {
-			axios.all([
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/'),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/'),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/')
-			])
-			.then(axios.spread((response, response1, response2) => {
-				let allPosts  = response.data.concat(response1.data, response2.data);
-				//console.log(allPosts)
-				this.posts = allPosts
+import axios from 'axios';
+export default {
+	data() {
+		return {
+			errors: [],
+			learn: [],
+			activity: []
+		};
+	},
+	created() {
+		axios.all([
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/learn'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study'),
+			//axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research'),
+		])
+		.then(axios.spread((response, response1, response2) => {
+			// Learn Filter
+			this.learn = response.data
+			
+			// Activity Filter
+			const allResponses = response1.data.concat(response2.data);
+			const categories = []
+			for(let i = 0; i < allResponses.length; i++) {
+				const array = allResponses[i].pure_taxonomies.activity
+				//console.log(array)
+				for(let j = 0; j < array.length; j++) {
+					let category = array[j].name
+					//console.log(category)
+					categories.push(category)
 				}
-			))
-			.catch(e => {
-		      	this.errors.push(e)
-			})
-		}
-	};
+			}
+			const catUnique = [...new Set(categories)]
+			this.activity = catUnique
+		}))
+		.catch(e => {
+			this.errors.push(e)
+		})
+	}
+};
 </script>
 
 <style scoped>

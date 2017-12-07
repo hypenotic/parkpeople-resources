@@ -21,6 +21,7 @@
 					<small v-html="posts.meta_box._resource_quote_name"></small>
 					<small v-html="posts.meta_box._resource_quote_group"></small>
 				</div>
+				
 			</div>
 		</div>
 	</section>
