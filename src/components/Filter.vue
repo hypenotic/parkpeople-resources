@@ -44,22 +44,23 @@ export default {
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/learn'),
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource'),
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study'),
-			//axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research'),
 		])
-		.then(axios.spread((response, response1, response2) => {
+		.then(axios.spread((response, response1, response2, response3) => {
 			// Learn Filter
 			this.learn = response.data
 			
 			// Activity Filter
-			const allResponses = response1.data.concat(response2.data);
+			const allResponses = response1.data.concat(response2.data, response3.data);
 			const categories = []
 			for(let i = 0; i < allResponses.length; i++) {
-				const array = allResponses[i].pure_taxonomies.activity
-				//console.log(array)
-				for(let j = 0; j < array.length; j++) {
-					let category = array[j].name
-					//console.log(category)
-					categories.push(category)
+				if(typeof(allResponses[i].pure_taxonomies.activity) != 'undefined') {
+					const array = allResponses[i].pure_taxonomies.activity
+					//console.log(array)
+					for(let j = 0; j < array.length; j++) {
+						let category = array[j].name
+						categories.push(category)
+					}
 				}
 			}
 			const catUnique = [...new Set(categories)]

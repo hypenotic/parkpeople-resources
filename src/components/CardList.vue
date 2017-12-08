@@ -13,21 +13,21 @@
 						</div>
   						<div class="card-content">
 							<div class="content">
-								<h3><router-link :to="post.type + '/' + post.slug"><span v-html="post.title.rendered"></span></router-link></h3>
-								<p v-html="post.excerpt.rendered"></p>
-								<small>{{ post.type | toUppercase }}</small>
-								<br>
+								<small>{{ post.type | capitalizeFirstLetter | replaceHyphen}}</small><br><br>
+								<router-link :to="post.type + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
+								<p v-if="post.excerpt.rendered">{{ post.excerpt.rendered | readMore(100,'...') | stripHTML }}</p>
 								<div v-if="post.pure_taxonomies.activity">
-									<p><b>Do in parks</b></p>
-								<span v-for="tax in post.pure_taxonomies.activity">
-									<span v-html="tax.name + ', '" ></span>
-								</span>
+									<b>Do in parks</b><br>
+									<span v-for="tax in post.pure_taxonomies.activity">
+										<span class="taxlist">{{ tax.name | toUppercase}}</span>
+									</span>
+									<br><br>
 								</div>
 								<div v-if="post.pure_taxonomies.learn">
-									<p><b>Know about parks</b></p>
-								<span v-for="tax in post.pure_taxonomies.learn">
-									<span v-html="tax.name + ', '" ></span>
-								</span>
+									<b>Know about parks</b><br>
+									<span v-for="tax in post.pure_taxonomies.learn">
+										<span class="taxlist">{{ tax.name | toUppercase}}</span>
+									</span>
 								</div>
     						</div>
   						</div>
@@ -36,10 +36,9 @@
 			</div>
 			</transition>
 		</div>
-		
 	</section>
 	<div class="skewed-bg"></div>
-	</div>
+</div>
 </template>
 
 <script>
@@ -52,9 +51,21 @@
 			};
 		},
 		filters: {
+			replaceHyphen(value){
+				return value.replace("-", ' ');
+			},
+			capitalizeFirstLetter(value) {
+    			return value.charAt(0).toUpperCase() + value.slice(1);
+			},
 			toUppercase(value) {
       			return value.toUpperCase();
-    		}
+    		},
+			readMore(value, length, suffix) {
+				return value.substring(0, length) + suffix;
+			},
+			stripHTML(value){
+				return value.replace(/(<([^>]+)>)/ig,"");
+			},
   		},
 	  	created() {
 			axios.all([
@@ -64,10 +75,9 @@
 			])
 			.then(axios.spread((response, response1, response2) => {
 				let allPosts  = response.data.concat(response1.data, response2.data);
-				//console.log(allPosts)
+				console.log(allPosts)
 				this.posts = allPosts
-				}
-			))
+			}))
 			.catch(e => {
 		      	this.errors.push(e)
 			})
@@ -79,6 +89,12 @@
 
 .section {
 	background-color: #ecebeb;
+}
+
+.content h4 {
+	font-size: 1.4rem;
+	font-weight: 700;
+	line-height: 1.4;
 }
 
 .skewed-bg{
@@ -97,6 +113,14 @@ img {
 	display:flex;
     flex-direction: column;
 	height: 100%;
+}
+
+.taxlist {
+	font-weight: bold;
+	color: rgba(0,0,0,0.5);
+	&:after {
+		content: " | ";
+	}
 }
 
 .fade-enter-active, .fade-leave-active {
