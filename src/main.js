@@ -6,7 +6,6 @@ import { routes } from './routes'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 
-
 // Use
 Vue.use(Buefy);
 

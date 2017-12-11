@@ -62,7 +62,7 @@ export default {
 		readMore(value, length, suffix) {
 			return value.substring(0, length) + suffix;
 		},
-		stripHTML(value){
+		stripHTML(value) {
 			return value.replace(/(<([^>]+)>)/ig,"");
 		},
 	},
