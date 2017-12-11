@@ -47,6 +47,7 @@ export default {
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research'),
 		])
 		.then(axios.spread((response, response1, response2, response3) => {
+			
 			// Learn Filter
 			this.learn = response.data
 			
