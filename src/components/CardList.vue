@@ -13,22 +13,21 @@
 						</div>
   						<div class="card-content">
 							<div class="content">
-								<small>{{ post.type | capitalizeFirstLetter | replaceHyphen}}</small><br><br>
 								<router-link :to="post.type + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
 								<p v-if="post.excerpt.rendered">{{ post.excerpt.rendered | readMore(100,'...') | stripHTML }}</p>
 								<div v-if="post.pure_taxonomies.activity">
-									<b>Do in parks</b><br>
-									<span v-for="tax in post.pure_taxonomies.activity">
-										<span class="taxlist">{{ tax.name | toUppercase}}</span>
-									</span>
-									<br><br>
+									<b>Do in parks</b>
+									<ul>
+										<li v-for="tax in post.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
+									</ul>
 								</div>
 								<div v-if="post.pure_taxonomies.learn">
-									<b>Know about parks</b><br>
-									<span v-for="tax in post.pure_taxonomies.learn">
-										<span class="taxlist">{{ tax.name | toUppercase}}</span>
-									</span>
+									<b>Know about parks</b>
+									<ul>
+										<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
+									</ul>
 								</div>
+								<small>{{ post.type | capitalizeFirstLetter | replaceHyphen}}</small>
     						</div>
   						</div>
 					</div>
@@ -42,47 +41,47 @@
 </template>
 
 <script>
-	import axios from 'axios';
-	export default {
-		data() {
-			return {
-	    		posts: [],
-	    		errors: [],
-			};
+import axios from 'axios';
+export default {
+	data() {
+		return {
+			posts: [],
+			errors: [],
+		};
+	},
+	filters: {
+		replaceHyphen(value){
+			return value.replace("-", ' ');
 		},
-		filters: {
-			replaceHyphen(value){
-				return value.replace("-", ' ');
-			},
-			capitalizeFirstLetter(value) {
-    			return value.charAt(0).toUpperCase() + value.slice(1);
-			},
-			toUppercase(value) {
-      			return value.toUpperCase();
-    		},
-			readMore(value, length, suffix) {
-				return value.substring(0, length) + suffix;
-			},
-			stripHTML(value){
-				return value.replace(/(<([^>]+)>)/ig,"");
-			},
-  		},
-	  	created() {
-			axios.all([
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/' + '?_embed'),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/' + '?_embed'),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + '?_embed')
-			])
-			.then(axios.spread((response, response1, response2) => {
-				let allPosts  = response.data.concat(response1.data, response2.data);
-				console.log(allPosts)
-				this.posts = allPosts
-			}))
-			.catch(e => {
-		      	this.errors.push(e)
-			})
-		}
-	};
+		capitalizeFirstLetter(value) {
+			return value.charAt(0).toUpperCase() + value.slice(1);
+		},
+		toUppercase(value) {
+			return value.toUpperCase();
+		},
+		readMore(value, length, suffix) {
+			return value.substring(0, length) + suffix;
+		},
+		stripHTML(value){
+			return value.replace(/(<([^>]+)>)/ig,"");
+		},
+	},
+	created() {
+		axios.all([
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/' + '?_embed'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/' + '?_embed'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + '?_embed')
+		])
+		.then(axios.spread((response, response1, response2) => {
+			let allPosts  = response.data.concat(response1.data, response2.data);
+			console.log(allPosts)
+			this.posts = allPosts
+		}))
+		.catch(e => {
+			this.errors.push(e)
+		})
+	}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -91,10 +90,14 @@
 	background-color: #ecebeb;
 }
 
-.content h4 {
+.content a h4 {
+	color: rgba(30,177,242, 1);
 	font-size: 1.4rem;
 	font-weight: 700;
 	line-height: 1.4;
+	&:hover {
+		color: rgba(30,177,242,0.7);
+	}
 }
 
 .skewed-bg{
@@ -109,24 +112,24 @@
 img {
 	object-fit: cover;
 }
+
 .card {
 	display:flex;
     flex-direction: column;
 	height: 100%;
 }
 
-.taxlist {
-	font-weight: bold;
-	color: rgba(0,0,0,0.5);
-	&:after {
-		content: " | ";
+ul {
+	list-style-type: none;
+	margin: 0 0 10px 0;
+	li { 
+		color: rgba(0,0,0,0.5);
+		display: inline;
+		font-weight: 700;
+		&:not(:last-child):after {
+			content: " | ";
+		}
 	}
 }
 
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .3s
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0
-}
 </style>
