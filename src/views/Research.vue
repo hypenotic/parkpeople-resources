@@ -11,7 +11,7 @@
 
 				<div class="columns">
 					<div class="column is-6">
-						4
+						6
 					</div>
 					<div class="column is-6">
 						<h6 v-html="post.title.rendered"></h6>
