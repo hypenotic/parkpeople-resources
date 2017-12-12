@@ -1,44 +1,57 @@
 <template>
-	<section class="section">
+<div v-if="post.meta_box">
+
+	<img class="heading" src="/src/assets/placeimg_1000_500_nature2.jpg">
+
+	<section style="margin-top: -160px;">
 		<div class="columns">
-			<div class="column is-8 is-offset-2">
-				<div v-if="posts.meta_box">
-					<h2 class="title" v-if="posts.title">{{posts.title.rendered}}</h2>
-					<h3 class="is-size-4">Context</h3>
-					<span v-html="posts.meta_box._research_content_context"></span>
-					<h3 class="is-size-4">Vision</h3>
-					<div v-html="posts.meta_box._research_content_vision"></div>
-					<h3 class="is-size-4">Approach</h3>
-					<div v-html="posts.meta_box._research_content_approach"></div>
-					<h3 class="is-size-4">Impact</h3>
-					<div v-html="posts.meta_box._research_content_impact"></div>
-					<h3 class="is-size-4">Takeaways</h3>
-					<div v-html="posts.meta_box._research_content_takeaway"></div>
-					<h3 class="is-size-4">Tips and Ideas</h3>
-					<div v-html="posts.meta_box._research_tips"></div>
-					<h3 class="is-size-4">Quote</h3>
-					<div v-html="posts.meta_box._research_content_quote"></div>
-					<small v-html="posts.meta_box._research_quote_name"></small>
-					<small v-html="posts.meta_box._research_quote_group"></small>
+			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem;">
+				
+				<h2 v-html="post.title.rendered" class="title"></h2>
+
+				<div class="columns">
+					<div class="column is-6">
+						4
+					</div>
+					<div class="column is-6">
+						<h6 v-html="post.title.rendered"></h6>
+						<p v-html="post.excerpt.rendered"></p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
+	<section class="section">
+		<div class="columns">
+			<div class="column is-three-fifths is-offset-one-fifth">
+					<h3 class="is-size-4">Summary</h3>
+					<div v-html="post.meta_box._research_content_quote"></div>
+				</div>
+			</div>
+	</section>
+</div>
 </template>
 
 <script>
 	import axios from 'axios';
+	import moment from 'moment';
 	export default {
 		data() {
 			return {
 				slug: this.$route.params.slug,
-				posts: [],
+				post: [],
+			}
+		},
+		methods: {
+			moment: () => {
+				return moment();
 			}
 		},
 		created() {
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?slug=' + this.slug)
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&slug=' + this.slug)
 		    .then(response => {
-				this.posts = response.data[0]
+				this.post = response.data[0]
 				console.log(response.data[0])
 		    })
 		    .catch(e => {
@@ -49,4 +62,16 @@
 </script>
 
 <style lang="scss" scoped>
+
+img.heading {
+	position: relative;
+	z-index: -1;
+	margin-top: -60px;
+	height: 300px;
+	width: 100%;
+	object-fit:cover;
+  	object-position: 0 20%;
+	-webkit-clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+    clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+}
 </style>

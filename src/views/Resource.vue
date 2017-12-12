@@ -7,8 +7,8 @@
 		<div class="columns" >
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem;">
 				<h2 v-html="post.title.rendered" class="title"></h2>
-				<p><span class="type">{{ post.type }}</span> By {{ authorName }} | {{ moment(post.date).format('MMM Do, YYYY') }}</p>
-				<ul>
+				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}</p>
+				<ul class="category">
 					<li v-for="category in categories">{{ category }}</li>
 				</ul>
 				<p v-html="post.excerpt.rendered"></p>
@@ -21,7 +21,9 @@
 	<section class="section">
 		<div class="columns" >
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white;">
+
 				<p v-html="post.content.rendered"></p>
+
 				<h3 class="is-size-4">Takeaways</h3>
 				<div v-html="post.meta_box._resource_content_takeaway"></div>
 				<h3 class="is-size-4">Tips and Ideas</h3>
@@ -30,7 +32,7 @@
 				<div v-html="post.meta_box._resource_content_quote"></div>
 				<small v-html="post.meta_box._resource_quote_name"></small>
 				<small v-html="post.meta_box._resource_quote_group"></small>
-			</div>å
+			</div>
 		</div>
 	</section>
 </div>
@@ -109,13 +111,13 @@ img.heading {
 .type {
 	background-color: green;
 	color: white;
-	padding: 7px 5px 6px 5px;
+	padding: 7px 7px 5px 7px;
 	font-weight: 700;
 	margin-right: 10px;
 	text-transform: uppercase;
 }
 
-ul {
+ul.category {
 	list-style-type: none;
 	margin: 0 0 1.5rem 0;
 	li { 
@@ -124,10 +126,9 @@ ul {
 		text-transform: uppercase;
 		font-weight: 700;
 		&:not(:last-child):after {
-			content: " | ";
+			content: " / ";
 		}
 	}
 }
-
 
 </style>
