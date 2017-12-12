@@ -1,37 +1,39 @@
 <template>
-	<section class="section">
-		<div class="columns">
-			<div class="column is-8 is-offset-2">
-				<div v-if="post.meta_box">
+<div v-if="post.meta_box">
+	
+	<img class="heading" src="/src/assets/placeimg_1000_500_nature.jpg">
 
-					<h2 class="title" v-if="post.title">{{post.title.rendered}}</h2>
-					<p>{{ post.type }} By {{ authorName }} | {{ moment(post.date).format('MMM Do, YYYY') }}</p>
-					<ul>
-						<li v-for="category in categories">{{ category }}</li>
-					</ul>
-					<br>
-					<p v-html="post.excerpt.rendered"></p>
-					<h3 class="is-size-4">Context</h3>
-					<span v-html="post.meta_box._resource_content_context"></span>
-					<h3 class="is-size-4">Vision</h3>
-					<div v-html="post.meta_box._resource_content_vision"></div>
-					<h3 class="is-size-4">Approach</h3>
-					<div v-html="post.meta_box._resource_content_approach"></div>
-					<h3 class="is-size-4">Impact</h3>
-					<div v-html="post.meta_box._resource_content_impact"></div>
-					<h3 class="is-size-4">Takeaways</h3>
-					<div v-html="post.meta_box._resource_content_takeaway"></div>
-					<h3 class="is-size-4">Tips and Ideas</h3>
-					<div v-html="post.meta_box._resource_tips"></div>
-					<h3 class="is-size-4">Quote</h3>
-					<div v-html="post.meta_box._resource_content_quote"></div>
-					<small v-html="post.meta_box._resource_quote_name"></small>
-					<small v-html="post.meta_box._resource_quote_group"></small>
-				</div>
-				
+	<section style="margin-top: -160px;">
+		<div class="columns" >
+			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem;">
+				<h2 v-html="post.title.rendered" class="title"></h2>
+				<p><span class="type">{{ post.type }}</span> By {{ authorName }} | {{ moment(post.date).format('MMM Do, YYYY') }}</p>
+				<ul>
+					<li v-for="category in categories">{{ category }}</li>
+				</ul>
+				<p v-html="post.excerpt.rendered"></p>
 			</div>
 		</div>
 	</section>
+
+	<img style="width: 100%; object-fit: cover; height: 300px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
+	
+	<section class="section">
+		<div class="columns" >
+			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white;">
+				<p v-html="post.content.rendered"></p>
+				<h3 class="is-size-4">Takeaways</h3>
+				<div v-html="post.meta_box._resource_content_takeaway"></div>
+				<h3 class="is-size-4">Tips and Ideas</h3>
+				<div v-html="post.meta_box._resource_tips"></div>
+				<h3 class="is-size-4">Quote</h3>
+				<div v-html="post.meta_box._resource_content_quote"></div>
+				<small v-html="post.meta_box._resource_quote_name"></small>
+				<small v-html="post.meta_box._resource_quote_group"></small>
+			</div>å
+		</div>
+	</section>
+</div>
 </template>
 
 <script>
@@ -52,7 +54,7 @@ export default {
 		}
 	},
 	created() {
-		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?slug=' + this.slug)
+		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&slug=' + this.slug)
 		.then(response => {
 
 			// Let's put data into post
@@ -91,4 +93,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+img.heading {
+	position: relative;
+	z-index: -1;
+	margin-top: -60px;
+	height: 300px;
+	width: 100%;
+	object-fit:cover;
+  	object-position: 0 20%;
+	-webkit-clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+    clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+}
+
+.type {
+	background-color: green;
+	color: white;
+	padding: 7px 5px 6px 5px;
+	font-weight: 700;
+	margin-right: 10px;
+	text-transform: uppercase;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0 0 1.5rem 0;
+	li { 
+		color: rgba(0,0,0,0.5);
+		display: inline;
+		text-transform: uppercase;
+		font-weight: 700;
+		&:not(:last-child):after {
+			content: " | ";
+		}
+	}
+}
+
+
 </style>
