@@ -57,25 +57,30 @@ export default {
 
 			// Let's put data into post
 			this.post = response.data[0]
-			//console.log(this.post)
 
 			// Let's get the categories
-			const cat1 = this.post.pure_taxonomies.activity
-			const cat2 = this.post.pure_taxonomies.learn
+			const tax1 = this.post.pure_taxonomies.activity
+			const tax2 = this.post.pure_taxonomies.learn
 
 			// Let's concat
-			const catAll = cat1.concat(cat2)
-
-			// Let's loop and push
-			for(let i = 0; i < catAll.length; i++) {
-				this.categories.push(catAll[i].name)
+			const taxAll = tax1.concat(tax2)
+			
+			// Let's loop, skip over undefined and push
+			for(let i = 0; i < taxAll.length; i++) {
+				if(typeof(taxAll[i]) != 'undefined') {
+					this.categories.push(taxAll[i].name)
+				}
 			}
 
-			// Let's make another API call to get author data
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/users/' + response.data[0].author) 
+			// Let's make another API call to get author data by ID
+			const authorID = response.data[0].author
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/users/' + authorID) 
 			.then(response => {
 				//console.log(response.data)
 				this.authorName = response.data.name
+			})
+			.catch(e => {
+				this.errors.push(e)
 			})
 		})
 		.catch(e => {
