@@ -45,6 +45,7 @@ export default {
 	data() {
 		return {
 			slug: this.$route.params.slug,
+			//id: this.$route.params.id,
 			post: [],
 			categories: [],
 			authorName: ''
@@ -56,9 +57,11 @@ export default {
 		}
 	},
 	created() {
+		//axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?lang=fr&_embed&slug=' + this.slug)
 		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&slug=' + this.slug)
-		.then(response => {
+		//axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + this.id + '?_embed')
 
+		.then(response => {
 			// Let's put data into post
 			this.post = response.data[0]
 

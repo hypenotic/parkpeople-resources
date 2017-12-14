@@ -10,18 +10,30 @@
 			  	<div class="column is-6">
 					<h6>Doing things in Parks</h6>
 					<p>Lessons, inspiration and practical guides, oh my!</p>
+					<span>Checked locations: {{ checkedCategories }}</span>
 				  	<ul>
-					  	<li><a href="" class="bt-filter active">All</a></li>
-						<li v-for="item in activity"><a href="" class="bt-filter">{{ item }}</a></li>
+					  	<!--<li><a href="" class="bt-filter active">All</a></li>-->
+						<!--<li v-for="item in activity"><a href="" class="bt-filter">{{ item }}</a></li>-->
+
+						<li v-for="item in activity">
+							<input type="checkbox" v-model="checkedCategories" v-bind:value="item" />{{item}}
+						</li>
 					</ul>
+					
 				</div>
+				
 				
 				<div class="column is-6">
 					<h6>Know about Parks</h6>
 					<p>Reports, case studies, analysis and adminstrative principles</p>
 				  	<ul>
-					  	<li><a href="" class="bt-filter active">All</a></li>
-						<li v-for="item in learn" v-if="item.count > 0"><a href="" class="bt-filter">{{ item.name }}</a></li>
+					  	<!--<li><a href="" class="bt-filter active">All</a></li>-->
+						<!--<li v-for="item in learn" v-if="item.count > 0"><a href="" class="bt-filter">{{ item.name }}</a></li>-->
+						
+						<li v-for="item in learn" v-if="item.count > 0">
+							<input type="checkbox" v-model="checkedCategories" v-bind:value="item.name" />{{item.name}}
+						</li>
+					
 					</ul>
 				</div>
     		</div>
@@ -36,7 +48,8 @@ export default {
 		return {
 			errors: [],
 			learn: [],
-			activity: []
+			activity: [],
+			checkedCategories: []
 		};
 	},
 	created() {

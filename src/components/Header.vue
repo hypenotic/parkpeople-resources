@@ -3,6 +3,10 @@
         <div class="navbar-brand">
             <a><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px;"></a>
         </div>
+        <div class="lang">
+            <router-link to="" class="lang">EN</router-link><router-link to="" class="lang">FR</router-link>
+        </div>
+
         <div id="navbarExampleTransparentExample" class="navbar-menu">
             <div class="navbar-end">
                 <router-link to="/" class="navbar-item" exact>Home</router-link>
@@ -19,6 +23,11 @@
 <style scoped>
 .green {
     background-color: #067f1b;
+}
+
+.lang {
+    color: white;
+    margin: 1em;
 }
 
 .navbar-item {

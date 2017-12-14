@@ -8,13 +8,13 @@
     				<div class="card">
   						<div class="card-image">
 							<figure class="image is-2by1">
-								<img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url">
+								<img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
 							</figure>
 						</div>
   						<div class="card-content">
 							<div class="content">
 								<router-link :to="post.type + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
-								<p v-if="post.excerpt.rendered">{{ post.excerpt.rendered | readMore(100,'...') | stripHTML }}</p>
+								<p v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></p>
 								<div v-if="post.pure_taxonomies.activity">
 									<b>Do in parks</b>
 									<ul>
@@ -27,7 +27,7 @@
 										<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
 									</ul>
 								</div>
-								<small>{{ post.type | capitalizeFirstLetter | replaceHyphen}}</small>
+								<small>{{ post.type | removeHyphen | toTitleCase }}</small>
     						</div>
   						</div>
 					</div>
@@ -50,7 +50,7 @@ export default {
 		};
 	},
 	filters: {
-		replaceHyphen(value){
+		removeHyphen(value){
 			return value.replace("-", ' ');
 		},
 		capitalizeFirstLetter(value) {
@@ -60,11 +60,21 @@ export default {
 			return value.toUpperCase();
 		},
 		readMore(value, length, suffix) {
-			return value.substring(0, length) + suffix;
+			if (value.length < length) {
+				return value;
+			} else {	
+				return value.substring(0, length) + suffix;
+			}
 		},
 		stripHTML(value) {
 			return value.replace(/(<([^>]+)>)/ig,"");
 		},
+		toTitleCase(value)
+			{
+    		return value.replace(/\w\S*/g, (txt) => {
+				return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+			});
+		}
 	},
 	created() {
 		axios.all([

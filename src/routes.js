@@ -18,4 +18,5 @@ export const routes = [
 	{ path:'/case-study/:slug', component: CaseStudy },
 	{ path:'/research/:slug', component: Research },
 	{ path:'/resource/:slug', component: Resource },
+	//{ path:'/resource/:id', component: Resource },
 ]
