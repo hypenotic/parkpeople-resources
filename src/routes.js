@@ -15,8 +15,7 @@ export const routes = [
 	/*path will be appended to URL,
 	then need the component to load*/
 	{ path:'/', component: Home },
-	{ path:'/case-study/:slug', component: CaseStudy },
-	{ path:'/research/:slug', component: Research },
-	{ path:'/resource/:slug', component: Resource },
-	//{ path:'/resource/:id', component: Resource },
+	{ path:'/case-study/:id/:slug', component: CaseStudy },
+	{ path:'/research/:id/:slug', component: Research },
+	{ path:'/resource/:id/:slug', component: Resource },
 ]

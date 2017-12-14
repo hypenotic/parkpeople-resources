@@ -3,6 +3,8 @@
 	<section class="section">
 		<div class="container">
 			<transition name="fade">
+
+			
 			<div class="columns is-multiline" v-if="posts && posts.length">
   				<div class="column is-one-quarter" v-for="(post,index) in posts" :key='index'>
     				<div class="card">
@@ -13,7 +15,7 @@
 						</div>
   						<div class="card-content">
 							<div class="content">
-								<router-link :to="post.type + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
+								<router-link :to="post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
 								<p v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></p>
 								<div v-if="post.pure_taxonomies.activity">
 									<b>Do in parks</b>
@@ -86,6 +88,7 @@ export default {
 			let allPosts  = response.data.concat(response1.data, response2.data);
 			console.log(allPosts)
 			this.posts = allPosts
+			
 		}))
 		.catch(e => {
 			this.errors.push(e)

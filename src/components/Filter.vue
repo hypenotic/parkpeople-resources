@@ -11,12 +11,14 @@
 					<h6>Doing things in Parks</h6>
 					<p>Lessons, inspiration and practical guides, oh my!</p>
 					<span>Checked locations: {{ checkedCategories }}</span>
-				  	<ul>
-					  	<!--<li><a href="" class="bt-filter active">All</a></li>-->
+				  	<ul id="ck-button">
+					  	<li><a href="" class="bt-filter active">All</a></li>
 						<!--<li v-for="item in activity"><a href="" class="bt-filter">{{ item }}</a></li>-->
 
 						<li v-for="item in activity">
-							<input type="checkbox" v-model="checkedCategories" v-bind:value="item" />{{item}}
+							<label>
+							<input type="checkbox" hidden v-model="checkedCategories" v-bind:value="item" /><span>{{item}}</span>
+							</label>
 						</li>
 					</ul>
 					
@@ -27,7 +29,7 @@
 					<h6>Know about Parks</h6>
 					<p>Reports, case studies, analysis and adminstrative principles</p>
 				  	<ul>
-					  	<!--<li><a href="" class="bt-filter active">All</a></li>-->
+					  	<li><a href="" class="bt-filter active">All</a></li>
 						<!--<li v-for="item in learn" v-if="item.count > 0"><a href="" class="bt-filter">{{ item.name }}</a></li>-->
 						
 						<li v-for="item in learn" v-if="item.count > 0">
@@ -87,43 +89,94 @@ export default {
 };
 </script>
 
-<style scoped>
-	.bg-filter {
-		background-color: #4a4a4a;
-		padding: 40px 0 50px 0;
-	}
+<style lang="scss" scoped>
+.bg-filter {
+	background-color: #4a4a4a;
+	padding: 40px 0 50px 0;
+}
 
-	.hero {
-		color: white;
-	}
+.hero {
+	color: white;
+}
 
-	.bt-filter {
-		background-color: rgba(30,177,242, .2);
-		color: rgba(250,250,250, 0.5);
-		border-radius: 18px;
-		padding: 8px 12px;
-		font-weight: bold;
-		text-transform: uppercase;
-	}
+/*.bt-filter {
+	background-color: rgba(30,177,242, .2);
+	color: rgba(250,250,250, 0.5);
+	border-radius: 18px;
+	padding: 8px 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
 
-	.bt-filter:hover {
+.bt-filter:hover {
+	background-color: rgba(30,177,242, .5);
+	color: rgba(250,250,250, 0.8);
+}
+
+.bt-filter.active {
+	background-color: rgba(30,177,242, 1);
+	color: rgba(250,250,250, 1);
+}*/
+
+ul {
+	list-style-type: none;
+	margin: 20px 0;
+	padding: 0;
+}
+
+/*li {
+	float: left;
+	margin: 15px 10px 5px 0;
+}*/
+
+
+#ck-button li {
+    //margin:4px;
+	margin: 15px 10px 5px 0;
+    //background-color:#EFEFEF;
+    //border-radius:4px;
+    //border:1px solid #D0D0D0;
+    overflow:auto;
+    float:left;
+	background-color: rgba(30,177,242, .2);
+	color: rgba(250,250,250, 0.5);
+	border-radius: 18px;
+	padding: 8px 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+	&:hover {
 		background-color: rgba(30,177,242, .5);
 		color: rgba(250,250,250, 0.8);
 	}
+	&:input:checked + span{
+    background-color:#911;
+    color:#fff;
+}
+}
+/*
+#ck-button:hover {
+    background:red;
+}
 
-	.bt-filter.active {
-		background-color: rgba(30,177,242, 1);
-		color: rgba(250,250,250, 1);
-	}
+#ck-button label {
+    float:left;
+    width:4.0em;
+}
 
-	ul {
-		list-style-type: none;
-    	margin: 20px 0;
-    	padding: 0;
-	}
+#ck-button li label span {
+    text-align:center;
+    padding:3px 0px;
+    display:block;
+}
 
-	li {
-		float: left;
-		margin: 15px 10px 5px 0;
-	}
+#ck-button label input {
+    position:absolute;
+    top:-20px;
+}
+
+#ck-button input:checked + span {
+    background-color:#911;
+    color:#fff;
+}
+*/
 </style>
