@@ -15,7 +15,7 @@
 			</div>
 		</div>
 	</section>
-
+	
 	<img style="width: 100%; object-fit: cover; height: 300px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
 	
 	<section class="section">
@@ -48,7 +48,7 @@ export default {
 			id: this.$route.params.id,
 			post: [],
 			categories: [],
-			authorName: ''
+			authorName: '',
 		}
 	},
 	methods: {
@@ -79,7 +79,7 @@ export default {
 			}
 
 			// Let's make another API call to get author data by ID
-			const authorID = response.data[0].author
+			const authorID = response.data.author
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/users/' + authorID) 
 			.then(response => {
 				//console.log(response.data)

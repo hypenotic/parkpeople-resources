@@ -10,35 +10,27 @@
 			  	<div class="column is-6">
 					<h6>Doing things in Parks</h6>
 					<p>Lessons, inspiration and practical guides, oh my!</p>
-					<span>Checked locations: {{ checkedCategories }}</span>
 				  	<ul id="ck-button">
-					  	<li><a href="" class="bt-filter active">All</a></li>
-						<!--<li v-for="item in activity"><a href="" class="bt-filter">{{ item }}</a></li>-->
-
 						<li v-for="item in activity">
 							<label>
 							<input type="checkbox" hidden v-model="checkedCategories" v-bind:value="item" /><span>{{item}}</span>
 							</label>
 						</li>
 					</ul>
-					
 				</div>
-				
-				
 				<div class="column is-6">
 					<h6>Know about Parks</h6>
 					<p>Reports, case studies, analysis and adminstrative principles</p>
-				  	<ul>
-					  	<li><a href="" class="bt-filter active">All</a></li>
-						<!--<li v-for="item in learn" v-if="item.count > 0"><a href="" class="bt-filter">{{ item.name }}</a></li>-->
-						
+				  	<ul id="ck-button">
 						<li v-for="item in learn" v-if="item.count > 0">
-							<input type="checkbox" v-model="checkedCategories" v-bind:value="item.name" />{{item.name}}
+							<label>
+							<input type="checkbox" hidden v-model="checkedCategories" v-bind:value="item.name" /><span>{{item.name}}</span>
+							</label>
 						</li>
-					
 					</ul>
 				</div>
     		</div>
+			<span>Checked locations: {{ checkedCategories }}</span>
 		</div>
 	</section>
 </template>
@@ -90,6 +82,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .bg-filter {
 	background-color: #4a4a4a;
 	padding: 40px 0 50px 0;
@@ -99,84 +92,36 @@ export default {
 	color: white;
 }
 
-/*.bt-filter {
-	background-color: rgba(30,177,242, .2);
-	color: rgba(250,250,250, 0.5);
-	border-radius: 18px;
-	padding: 8px 12px;
-	font-weight: bold;
-	text-transform: uppercase;
-}
-
-.bt-filter:hover {
-	background-color: rgba(30,177,242, .5);
-	color: rgba(250,250,250, 0.8);
-}
-
-.bt-filter.active {
-	background-color: rgba(30,177,242, 1);
-	color: rgba(250,250,250, 1);
-}*/
-
-ul {
+#ck-button {
 	list-style-type: none;
 	margin: 20px 0;
 	padding: 0;
 }
 
-/*li {
-	float: left;
-	margin: 15px 10px 5px 0;
-}*/
-
-
 #ck-button li {
-    //margin:4px;
-	margin: 15px 10px 5px 0;
-    //background-color:#EFEFEF;
-    //border-radius:4px;
-    //border:1px solid #D0D0D0;
-    overflow:auto;
-    float:left;
-	background-color: rgba(30,177,242, .2);
-	color: rgba(250,250,250, 0.5);
-	border-radius: 18px;
-	padding: 8px 12px;
 	font-weight: bold;
 	text-transform: uppercase;
-	&:hover {
-		background-color: rgba(30,177,242, .5);
-		color: rgba(250,250,250, 0.8);
+	& input + span {
+		margin: 10px 10px 5px 0;
+    	overflow:auto;
+    	float:left;
+		background-color: rgba(30,177,242, .2);
+		color: rgba(250,250,250, 0.5);
+		border-radius: 18px;
+		padding: 8px 12px;
+		&:hover, &:active {
+			background-color: rgba(30,177,242, 1);
+			color: rgba(250,250,250, 0.8);
+		}
+		&:not(:checked) {
+			background-color: rgba(30,177,242, .2);
+			color: rgba(250,250,250, 0.5);
+		}
 	}
-	&:input:checked + span{
-    background-color:#911;
-    color:#fff;
-}
-}
-/*
-#ck-button:hover {
-    background:red;
+	& input:checked + span {
+    	background-color: rgba(30,177,242, 1);
+    	color: rgba(250,250,250, 0.8);
+	}
 }
 
-#ck-button label {
-    float:left;
-    width:4.0em;
-}
-
-#ck-button li label span {
-    text-align:center;
-    padding:3px 0px;
-    display:block;
-}
-
-#ck-button label input {
-    position:absolute;
-    top:-20px;
-}
-
-#ck-button input:checked + span {
-    background-color:#911;
-    color:#fff;
-}
-*/
 </style>
