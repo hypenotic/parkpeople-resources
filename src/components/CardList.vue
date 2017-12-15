@@ -2,12 +2,14 @@
 <div>
 	<section class="section">
 		<div class="container">
-			<transition name="fade">
-
 			
+			<p>Counter is: {{ doubleCounter }}</p>
+			<p>Number of clicks: {{ stringCounter }}</p>
+
+			<transition name="fade">
 			<div class="columns is-multiline" v-if="posts && posts.length">
   				<div class="column is-one-quarter" v-for="(post,index) in posts" :key='index'>
-    				<div class="card">
+    				<div class="card" :data-category="getDataAtt()">
   						<div class="card-image">
 							<figure class="image is-2by1">
 								<img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
@@ -44,6 +46,7 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 export default {
 	data() {
 		return {
@@ -76,6 +79,20 @@ export default {
     		return value.replace(/\w\S*/g, (txt) => {
 				return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 			});
+		}
+	},
+	computed: {
+		...mapGetters([
+			'doubleCounter', 
+			'stringCounter'])
+	},
+	methods: {
+		getDataAtt() {
+			for(let i = 0; i < this.posts.length; i++) {
+				return this.posts[i].pure_taxonomies.activity[i].name
+				//return console.log(i)
+			}
+			
 		}
 	},
 	created() {

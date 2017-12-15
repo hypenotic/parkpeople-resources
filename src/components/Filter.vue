@@ -13,7 +13,7 @@
 				  	<ul id="ck-button">
 						<li v-for="item in activity">
 							<label>
-							<input type="checkbox" hidden v-model="checkedCategories" v-bind:value="item" /><span>{{item}}</span>
+							<input type="checkbox" hidden v-model="checkedCategories" :value="item" /><span>{{item}}</span>
 							</label>
 						</li>
 					</ul>
@@ -24,13 +24,15 @@
 				  	<ul id="ck-button">
 						<li v-for="item in learn" v-if="item.count > 0">
 							<label>
-							<input type="checkbox" hidden v-model="checkedCategories" v-bind:value="item.name" /><span>{{item.name}}</span>
+							<input type="checkbox" hidden v-model="checkedCategories" :value="item.name" /><span>{{item.name}}</span>
 							</label>
 						</li>
 					</ul>
 				</div>
     		</div>
 			<span>Checked locations: {{ checkedCategories }}</span>
+			<button @click="increment">Increment</button>
+			<button @click="decrement">Decrement</button>
 		</div>
 	</section>
 </template>
@@ -45,6 +47,14 @@ export default {
 			activity: [],
 			checkedCategories: []
 		};
+	},
+	methods: {
+		increment(){
+			this.$store.state.counter++
+		},
+		decrement(){
+			this.$store.state.counter--
+		},
 	},
 	created() {
 		axios.all([
