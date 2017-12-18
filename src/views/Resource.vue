@@ -7,7 +7,10 @@
 		<div class="columns" >
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem;">
 				<h2 v-html="post.title.rendered" class="title"></h2>
-				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}</p>
+				
+				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}
+	
+				</p>
 				<ul class="category">
 					<li v-for="category in categories">{{ category }}</li>
 				</ul>
@@ -62,7 +65,7 @@ export default {
 		.then(response => {
 			// Let's put data into post
 			this.post = response.data
-			console.log(this.post)
+			//console.log(this.post)
 
 			// Let's get the categories
 			const tax1 = this.post.pure_taxonomies.activity

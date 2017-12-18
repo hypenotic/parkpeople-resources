@@ -31,8 +31,10 @@
 				</div>
     		</div>
 			<span>Checked locations: {{ checkedCategories }}</span>
+			<!--
 			<button @click="increment">Increment</button>
 			<button @click="decrement">Decrement</button>
+			-->
 		</div>
 	</section>
 </template>

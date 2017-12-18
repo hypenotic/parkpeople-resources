@@ -1,15 +1,14 @@
-<template>
+<template v-if="posts && posts.length">
 <div>
 	<section class="section">
 		<div class="container">
-			
+			<!--
 			<p>Counter is: {{ doubleCounter }}</p>
 			<p>Number of clicks: {{ stringCounter }}</p>
-
-			<transition name="fade">
-			<div class="columns is-multiline" v-if="posts && posts.length">
+			-->
+			<div class="columns is-multiline">
   				<div class="column is-one-quarter" v-for="(post,index) in posts" :key='index'>
-    				<div class="card" :data-category="getDataAtt()">
+    				<div class="card" data-category="test">
   						<div class="card-image">
 							<figure class="image is-2by1">
 								<img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
@@ -37,7 +36,6 @@
 					</div>
   				</div>
 			</div>
-			</transition>
 		</div>
 	</section>
 	<div class="skewed-bg"></div>
@@ -88,24 +86,39 @@ export default {
 	},
 	methods: {
 		getDataAtt() {
+			const categories = []
+			console.log(categories)
 			for(let i = 0; i < this.posts.length; i++) {
-				return this.posts[i].pure_taxonomies.activity[i].name
-				//return console.log(i)
+				if(typeof(this.posts[i].pure_taxonomies.activity) != 'undefined') {
+					const array = this.posts[i].pure_taxonomies.activity
+					//console.log(array)
+					for(let j = 0; j < array.length; j++) {
+						let category = array[j].name
+						categories.push(category)
+					}
+				}
 			}
-			
+			return categories;
+		},
+		showImage(post) {
+        	let imageSizes = this.post._embedded['wp:featuredmedia'][0]['media_details']['sizes'];
+        	if(typeof imageSizes != 'undefined') {
+            	return imageSizes['medium']['source_url'];
+			}
 		}
 	},
 	created() {
+		console.clear();
 		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/' + '?_embed'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/' + '?_embed'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + '?_embed')
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
 		])
 		.then(axios.spread((response, response1, response2) => {
-			let allPosts  = response.data.concat(response1.data, response2.data);
-			console.log(allPosts)
-			this.posts = allPosts
 			
+			let allPosts  = response.data.concat(response1.data, response2.data);
+			//console.log(allPosts)
+			this.posts = allPosts
 		}))
 		.catch(e => {
 			this.errors.push(e)

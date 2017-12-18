@@ -4,7 +4,8 @@
             <a><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px;"></a>
         </div>
         <div class="lang">
-            <router-link to="" class="lang">EN</router-link><router-link to="" class="lang">FR</router-link>
+            <router-link to="" class="lang">EN</router-link>
+            <router-link to="" class="lang">FR</router-link>
         </div>
 
         <div id="navbarExampleTransparentExample" class="navbar-menu">
@@ -16,8 +17,13 @@
 </template>
 
 <script>
-	export default {	
-	};
+export default {
+    data() {
+        return {
+            id: this.$route.params.id,
+        }
+    },
+};
 </script>
 
 <style scoped>
