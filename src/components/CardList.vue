@@ -8,7 +8,7 @@
 			-->
 			<div class="columns is-multiline">
   				<div class="column is-one-quarter" v-for="(post,index) in posts" :key='index'>
-    				<div class="card" data-category="test">
+    				<div class="card" :data-category="getDataAtt(post)">
   						<div class="card-image">
 							<figure class="image is-2by1">
 								<img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
@@ -85,18 +85,14 @@ export default {
 			'stringCounter'])
 	},
 	methods: {
-		getDataAtt() {
-			const categories = []
+		getDataAtt(post) {
+			const categories = [];
 			console.log(categories)
-			for(let i = 0; i < this.posts.length; i++) {
-				if(typeof(this.posts[i].pure_taxonomies.activity) != 'undefined') {
-					const array = this.posts[i].pure_taxonomies.activity
-					//console.log(array)
-					for(let j = 0; j < array.length; j++) {
-						let category = array[j].name
-						categories.push(category)
-					}
-				}
+			for(let i = 0; i < post.pure_taxonomies.activity; i++) {
+				//if(typeof(post.pure_taxonomies.activity[i]) != 'undefined') {
+				let category = post.pure_taxonomies.activity[i].name
+				categories.push(category)
+				//}
 			}
 			return categories;
 		},
@@ -108,11 +104,10 @@ export default {
 		}
 	},
 	created() {
-		console.clear();
 		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=1'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=1'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=1')
 		])
 		.then(axios.spread((response, response1, response2) => {
 			
