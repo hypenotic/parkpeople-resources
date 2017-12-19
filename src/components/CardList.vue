@@ -87,39 +87,24 @@ export default {
 	methods: {
 		getDataAtt(post) {
 			const categories = [];
-			const cat1 = post.pure_taxonomies.activity;
-			const cat2 = post.pure_taxonomies.learn;
-
-			//const allCats = [];
-
-			// if(typeof(cat1, cat2) === 'undefined'){
-			// 	const test = []
-			// 	//console.log('1', test)
-			// 	allCats.push(test)
-			// } else if(typeof(cat1) === 'undefined'){
-			// 	const test = post.pure_taxonomies.learn;
-			// 	//console.log('2', test)
-			// 	allCats.push(test)
-			// } else if(typeof(cat2) === 'undefined'){
-			// 	const test = post.pure_taxonomies.activity;
-			// 	//console.log('3',test)
-			// 	allCats.push(test)
-			// } else {
-			// 	const test = cat1.concat(cat2);
-			// 	allCats.push(test)
-			// 	//console.log('4',test)
-			// }
+			let allCats = [];
+			let cat1 = post.pure_taxonomies.activity;
+			let cat2 = post.pure_taxonomies.learn;
+			let i;
 			
-			//console.log(categories)
-			for(let i = 0; i < post.pure_taxonomies.activity.length; i++) {
-
-				//if (typeof(allCats[i]) != 'undefined') {
-				
-				let category = post.pure_taxonomies.activity[i].name
-				categories.push(category)
-				//}
+			if(typeof(cat1) != 'undefined'){
+				allCats = cat1.concat(cat2);
+			} else if(typeof(cat2) != 'undefined') {
+				allCats = cat2.concat(cat1);
+			} else {
+				return;
 			}
-			console.log(categories)
+
+			for(i = 0; i < allCats.length; i++) {
+				if (typeof(allCats[i]) != 'undefined') {
+				categories.push(allCats[i].name)
+				}
+			}
 			return categories;
 		},
 		showImage(post) {
