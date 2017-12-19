@@ -87,13 +87,39 @@ export default {
 	methods: {
 		getDataAtt(post) {
 			const categories = [];
-			console.log(categories)
-			for(let i = 0; i < post.pure_taxonomies.activity; i++) {
-				//if(typeof(post.pure_taxonomies.activity[i]) != 'undefined') {
+			const cat1 = post.pure_taxonomies.activity;
+			const cat2 = post.pure_taxonomies.learn;
+
+			//const allCats = [];
+
+			// if(typeof(cat1, cat2) === 'undefined'){
+			// 	const test = []
+			// 	//console.log('1', test)
+			// 	allCats.push(test)
+			// } else if(typeof(cat1) === 'undefined'){
+			// 	const test = post.pure_taxonomies.learn;
+			// 	//console.log('2', test)
+			// 	allCats.push(test)
+			// } else if(typeof(cat2) === 'undefined'){
+			// 	const test = post.pure_taxonomies.activity;
+			// 	//console.log('3',test)
+			// 	allCats.push(test)
+			// } else {
+			// 	const test = cat1.concat(cat2);
+			// 	allCats.push(test)
+			// 	//console.log('4',test)
+			// }
+			
+			//console.log(categories)
+			for(let i = 0; i < post.pure_taxonomies.activity.length; i++) {
+
+				//if (typeof(allCats[i]) != 'undefined') {
+				
 				let category = post.pure_taxonomies.activity[i].name
 				categories.push(category)
 				//}
 			}
+			console.log(categories)
 			return categories;
 		},
 		showImage(post) {
@@ -105,9 +131,9 @@ export default {
 	},
 	created() {
 		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=1'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=1'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=1')
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
 		])
 		.then(axios.spread((response, response1, response2) => {
 			
