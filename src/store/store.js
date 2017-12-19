@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        counter: 0
+        counter: 0,
+        checkedCategories: []
     },
     getters: {
         // doubleCounter is a function where we get state as an argument
@@ -14,6 +15,9 @@ export const store = new Vuex.Store({
         },
         stringCounter: state => {
             return state.counter + "Clicks";
+        },
+        categoryList: state => {
+            return state.checkedCategories;
         }
     }
 })

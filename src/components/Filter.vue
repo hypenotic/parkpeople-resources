@@ -57,6 +57,9 @@ export default {
 		decrement(){
 			this.$store.state.counter--
 		},
+		// checkedCategories() {
+		// 	this.$store.state.checkedCategories
+		// }
 	},
 	created() {
 		axios.all([

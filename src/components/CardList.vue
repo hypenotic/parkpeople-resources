@@ -2,6 +2,8 @@
 <div>
 	<section class="section">
 		<div class="container">
+
+			<span>Checked locations: {{ categoryList }}</span>
 			<!--
 			<p>Counter is: {{ doubleCounter }}</p>
 			<p>Number of clicks: {{ stringCounter }}</p>
@@ -82,10 +84,15 @@ export default {
 	computed: {
 		...mapGetters([
 			'doubleCounter', 
-			'stringCounter'])
+			'stringCounter',
+			'categoryList'])
 	},
 	methods: {
 		getDataAtt(post) {
+			/* 
+			getDataAtt() loops through category names of a loaded post and pushes them to a new array. 
+			The categories are used in the data-category attribute for filtering.
+			*/
 			const categories = [];
 			let allCats = [];
 			let cat1 = post.pure_taxonomies.activity;
@@ -102,7 +109,7 @@ export default {
 
 			for(i = 0; i < allCats.length; i++) {
 				if (typeof(allCats[i]) != 'undefined') {
-				categories.push(allCats[i].name)
+					categories.push(allCats[i].name)
 				}
 			}
 			return categories;
