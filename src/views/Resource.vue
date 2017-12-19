@@ -27,6 +27,13 @@
 
 				<p v-html="post.content.rendered"></p>
 
+				<ol>
+					<li v-for="item in post.meta_box._resource_list">
+						<h5>{{ item._resource_list_headline }}</h5>
+						<p v-html="item._resource_list_content"></p>
+					</li>
+				</ol>
+
 				<h3 class="is-size-4">Takeaways</h3>
 				<div v-html="post.meta_box._resource_content_takeaway"></div>
 				<h3 class="is-size-4">Tips and Ideas</h3>
