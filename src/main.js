@@ -8,6 +8,8 @@ import 'buefy/lib/buefy.css'
 import { store } from './store/store.js';
 var SocialSharing = require('vue-social-sharing');
 
+export const eventBus = new Vue();
+
 // Use
 Vue.use(Buefy);
 Vue.use(SocialSharing);

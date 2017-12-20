@@ -47,11 +47,13 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { eventBus } from '../main.js';
 export default {
 	data() {
 		return {
 			posts: [],
 			errors: [],
+			categoryList: []
 		};
 	},
 	filters: {
@@ -84,8 +86,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'doubleCounter', 
-			'stringCounter',
-			'categoryList'])
+			'stringCounter'])
 	},
 	methods: {
 		getDataAtt(post) {
@@ -119,7 +120,12 @@ export default {
         	if(typeof imageSizes != 'undefined') {
             	return imageSizes['medium']['source_url'];
 			}
-		}
+		},
+	},
+	mounted() {
+		eventBus.$on('i-got-clicked', checkedCategories => {
+			this.categoryList = checkedCategories
+		})
 	},
 	created() {
 		axios.all([

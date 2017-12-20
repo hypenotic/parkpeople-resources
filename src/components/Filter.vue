@@ -13,7 +13,7 @@
 				  	<ul id="ck-button">
 						<li v-for="item in activity">
 							<label>
-							<input type="checkbox" hidden v-model="checkedCategories" :value="item" /><span>{{item}}</span>
+							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item" /><span>{{item}}</span>
 							</label>
 						</li>
 					</ul>
@@ -30,7 +30,7 @@
 					</ul>
 				</div>
     		</div>
-			<span>Checked locations: {{ checkedCategories }}</span>
+
 			<!--
 			<button @click="increment">Increment</button>
 			<button @click="decrement">Decrement</button>
@@ -41,13 +41,14 @@
 
 <script>
 import axios from 'axios';
+import { eventBus } from '../main.js';
 export default {
 	data() {
 		return {
 			errors: [],
 			learn: [],
 			activity: [],
-			checkedCategories: []
+			checkedCategories: [],
 		};
 	},
 	methods: {
@@ -57,9 +58,9 @@ export default {
 		decrement(){
 			this.$store.state.counter--
 		},
-		// checkedCategories() {
-		// 	this.$store.state.checkedCategories
-		// }
+		emitGlobalClickEvent() {
+      		eventBus.$emit('i-got-clicked', this.checkedCategories);
+    	}
 	},
 	created() {
 		axios.all([
