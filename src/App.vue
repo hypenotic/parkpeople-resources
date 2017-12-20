@@ -30,13 +30,14 @@ $family-cursive: "Comfortaa", cursive;
 $family-sanserif: "Dosis", sans-serif;
 
 html, body {
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 26px;
     font-family: $family-cursive;
 }
 
 p {
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
@@ -91,5 +92,15 @@ small {
 
 .wfs-active, .wf-inactive {
     visibility: visible;
+}
+
+ol.resource__bullets {
+	>li {
+		ul, ol {
+			list-style-type: disc;
+			margin-left: 24px;
+			padding-left: 10px;
+		}
+	}
 }
 </style>

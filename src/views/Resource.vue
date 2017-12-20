@@ -6,6 +6,33 @@
 	<section style="margin-top: -160px;">
 		<div class="columns" >
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem;">
+				<div class="social-share-container">
+					<p>Share via:</p>
+					<social-sharing url=""
+					title=""
+					description=""
+					hashtags=""
+					twitter-user="Park_People"
+					inline-template>
+					<div class="social-share-buttons">
+						<network network="email">
+							<i class="fa fa-envelope"></i> Email
+						</network>
+						<network network="twitter">
+							<i class="fa fa-twitter"></i> Twitter
+						</network>
+						<network network="facebook">
+							<i class="fa fa-facebook"></i> Facebook
+						</network>
+						<network network="linkedin">
+							<i class="fa fa-linkedin"></i> LinkedIn
+						</network>
+						<!-- <network network="pinterest">
+							<i class="fa fa-pinterest"></i> Pinterest
+						</network> -->
+					</div>
+					</social-sharing>
+				</div>
 				<h2 v-html="post.title.rendered" class="title"></h2>
 				
 				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}</p>
@@ -19,16 +46,16 @@
 	
 	<img style="width: 100%; object-fit: cover; height: 300px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
 	
-	<section class="section">
+	<section class="section section__single-resource">
 		<div class="columns" >
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white;">
 
 				<p v-html="post.content.rendered"></p>
 
 				<ol class="resource__bullets">
-					<li v-for="item in post.meta_box._resource_list">
-						<h4>{{ item._resource_list_headline }}</h4>
-						<p v-html="item._resource_list_content"></p>
+					<li v-for="item in post.meta_box._resource_list" :key="item['_resource_list_headline']">
+						<h4>{{ item['_resource_list_headline'] }}</h4>
+						<p v-html="item['_resource_list_content']"></p>
 					</li>
 				</ol>
 
@@ -111,7 +138,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 img.heading {
 	position: relative;
@@ -158,12 +185,6 @@ ol.resource__bullets {
 		padding-left: 70px;
 		padding-bottom: 30px;
 		margin-bottom: 50px;
-		// NEED TO PUT THESE STYLES IN OUTER CSS STYLESHEET
-		ul, ol {
-			list-style-type: disc;
-			margin-left: 24px;
-			padding-left: 10px;
-		}
 		h4 {
 			font-size: 24px;
 			// line-height: 35px;
@@ -188,6 +209,7 @@ ol.resource__bullets {
 		font-style: italic;
 		font-weight: bold;
 		text-align: center;
+		padding-top: 9px;
 		// display: inline-block;
 		position: absolute;
 		top: 0;

@@ -6,9 +6,11 @@ import { routes } from './routes'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 import { store } from './store/store.js';
+var SocialSharing = require('vue-social-sharing');
 
 // Use
 Vue.use(Buefy);
+Vue.use(SocialSharing);
 
 /* With the Vue Router imported 
 we can then tell the app to use it */
