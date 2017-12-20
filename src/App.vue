@@ -25,6 +25,8 @@
 // Import Bulma's core
 @import "~bulma/sass/utilities/_all";
 @import url('https://fonts.googleapis.com/css?family=Dosis|Comfortaa');
+// Import Variables
+@import './styles/variables.scss';
 
 $family-cursive: "Comfortaa", cursive;
 $family-sanserif: "Dosis", sans-serif;
@@ -33,12 +35,14 @@ html, body {
     font-size: 18px;
     line-height: 26px;
     font-family: $family-cursive;
+    color: $body-color;
 }
 
 p {
     font-size: 1rem;
     line-height: 1.5rem;
     margin-bottom: 1.5rem;
+    color: $body-color;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -46,6 +50,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     margin-top: 0;
     margin-bottom: 1rem;
+    color: $body-color;
 }
 
 h1 {
