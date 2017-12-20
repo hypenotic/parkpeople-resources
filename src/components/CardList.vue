@@ -13,7 +13,7 @@
     				<div class="card" :data-category="getDataAtt(post)">
   						<div class="card-image">
 							<figure class="image is-2by1">
-								<img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+								<img v-if="post._embedded['wp:featuredmedia'] != undefined" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
 							</figure>
 						</div>
   						<div class="card-content">
