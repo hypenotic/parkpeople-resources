@@ -8,9 +8,7 @@
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem;">
 				<h2 v-html="post.title.rendered" class="title"></h2>
 				
-				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}
-	
-				</p>
+				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}</p>
 				<ul class="category">
 					<li v-for="category in categories">{{ category }}</li>
 				</ul>
@@ -27,9 +25,9 @@
 
 				<p v-html="post.content.rendered"></p>
 
-				<ol>
+				<ol class="resource__bullets">
 					<li v-for="item in post.meta_box._resource_list">
-						<h5>{{ item._resource_list_headline }}</h5>
+						<h4>{{ item._resource_list_headline }}</h4>
 						<p v-html="item._resource_list_content"></p>
 					</li>
 				</ol>
@@ -37,7 +35,14 @@
 				<h3 class="is-size-4">Takeaways</h3>
 				<div v-html="post.meta_box._resource_content_takeaway"></div>
 				<h3 class="is-size-4">Tips and Ideas</h3>
-				<div v-html="post.meta_box._resource_tips"></div>
+				<div>
+					<ul>
+						<li v-for="tip in post.meta_box._resource_tips" :key="tip['_resource_tip_headline']">
+							<h4 v-html="tip['_resource_tip_headline']"></h4>
+							<div v-html="tip['_resource_tip_content']"></div>
+						</li>
+					</ul>
+				</div>
 				<h3 class="is-size-4">Quote</h3>
 				<div v-html="post.meta_box._resource_content_quote"></div>
 				<small v-html="post.meta_box._resource_quote_name"></small>
@@ -142,5 +147,53 @@ ul.category {
 		}
 	}
 }
+
+ol.resource__bullets {
+	list-style: none;
+	margin-top: 50px;
+	>li {
+		counter-increment: item;
+		margin-bottom: 5px;
+		position: relative;
+		padding-left: 70px;
+		padding-bottom: 30px;
+		margin-bottom: 50px;
+		// NEED TO PUT THESE STYLES IN OUTER CSS STYLESHEET
+		ul, ol {
+			list-style-type: disc;
+			margin-left: 24px;
+			padding-left: 10px;
+		}
+		h4 {
+			font-size: 24px;
+			// line-height: 35px;
+			font-weight: bold;
+			padding-top: 13px;
+		}
+	}
+	>li:not(:last-child) {
+		border-bottom: 2px dashed orange;
+	}
+	>li:before {
+		margin-right: 10px;
+		content: counter(item);
+		background: white;
+		border-radius: 100%;
+		border: 2px solid orange;
+		color: orange;
+		width: 50px;
+		height: 50px;
+		font-family: serif;
+		font-size: 30px;
+		font-style: italic;
+		font-weight: bold;
+		text-align: center;
+		// display: inline-block;
+		position: absolute;
+		top: 0;
+		left: 0px;
+	}
+}
+
 
 </style>
