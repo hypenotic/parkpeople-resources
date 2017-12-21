@@ -4,13 +4,11 @@
 		<div class="container">
 
 			<span>Checked locations: {{ categoryList }}</span>
-			<!--
-			<p>Counter is: {{ doubleCounter }}</p>
-			<p>Number of clicks: {{ stringCounter }}</p>
-			-->
+			
 			<div class="columns is-multiline">
-  				<div class="column is-one-quarter" v-for="(post,index) in posts" :key='index'>
-    				<div class="card" :data-category="getDataAtt(post)">
+  				<div class="column is-one-quarter" v-for="(post,index) in filteredList" :key='index'>
+    				<!-- <div class="card" :data-category="getDataAtt(post)"> -->
+						<div class="card">
   						<div class="card-image">
 							<figure class="image is-2by1">
 								<img v-if="post._embedded['wp:featuredmedia'] != undefined" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
@@ -46,14 +44,13 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters } from 'vuex';
 import { eventBus } from '../main.js';
 export default {
 	data() {
 		return {
 			posts: [],
 			errors: [],
-			categoryList: []
+			categoryList: [],
 		};
 	},
 	filters: {
@@ -67,63 +64,59 @@ export default {
 			return value.toUpperCase();
 		},
 		readMore(value, length, suffix) {
-			if (value.length < length) {
-				return value;
-			} else {	
-				return value.substring(0, length) + suffix;
-			}
+			if (value.length < length)
+			return value;	
+			return value.substring(0, length) + suffix;
 		},
 		stripHTML(value) {
 			return value.replace(/(<([^>]+)>)/ig,"");
 		},
-		toTitleCase(value)
-			{
+		toTitleCase(value) {
     		return value.replace(/\w\S*/g, (txt) => {
 				return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 			});
+		},
+	},
+	computed:{
+        filteredList(){
+        	if (!this.categoryList.length)
+            return this.posts
+          	return this.posts.filter(j => this.categoryList.includes(j.location))
 		}
-	},
-	computed: {
-		...mapGetters([
-			'doubleCounter', 
-			'stringCounter'])
-	},
+    },
 	methods: {
-		getDataAtt(post) {
-			/* 
-			getDataAtt() loops through category names of a loaded post and pushes them to a new array. 
-			The categories are used in the data-category attribute for filtering.
-			*/
-			const categories = [];
-			let allCats = [];
-			let cat1 = post.pure_taxonomies.activity;
-			let cat2 = post.pure_taxonomies.learn;
-			let i;
+		// getDataAtt(post) {
+		// 	/* 
+		// 	getDataAtt() loops through category names of a loaded post and pushes them to a new array. 
+		// 	The categories are used in the data-category attribute for filtering.
+		// 	*/
+		// 	const categories = [];
+		// 	let allCats = [];
+		// 	let cat1 = post.pure_taxonomies.activity;
+		// 	let cat2 = post.pure_taxonomies.learn;
+		// 	let i;
 			
-			if(typeof(cat1) != 'undefined'){
-				allCats = cat1.concat(cat2);
-			} else if(typeof(cat2) != 'undefined') {
-				allCats = cat2.concat(cat1);
-			} else {
-				return;
-			}
+		// 	if(typeof(cat1) != 'undefined'){
+		// 		allCats = cat1.concat(cat2);
+		// 	} else if(typeof(cat2) != 'undefined') {
+		// 		allCats = cat2.concat(cat1);
+		// 	} else {
+		// 		return;
+		// 	}
 
-			for(i = 0; i < allCats.length; i++) {
-				if (typeof(allCats[i]) != 'undefined') {
-					categories.push(allCats[i].name)
-				}
-			}
-			return categories;
-		},
-		showImage(post) {
-        	let imageSizes = this.post._embedded['wp:featuredmedia'][0]['media_details']['sizes'];
-        	if(typeof imageSizes != 'undefined') {
-            	return imageSizes['medium']['source_url'];
-			}
-		},
+		// 	for(i = 0; i < allCats.length; i++) {
+		// 		if (typeof(allCats[i]) != 'undefined') {
+		// 			categories.push(allCats[i].name)
+		// 		}
+		// 	}
+		// 	return categories;
+		// },
+		fetchData() {
+            this.posts = posts
+        }
 	},
 	mounted() {
-		eventBus.$on('i-got-clicked', checkedCategories => {
+		eventBus.$on('checked', checkedCategories => {
 			this.categoryList = checkedCategories
 		})
 	},
@@ -138,11 +131,12 @@ export default {
 			let allPosts  = response.data.concat(response1.data, response2.data);
 			//console.log(allPosts)
 			this.posts = allPosts
+			this.fetchData();
 		}))
 		.catch(e => {
 			this.errors.push(e)
 		})
-	}
+	},
 };
 </script>
 

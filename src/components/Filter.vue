@@ -24,17 +24,12 @@
 				  	<ul id="ck-button">
 						<li v-for="item in learn" v-if="item.count > 0">
 							<label>
-							<input type="checkbox" hidden v-model="checkedCategories" :value="item.name" /><span>{{item.name}}</span>
+							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item.name" /><span>{{item.name}}</span>
 							</label>
 						</li>
 					</ul>
 				</div>
     		</div>
-
-			<!--
-			<button @click="increment">Increment</button>
-			<button @click="decrement">Decrement</button>
-			-->
 		</div>
 	</section>
 </template>
@@ -52,14 +47,8 @@ export default {
 		};
 	},
 	methods: {
-		increment(){
-			this.$store.state.counter++
-		},
-		decrement(){
-			this.$store.state.counter--
-		},
 		emitGlobalClickEvent() {
-      		eventBus.$emit('i-got-clicked', this.checkedCategories);
+      		eventBus.$emit('checked', this.checkedCategories);
     	}
 	},
 	created() {

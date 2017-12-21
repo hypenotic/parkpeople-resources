@@ -5,7 +5,6 @@ import VueRouter from 'vue-router'
 import { routes } from './routes'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
-import { store } from './store/store.js';
 var SocialSharing = require('vue-social-sharing');
 
 export const eventBus = new Vue();
@@ -29,6 +28,5 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
-  store,
   render: h => h(App)
 })
