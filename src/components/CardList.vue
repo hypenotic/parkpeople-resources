@@ -79,15 +79,8 @@ export default {
         	if (!this.categoryList.length) {
 				return this.posts
 			} else {
-			//console.log(this.posts.filter(j => this.categoryList.includes(j.locations)))
 				for(let i = 0; i < this.posts.length; i++) {
-					if(typeof(this.posts[i].pure_taxonomies.learn) != undefined) {
-						
 					return this.posts.filter(j => this.categoryList.includes(j.pure_taxonomies.learn[i].name))
-					} else {
-						return;
-					}
-					
 				}
 			}
 		},
@@ -130,7 +123,7 @@ export default {
 	},
 	created() {
 		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=2'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=1'),
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=8'),
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=5')
 		])
