@@ -24,7 +24,7 @@
 				  	<ul id="ck-button">
 						<li v-for="item in learn" v-if="item.count > 0">
 							<label>
-							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item.name" /><span>{{item.name}} = {{ item.count }}</span>
+							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item.name" /><span>{{item.name}}</span>
 							</label>
 						</li>
 					</ul>
