@@ -86,7 +86,7 @@
 				<small v-html="post.meta_box._resource_quote_group"></small>
 		</div>
 		<div class="rec-link" v-if="post.meta_box._resource_links.length > 0">
-			<h3>Recommended Documents &amp; Links</h3>
+			<h3>Recommended Links</h3>
 			<ul class="resource__rec-link__list">
 				<li v-for="link in post.meta_box._resource_links" :key="link['_resource_link_headline']">
 					<h4 v-html="link['_resource_link_headline']"></h4>
@@ -116,16 +116,16 @@
 					<div class="card-content">
 						<div class="content">
 							<router-link :to="'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></router-link>
-							<!-- <p v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></p> -->
+							<p v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></p>
 							<div v-if="related.pure_taxonomies.activity">
 								<b>Do in parks</b>
-								<ul>
+								<ul class="card__activity-list">
 									<li v-for="tax in related.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
 								</ul>
 							</div>
 							<div v-if="related.pure_taxonomies.learn">
 								<b>Know about parks</b>
-								<ul>
+								<ul class="card__learn-list">
 									<li v-for="tax in related.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
 								</ul>
 							</div>
@@ -566,6 +566,45 @@ ul.resource__tips__bullets {
 	color: $orange;
 	font-size: 0.8rem;
 	font-weight: bold;
+}
+
+.content a h4 {
+	color: rgba(30,177,242, 1);
+	font-size: 1.2rem;
+	line-height: 1.8rem;
+	font-weight: 700;
+	// line-height: 1.4;
+	
+	&:hover {
+		color: rgba(30,177,242,0.7);
+	}
+}
+
+.content {
+	p {
+		font-size: 0.8rem;
+		line-height: 1.3rem;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0 0 10px 0;
+		li { 
+			color: rgba(0,0,0,0.5);
+			display: inline;
+			font-weight: 700;
+			&:not(:last-child):after {
+				content: " | ";
+			}
+		}
+	}
+
+	.card__activity-list,
+	.card__learn-list {
+		li {
+			font-family: $family-sanserif;
+			// color: $blue;
+		}
+	}
 }
 
 </style>

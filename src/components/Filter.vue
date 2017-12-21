@@ -88,9 +88,15 @@ export default {
 
 <style lang="scss" scoped>
 
+@import '../styles/variables.scss';
+
 .bg-filter {
 	background-color: #4a4a4a;
 	padding: 40px 0 50px 0;
+	color: $white;
+	h4, h6, p {
+		color: $white;
+	}
 }
 
 .hero {
@@ -106,6 +112,7 @@ export default {
 #ck-button li {
 	font-weight: bold;
 	text-transform: uppercase;
+	font-family: $family-sanserif;
 	& input + span {
 		margin: 10px 10px 5px 0;
     	overflow:auto;

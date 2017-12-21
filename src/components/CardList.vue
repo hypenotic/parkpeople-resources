@@ -17,13 +17,13 @@
 								<p v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></p>
 								<div v-if="post.pure_taxonomies.activity">
 									<b>Do in parks</b>
-									<ul>
+									<ul class="card__activity-list">
 										<li v-for="tax in post.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
 									</ul>
 								</div>
 								<div v-if="post.pure_taxonomies.learn">
 									<b>Know about parks</b>
-									<ul>
+									<ul class="card__learn-list">
 										<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
 									</ul>
 								</div>
@@ -139,15 +139,18 @@ export default {
 
 <style lang="scss" scoped>
 
+@import '../styles/variables.scss';
+
 .section {
 	background-color: #ecebeb;
 }
 
 .content a h4 {
 	color: rgba(30,177,242, 1);
-	font-size: 1.4rem;
+	font-size: 1.2rem;
+	line-height: 1.8rem;
 	font-weight: 700;
-	line-height: 1.4;
+	// line-height: 1.4;
 	&:hover {
 		color: rgba(30,177,242,0.7);
 	}
@@ -172,16 +175,30 @@ img {
 	height: 100%;
 }
 
-ul {
-	list-style-type: none;
-	margin: 0 0 10px 0;
-	li { 
-		color: rgba(0,0,0,0.5);
-		display: inline;
-		font-weight: 700;
-		&:not(:last-child):after {
-			content: " | ";
+.content {
+	p {
+		font-size: 0.8rem;
+		line-height: 1.3rem;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0 0 10px 0;
+		li { 
+			color: rgba(0,0,0,0.5);
+			display: inline;
+			font-weight: 700;
+			&:not(:last-child):after {
+				content: " | ";
+			}
 		}
+	}
+}
+
+.card__activity-list,
+.card__learn-list {
+	li {
+		font-family: $family-sanserif;
+		// color: $blue;
 	}
 }
 
