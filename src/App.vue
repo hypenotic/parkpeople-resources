@@ -3,7 +3,7 @@
     
         <app-header></app-header>
         <transition name="fade">
-            <router-view></router-view>
+            <router-view :key="$route.fullPath"></router-view>
         </transition>
         <app-footer></app-footer>
     </div>
@@ -36,6 +36,10 @@ html, body {
     line-height: 26px;
     font-family: $family-cursive;
     color: $body-color;
+}
+
+a {
+    color: $blue;
 }
 
 p {
@@ -104,8 +108,20 @@ ol.resource__bullets {
 		ul, ol {
 			list-style-type: disc;
 			margin-left: 24px;
-			padding-left: 10px;
+            padding-left: 10px;
+            margin-top: 16px;
+            li:not(:last-child) {
+                margin-bottom: 8px;
+            }
 		}
 	}
+}
+
+.resource__takeaways {
+    h4 {
+        font-size: 1.3rem;
+        line-height: 1.8rem;
+        font-weight: bold;
+    }
 }
 </style>

@@ -5,7 +5,7 @@
 
 	<section style="margin-top: -200px;">
 		<div class="columns">
-			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem 3rem 0;position: relative;margin-bottom: 30px;">
+			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 72px 72px 0;position: relative;margin-bottom: 30px;">
 				<div class="social-share-container">
 					<!-- <p>Share via:</p> -->
 					<div id="social-share-trigger" v-bind:class="{ 'social-menu-open': showSocialShare }" v-on:click="showSocialShare = !showSocialShare">
@@ -34,7 +34,7 @@
 					</div>
 					</social-sharing>
 				</div>
-				<h2 v-html="post.title.rendered"></h2>
+				<h1 v-html="post.title.rendered"></h1>
 				
 				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}</p>
 				<ul class="category">
@@ -60,31 +60,81 @@
 					</li>
 				</ol>
 
-				<h3>Takeaways</h3>
-				<div v-html="post.meta_box._resource_content_takeaway"></div>
-				<h3>Tips and Ideas</h3>
-				<div>
-					<ul>
-						<li v-for="tip in post.meta_box._resource_tips" :key="tip['_resource_tip_headline']">
-							<h4 v-html="tip['_resource_tip_headline']"></h4>
-							<div v-html="tip['_resource_tip_content']"></div>
-						</li>
-					</ul>
+				<div v-if="post.meta_box._resource_content_takeaway != ''" class="resource__takeaways">
+					<h3>Takeaways</h3>
+					<div v-html="post.meta_box._resource_content_takeaway"></div>
 				</div>
+
+				<div v-if="post.meta_box._resource_tips > 0" class="resource__tips">
+					<h3>Tips &amp; Bonus Ideas</h3>
+					<div>
+						<ul class="resource__tips__bullets">
+							<li v-for="tip in post.meta_box._resource_tips" :key="tip['_resource_tip_headline']">
+								<h4 v-html="tip['_resource_tip_headline']"></h4>
+								<div v-html="tip['_resource_tip_content']"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
 			</div>
 		</div>
-		<div class="quote">
+		<div class="quote" v-if="post.meta_box._resource_content_quote != undefined">
 			<h3>Quote</h3>
 				<div v-html="post.meta_box._resource_content_quote"></div>
 				<small v-html="post.meta_box._resource_quote_name"></small>
 				<small v-html="post.meta_box._resource_quote_group"></small>
 		</div>
-		<div class="rec-link">
-			<h3>Recommended Links</h3>
+		<div class="rec-link" v-if="post.meta_box._resource_links.length > 0">
+			<h3>Recommended Documents &amp; Links</h3>
+			<ul class="resource__rec-link__list">
+				<li v-for="link in post.meta_box._resource_links" :key="link['_resource_link_headline']">
+					<h4 v-html="link['_resource_link_headline']"></h4>
+					<p>{{ link['_resource_link_type'] }} | {{ link['_resource_link_author'] }}</p>
+					<a v-if="link['_resource_link_file_upload'] != undefined" class="button button--ghost button--orange" :href="link['_resource_link_file_upload']" target="_blank">Click to download</a>
+					<a v-else class="button button--ghost button--orange" :href="link['_resource_link_url']" target="_blank">Visit Article</a>
+				</li>
+			</ul>
 		</div>
 	</section>
 	<section class="related-resources">
 		<h3>Related Resources</h3>
+		<!-- <ul class="resource__tips__bullets">
+			<li v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
+				<h4 v-html="related.title.rendered"></h4>
+				<div v-html="related.title.rendered"></div>
+			</li>
+		</ul> -->
+		<div class="columns is-multiline">
+			<div class="column is-one-quarter" v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
+				<div class="card">
+					<div class="card-image">
+						<figure class="image is-2by1">
+							<img v-if="related._embedded['wp:featuredmedia'] != undefined" :src="related._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+						</figure>
+					</div>
+					<div class="card-content">
+						<div class="content">
+							<router-link :to="'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></router-link>
+							<!-- <p v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></p> -->
+							<div v-if="related.pure_taxonomies.activity">
+								<b>Do in parks</b>
+								<ul>
+									<li v-for="tax in related.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
+								</ul>
+							</div>
+							<div v-if="related.pure_taxonomies.learn">
+								<b>Know about parks</b>
+								<ul>
+									<li v-for="tax in related.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
+								</ul>
+							</div>
+							<small>{{ related.type | removeHyphen | toTitleCase }}</small>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 </div>
 </template>
@@ -95,13 +145,43 @@ import moment from 'moment';
 export default {
 	data() {
 		return {
+			errors: [],
 			slug: this.$route.params.slug,
 			id: this.$route.params.id,
 			post: [],
 			categories: [],
+			categoryIDs: [],
 			authorName: '',
 			showSocialShare: false,
-			fullPath: this.$route.fullPath
+			fullPath: this.$route.fullPath,
+			relatedPosts: []
+		}
+	},
+	filters: {
+		removeHyphen(value){
+			return value.replace("-", ' ');
+		},
+		capitalizeFirstLetter(value) {
+			return value.charAt(0).toUpperCase() + value.slice(1);
+		},
+		toUppercase(value) {
+			return value.toUpperCase();
+		},
+		readMore(value, length, suffix) {
+			if (value.length < length) {
+				return value;
+			} else {	
+				return value.substring(0, length) + suffix;
+			}
+		},
+		stripHTML(value) {
+			return value.replace(/(<([^>]+)>)/ig,"");
+		},
+		toTitleCase(value)
+			{
+    		return value.replace(/\w\S*/g, (txt) => {
+				return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+			});
 		}
 	},
 	methods: {
@@ -122,7 +202,17 @@ export default {
 			const tax2 = this.post.pure_taxonomies.learn
 
 			// Let's concat
-			const taxAll = tax1.concat(tax2)
+			let taxAll = [];
+			// const taxAll = tax1.concat(tax2)
+			if(typeof(tax1) != 'undefined'){
+				taxAll = tax1.concat(tax2);
+			} else if(typeof(tax2) != 'undefined') {
+				taxAll = tax2.concat(tax1);
+			} else {
+				return;
+			}
+
+			// console.log(IDString);
 			
 			// Let's loop, skip over undefined and push
 			for(let i = 0; i < taxAll.length; i++) {
@@ -131,6 +221,70 @@ export default {
 				}
 			}
 
+			// Let's get the categories IDs
+			let taxID1 = this.post.activity
+			let taxID2 = this.post.learn
+
+			let stringID1 = "0"
+			if (taxID1.length > 0) {
+				stringID1 = taxID1.join(',')
+			}
+
+			let stringID2 = "0"
+			if (taxID2.length > 0) {
+				stringID2 = taxID2.join(',')
+			}
+			
+			console.log(stringID1, stringID2)
+
+			// Let's make a call to get related posts
+			axios.all([
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2)
+			])
+			.then(axios.spread((response, response1, response2, response3, response4, response5) => {
+				
+				function removeDuplicates(myArr, prop) {
+					return myArr.filter((obj, pos, arr) => {
+						return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+					});
+				}
+
+				let allPosts  = response.data.concat(response1.data, response2.data, response3.data, response4.data, response5.data)
+
+				let noDups = removeDuplicates(allPosts, 'id')
+
+				noDups.sort(function(a,b){
+					return new Date(b.date) - new Date(a.date)
+				})	
+				
+				this.relatedPosts = noDups
+
+			}))
+			.catch(error => {
+				if (error.response) {
+				// The request was made and the server responded with a status code
+				// that falls out of the range of 2xx
+				console.log('219', error.response.data);
+				console.log('219', error.response.status);
+				console.log('219', error.response.headers);
+				} else if (error.request) {
+				// The request was made but no response was received
+				// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+				// http.ClientRequest in node.js
+				console.log('219', error.request);
+				} else {
+				// Something happened in setting up the request that triggered an Error
+				console.log('Error 219', error.message);
+				}
+				console.log('219', error.config);
+			})
+
+
 			// Let's make another API call to get author data by ID
 			const authorID = response.data.author
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/users/' + authorID) 
@@ -138,12 +292,42 @@ export default {
 				//console.log(response.data)
 				this.authorName = response.data.name
 			})
-			.catch(e => {
-				this.errors.push(e)
+			.catch(error => {
+				if (error.response) {
+				// The request was made and the server responded with a status code
+				// that falls out of the range of 2xx
+				console.log('246', error.response.data);
+				console.log('246', error.response.status);
+				console.log('246', error.response.headers);
+				} else if (error.request) {
+				// The request was made but no response was received
+				// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+				// http.ClientRequest in node.js
+				console.log('246', error.request);
+				} else {
+				// Something happened in setting up the request that triggered an Error
+				console.log('Error 246', error.message);
+				}
+				console.log('246', error.config);
 			})
 		})
-		.catch(e => {
-			this.errors.push(e)
+		.catch(error => {
+			if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			console.log('265', error.response.data);
+			console.log('265', error.response.status);
+			console.log('265', error.response.headers);
+			} else if (error.request) {
+			// The request was made but no response was received
+			// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+			// http.ClientRequest in node.js
+			console.log('265', error.request);
+			} else {
+			// Something happened in setting up the request that triggered an Error
+			console.log('Error 265', error.message);
+			}
+			console.log('265', error.config);
 		})
 	},
 };
@@ -152,6 +336,13 @@ export default {
 <style lang="scss">
 
 @import '../styles/variables.scss';
+
+h1 {
+	font-size: 40px;
+	line-height: 50px;
+	margin-bottom: 24px;
+	font-weight: bold;
+}
 
 img.heading {
 	position: relative;
@@ -216,7 +407,8 @@ ul.category {
 	}
 }
 
-ol.resource__bullets {
+ol.resource__bullets,
+ul.resource__tips__bullets {
 	list-style: none;
 	margin-top: 50px;
 	>li {
@@ -234,15 +426,15 @@ ol.resource__bullets {
 		}
 	}
 	>li:not(:last-child) {
-		border-bottom: 2px dashed orange;
+		border-bottom: 2px dashed $orange;
 	}
 	>li:before {
 		margin-right: 10px;
 		content: counter(item);
 		background: white;
 		border-radius: 100%;
-		border: 2px solid orange;
-		color: orange;
+		border: 2px solid $orange;
+		color: $orange;
 		width: 50px;
 		height: 50px;
 		font-family: serif;
@@ -256,6 +448,10 @@ ol.resource__bullets {
 		top: 0;
 		left: 0px;
 	}
+}
+
+ul.resource__tips__bullets {
+	margin-top: 0;
 }
 
 .social-share-container {
@@ -341,6 +537,35 @@ ol.resource__bullets {
 		top: 70px;
 		left: -40px;
 	}
+}
+
+.resource__takeaways,
+.resource__tips {
+	padding: 32px 0;
+}
+
+.resource__rec-link__list {
+	@media #{$large-and-up} {
+        display: flex;
+		justify-content: center;
+		>li {
+			width: 30%;
+			margin: 0 1%;
+		}
+	}
+	h4 {
+		font-size: 32px;
+		font-weight: bold;
+	}
+}
+
+.button.button--ghost.button--orange {
+	border: 2px solid $orange;
+	border-radius: 50px;
+	padding: 1.2rem 1rem;
+	color: $orange;
+	font-size: 0.8rem;
+	font-weight: bold;
 }
 
 </style>
