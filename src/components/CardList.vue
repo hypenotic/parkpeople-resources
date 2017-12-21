@@ -112,9 +112,6 @@ export default {
 			}
 			return categories;
 		},
-		fetchData() {
-            this.posts = posts
-        }
 	},
 	mounted() {
 		eventBus.$on('checked', checkedCategories => {
@@ -132,7 +129,6 @@ export default {
 			let allPosts  = response.data.concat(response1.data, response2.data);
 			//console.log(allPosts)
 			this.posts = allPosts
-			this.fetchData();
 		}))
 		.catch(e => {
 			this.errors.push(e)
