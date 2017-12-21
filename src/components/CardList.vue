@@ -79,38 +79,43 @@ export default {
 	},
 	computed:{
         filteredList(){
-        	if (!this.categoryList.length)
-            return this.posts
-          	return this.posts.filter(j => this.categoryList.includes(j.location))
-		}
+        	if (!this.categoryList.length) {
+				return this.posts
+			} else {
+			//console.log(this.posts.filter(j => this.categoryList.includes(j.locations)))
+				for(let i = 0; i < this.posts.length; i++) {
+					return this.posts.filter(j => this.categoryList.includes(j.pure_taxonomies.learn[i].name))
+				}
+			}
+		},
     },
 	methods: {
-		// getDataAtt(post) {
-		// 	/* 
-		// 	getDataAtt() loops through category names of a loaded post and pushes them to a new array. 
-		// 	The categories are used in the data-category attribute for filtering.
-		// 	*/
-		// 	const categories = [];
-		// 	let allCats = [];
-		// 	let cat1 = post.pure_taxonomies.activity;
-		// 	let cat2 = post.pure_taxonomies.learn;
-		// 	let i;
+		getDataAtt(post) {
+			/* 
+			getDataAtt() loops through category names of a loaded post and pushes them to a new array. 
+			The categories are used in the data-category attribute for filtering.
+			*/
+			const categories = [];
+			let allCats = [];
+			let cat1 = post.pure_taxonomies.activity;
+			let cat2 = post.pure_taxonomies.learn;
+			let i;
 			
-		// 	if(typeof(cat1) != 'undefined'){
-		// 		allCats = cat1.concat(cat2);
-		// 	} else if(typeof(cat2) != 'undefined') {
-		// 		allCats = cat2.concat(cat1);
-		// 	} else {
-		// 		return;
-		// 	}
+			if(typeof(cat1) != 'undefined'){
+				allCats = cat1.concat(cat2);
+			} else if(typeof(cat2) != 'undefined') {
+				allCats = cat2.concat(cat1);
+			} else {
+				return;
+			}
 
-		// 	for(i = 0; i < allCats.length; i++) {
-		// 		if (typeof(allCats[i]) != 'undefined') {
-		// 			categories.push(allCats[i].name)
-		// 		}
-		// 	}
-		// 	return categories;
-		// },
+			for(i = 0; i < allCats.length; i++) {
+				if (typeof(allCats[i]) != 'undefined') {
+					categories.push(allCats[i].name)
+				}
+			}
+			return categories;
+		},
 		fetchData() {
             this.posts = posts
         }
@@ -122,9 +127,9 @@ export default {
 	},
 	created() {
 		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=1'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=8'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=5')
 		])
 		.then(axios.spread((response, response1, response2) => {
 			
