@@ -38,7 +38,7 @@
 				
 				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}</p>
 				<ul class="category">
-					<li v-for="category in categories">{{ category }}</li>
+					<li v-for="category in categories">{{ category }} {{lang}}</li>
 				</ul>
 				<p v-html="post.excerpt.rendered" style="margin: 0;"></p>
 			</div>
@@ -154,7 +154,8 @@ export default {
 			authorName: '',
 			showSocialShare: false,
 			fullPath: this.$route.fullPath,
-			relatedPosts: []
+			relatedPosts: [],
+			lang: ''
 		}
 	},
 	filters: {
@@ -187,7 +188,7 @@ export default {
 	methods: {
 		moment: () => {
 			return moment();
-		}
+		},
 	},
 	created() {
 		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + this.id + '?_embed')
@@ -211,8 +212,6 @@ export default {
 			} else {
 				return;
 			}
-
-			// console.log(IDString);
 			
 			// Let's loop, skip over undefined and push
 			for(let i = 0; i < taxAll.length; i++) {
@@ -220,6 +219,9 @@ export default {
 					this.categories.push(taxAll[i].name)
 				}
 			}
+
+			// Let's get the WPML Lang id
+			this.lang = this.post.wpml_translations[0].id
 
 			// Let's get the categories IDs
 			let taxID1 = this.post.activity

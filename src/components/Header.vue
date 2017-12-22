@@ -6,6 +6,8 @@
         <div class="lang">
             <router-link to="" class="lang">EN</router-link>
             <router-link to="" class="lang">FR</router-link>
+
+            {{ lang }}
         </div>
 
         <div id="navbarExampleTransparentExample" class="navbar-menu">
@@ -17,10 +19,12 @@
 </template>
 
 <script>
+import { eventBus } from '../main.js';
 export default {
     data() {
         return {
             id: this.$route.params.id,
+            lang: ''
         }
     },
 };
