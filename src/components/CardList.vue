@@ -81,7 +81,7 @@ export default {
         	if (!this.categoryList.length) {
 				return this.posts
 			} else {
-				let searchMatches = [];
+				let filterMatches = [];
 				for(let i = 0; i < this.posts.length; i++) {
 
 					// === SOLUTION WITH NEW API PROPERTY ===
@@ -102,7 +102,7 @@ export default {
 					// console.log(i,test,combined,this.categoryList)
 
 					// if (test == true) {
-					// 	final.push(this.posts[i])
+					// 	filterMatches.push(this.posts[i])
 					// }
 
 					// === SOLUTION WITH NO NEW API PROPERTY ===
@@ -131,11 +131,11 @@ export default {
 					console.log(i,test,combined,this.categoryList)
 
 					if (test == true) {
-						final.push(this.posts[i])
+						filterMatches.push(this.posts[i])
 					}
 					
 				}
-				return searchMatches
+				return filterMatches
 			}
 		},
     },
