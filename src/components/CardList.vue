@@ -2,6 +2,8 @@
 <div>
 	<section class="section">
 		<div class="container">
+
+			<span>Checked locations: {{ categoryList }}</span>
 			<div class="columns is-multiline">
   				<div class="column is-one-quarter" v-for="(post,index) in filteredList" :key='index'>
     				<!-- <div class="card" :data-category="getDataAtt(post)"> -->
@@ -47,7 +49,7 @@ export default {
 		return {
 			posts: [],
 			errors: [],
-			categoryList: [],
+			categoryList: []
 		};
 	},
 	filters: {
@@ -79,9 +81,61 @@ export default {
         	if (!this.categoryList.length) {
 				return this.posts
 			} else {
+				let searchMatches = [];
 				for(let i = 0; i < this.posts.length; i++) {
-					return this.posts.filter(j => this.categoryList.includes(j.pure_taxonomies.learn[i].name))
+
+					// === SOLUTION WITH NEW API PROPERTY ===
+					// let combined = [];
+
+					// for(let p = 0; p < this.posts[i].allTax.length; p++) {
+					// 	combined.push(this.posts[i].allTax[p]['name']);
+					// }
+
+					// var findOne = function (haystack, arr) {
+					// 	return arr.some(function (v) {
+					// 		return haystack.indexOf(v) >= 0;
+					// 	});
+					// }
+
+					// var test = findOne(combined,this.categoryList)
+
+					// console.log(i,test,combined,this.categoryList)
+
+					// if (test == true) {
+					// 	final.push(this.posts[i])
+					// }
+
+					// === SOLUTION WITH NO NEW API PROPERTY ===
+					let combined = [];
+
+					if (this.posts[i].pure_taxonomies.hasOwnProperty("learn")) {
+						for(let p = 0; p < this.posts[i].pure_taxonomies.learn.length; p++) {
+							combined.push(this.posts[i].pure_taxonomies.learn[p]['name']);
+						}
+					}
+
+					if (this.posts[i].pure_taxonomies.hasOwnProperty("activity")) {
+						for(let p = 0; p < this.posts[i].pure_taxonomies.activity.length; p++) {
+							combined.push(this.posts[i].pure_taxonomies.activity[p]['name']);
+						}
+					}
+
+					var findOne = function (haystack, arr) {
+						return arr.some(function (v) {
+							return haystack.indexOf(v) >= 0;
+						});
+					}
+
+					var test = findOne(combined,this.categoryList)
+
+					console.log(i,test,combined,this.categoryList)
+
+					if (test == true) {
+						final.push(this.posts[i])
+					}
+					
 				}
+				return searchMatches
 			}
 		},
     },
@@ -120,9 +174,9 @@ export default {
 	},
 	created() {
 		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=1'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=8'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=5')
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
 		])
 		.then(axios.spread((response, response1, response2) => {
 			
