@@ -199,6 +199,7 @@ img {
 	li {
 		font-family: $family-sanserif;
 		// color: $blue;
+		display: inline-block;
 	}
 }
 

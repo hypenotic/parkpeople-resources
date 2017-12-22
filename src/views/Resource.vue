@@ -40,7 +40,7 @@
 				<ul class="category">
 					<li v-for="category in categories">{{ category }} {{lang}}</li>
 				</ul>
-				<p v-html="post.excerpt.rendered" style="margin: 0;"></p>
+				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 			</div>
 		</div>
 	</section>

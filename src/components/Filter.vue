@@ -8,8 +8,8 @@
 			</div>
 			<div class="columns">
 			  	<div class="column is-6">
-					<h6>Doing things in Parks</h6>
-					<p>Lessons, inspiration and practical guides, oh my!</p>
+					<h6>Things you can do in parks</h6>
+					<p>Events and activities to do in your park</p>
 				  	<ul id="ck-button">
 						<li v-for="item in activity">
 							<label>
@@ -19,8 +19,8 @@
 					</ul>
 				</div>
 				<div class="column is-6">
-					<h6>Know about Parks</h6>
-					<p>Reports, case studies, analysis and adminstrative principles</p>
+					<h6>Things to know about parks and park groups</h6>
+					<p>Research and practical tools to guide your work in parks</p>
 				  	<ul id="ck-button">
 						<li v-for="item in learn" v-if="item.count > 0">
 							<label>

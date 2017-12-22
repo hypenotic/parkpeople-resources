@@ -24,12 +24,13 @@
 
 // Import Bulma's core
 @import "~bulma/sass/utilities/_all";
-@import url('https://fonts.googleapis.com/css?family=Dosis|Comfortaa');
+@import url('https://fonts.googleapis.com/css?family=Dosis|Comfortaa|Merriweather');
 // Import Variables
 @import './styles/variables.scss';
 
 $family-cursive: "Comfortaa", cursive;
 $family-sanserif: "Dosis", sans-serif;
+$serif: "Merriweather", serif;
 
 html, body {
     font-size: 18px;
@@ -122,6 +123,50 @@ ol.resource__bullets {
         font-size: 1.3rem;
         line-height: 1.8rem;
         font-weight: bold;
+    }
+}
+
+.resource__excerpt p {
+	font-size: 1.2rem;
+	line-height: 1.8rem;
+}
+
+.case-study__context {
+    blockquote{
+        padding-left: 40px;
+        padding-right: 15%;
+        p {
+            font-family: $serif;
+            color: $green;
+            font-size: 1.3rem;
+            line-height: 1.8rem;
+            font-style: italic;
+        }
+    }
+}
+
+.quote {
+    max-width: 75%;
+    margin: 0 auto;
+    cite {
+        display: block;
+        text-align: right;
+        margin-top: 8px;
+    }
+}
+
+.full-width-quote {
+    font-family: $serif;
+    color: $green;
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    font-style: italic;
+    position: relative;
+    &:after {
+        content: '“';
+        position: absolute;
+        top: 0;
+        left: -20px;
     }
 }
 </style>
