@@ -2,8 +2,6 @@
 <div>
 	<section class="section">
 		<div class="container">
-
-			<span>Checked locations: {{ categoryList }}</span>
 			<div class="columns is-multiline">
   				<div class="column is-one-quarter" v-for="(post,index) in filteredList" :key='index'>
     				<!-- <div class="card" :data-category="getDataAtt(post)"> -->
