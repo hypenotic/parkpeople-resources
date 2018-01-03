@@ -19,5 +19,5 @@ export const routes = [
 	{ path:'/case-study/:id/:slug', component: CaseStudy, props: true },
 	{ path:'/research/:id/:slug', component: Research, props: true },
 	{ path:'/resource/:id/:slug', component: Resource, props: true },
-	{ path:'/grants/', component: Grants, props: true }
+	{ path:'/grants', component: Grants, props: true }
 ]
