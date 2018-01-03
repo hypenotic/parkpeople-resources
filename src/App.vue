@@ -1,5 +1,5 @@
 <template>
-             <div>
+    <div>
     
         <app-header></app-header>
         <transition name="fade">

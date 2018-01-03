@@ -85,35 +85,7 @@ export default {
 			} else {
 				let filterMatches = [];
 				for(let i = 0; i < this.posts.length; i++) {
-					// NOTE – we're going to need to order these by date
-						// order filterMatches before final return
-						// LIKE THIS:
-						// sortByDate.sort(function(a,b){
-						// 	return new Date(b.date) - new Date(a.date)
-						// })	
-						// filterMatches = sortByDate
-					// === SOLUTION WITH NEW API PROPERTY ===
-					// let combined = [];
-
-					// for(let p = 0; p < this.posts[i].allTax.length; p++) {
-					// 	combined.push(this.posts[i].allTax[p]['name']);
-					// }
-
-					// var findOne = function (haystack, arr) {
-					// 	return arr.some(function (v) {
-					// 		return haystack.indexOf(v) >= 0;
-					// 	});
-					// }
-
-					// var test = findOne(combined,this.categoryList)
-
-					// console.log(i,test,combined,this.categoryList)
-
-					// if (test == true) {
-					// 	filterMatches.push(this.posts[i])
-					// }
-
-					// === SOLUTION WITH NO NEW API PROPERTY ===
+			
 					let combined = [];
 
 					if (this.posts[i].pure_taxonomies.hasOwnProperty("learn")) {

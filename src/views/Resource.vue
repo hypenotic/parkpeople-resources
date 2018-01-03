@@ -221,7 +221,7 @@ export default {
 			}
 
 			// Let's get the WPML Lang id
-			this.lang = this.post.wpml_translations[0].id
+			// this.lang = this.post.wpml_translations[0].id
 
 			// Let's get the categories IDs
 			let taxID1 = this.post.activity
