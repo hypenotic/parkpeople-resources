@@ -1,4 +1,5 @@
 import Vue from 'vue'
+// import Vuex from 'vuex'
 import App from './App.vue'
 // After install add Vue Router to our main app
 import VueRouter from 'vue-router'
@@ -12,6 +13,7 @@ export const eventBus = new Vue();
 // Use
 Vue.use(Buefy);
 Vue.use(SocialSharing);
+// Vue.use(Vuex);
 
 /* With the Vue Router imported 
 we can then tell the app to use it */

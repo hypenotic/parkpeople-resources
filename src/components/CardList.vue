@@ -77,7 +77,11 @@ export default {
 	computed:{
         filteredList(){
         	if (!this.categoryList.length) {
-				return this.posts
+				let postsList = this.posts;
+				let byDate = postsList.sort(function(a,b){
+					return new Date(b.date) - new Date(a.date)
+				})	
+				return byDate
 			} else {
 				let filterMatches = [];
 				for(let i = 0; i < this.posts.length; i++) {
@@ -132,13 +136,16 @@ export default {
 
 					var test = findOne(combined,this.categoryList)
 
-					console.log(i,test,combined,this.categoryList)
+					// console.log(i,test,combined,this.categoryList)
 
 					if (test == true) {
 						filterMatches.push(this.posts[i])
 					}
 					
 				}
+				filterMatches.sort(function(a,b){
+					return new Date(b.date) - new Date(a.date)
+				})	
 				return filterMatches
 			}
 		},

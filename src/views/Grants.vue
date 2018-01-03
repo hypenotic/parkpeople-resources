@@ -1,4 +1,4 @@
-<template v-if="data && data.hasOwnProperty('content')">
+<template v-if="data && data.hasOwnProperty('meta_box')">
 <div>
 	<section class="section">
 		<div class="container">
@@ -42,6 +42,7 @@
 	<section class="grants-newsletter">
 		<div class="container">
 			<p>Receive Park People's Newsletter to stay up to date on the TD Park People Grants:</p>
+			<div></div>
 		</div>
 	</section>
 	<section class="grant-sponsors">
@@ -137,25 +138,21 @@ export default {
 
 	},
 	created() {
-		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/pages/630?_embed')
-		])
-		.then(axios.spread((response) => {
+		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/pages/630?_embed')
+		.then(response => {
 			
             console.log(response.data)
 			this.data = response.data
-			axios.all([
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource?_embed&per_page=4')
-			])
-			.then(axios.spread((response) => {
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource?_embed&per_page=4')
+			.then(response => {
 				
 				console.log(response.data)
 				this.relatedPosts = response.data
-			}))
+			})
 			.catch(e => {
 				this.errors.push(e)
 			})
-		}))
+		})
 		.catch(e => {
 			this.errors.push(e)
 		})
@@ -327,6 +324,11 @@ img {
 	}
 }
 
+.more-info {
+	position: relative;
+	z-index: 500;
+}
+
 .grants-newsletter {
 	text-align: center;
 	font-size: 0.8rem;
@@ -374,6 +376,13 @@ img {
 		color: $green;
 		font-size: 40px;
 	}
+	a {
+        border-bottom: 1px solid $blue;
+        &:hover {
+            color: $blue;
+            font-weight: bold;
+        }
+    }
 }
 
 .related-resources-copy {
@@ -417,8 +426,8 @@ img {
 		left: 0;
 		top: 0%;
 		z-index: 10;
-		-webkit-animation: slide 40s linear infinite;
-		animation: slide 40s linear infinite;
+		-webkit-animation: slide 40s linear infinite alternate;
+		animation: slide 40s linear infinite alternate;
 
 		@media #{$xlarge-and-up} {
 			// width: 1000px;
@@ -448,9 +457,6 @@ img {
 			height: 50px;
 			top: 200px;
 			left: -120px;
-			-moz-transform: scaleX(-1);
-			-o-transform: scaleX(-1);
-			-webkit-transform: scaleX(-1);
 		}
 	}
 }

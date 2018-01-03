@@ -179,6 +179,23 @@ ol.resource__bullets {
         font-size: 1.2rem;
         line-height: 1.5;
     }
+    a {
+        border-bottom: 1px solid $blue;
+        &:hover {
+            color: $blue;
+            font-weight: bold;
+        }
+    }
+}
+
+.eligibility {
+    a {
+        border-bottom: 1px solid $blue;
+        &:hover {
+            color: $blue;
+            font-weight: bold;
+        }
+    }
 }
 
 
@@ -187,6 +204,13 @@ ol.resource__bullets {
     p {
 		font-size: 0.8rem;
 		line-height: 1.5;
-	}
+    }
+    a {
+        border-bottom: 1px solid $blue;
+        &:hover {
+            color: $blue;
+            font-weight: bold;
+        }
+    }
 }
 </style>
