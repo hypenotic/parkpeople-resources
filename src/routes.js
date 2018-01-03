@@ -5,6 +5,7 @@ import Home from './views/Home.vue';
 import CaseStudy from './views/CaseStudy.vue';
 import Research from './views/Research.vue';
 import Resource from './views/Resource.vue';
+import Grants from './views/Grants.vue';
 
 /* export a const names routes with will 
 hold my routes. Holding routes means it has 
@@ -18,4 +19,5 @@ export const routes = [
 	{ path:'/case-study/:id/:slug', component: CaseStudy, props: true },
 	{ path:'/research/:id/:slug', component: Research, props: true },
 	{ path:'/resource/:id/:slug', component: Resource, props: true },
+	{ path:'/grants/', component: Grants, props: true }
 ]

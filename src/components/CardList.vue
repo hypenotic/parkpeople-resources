@@ -81,7 +81,13 @@ export default {
 			} else {
 				let filterMatches = [];
 				for(let i = 0; i < this.posts.length; i++) {
-
+					// NOTE – we're going to need to order these by date
+						// order filterMatches before final return
+						// LIKE THIS:
+						// sortByDate.sort(function(a,b){
+						// 	return new Date(b.date) - new Date(a.date)
+						// })	
+						// filterMatches = sortByDate
 					// === SOLUTION WITH NEW API PROPERTY ===
 					// let combined = [];
 

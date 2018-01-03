@@ -24,7 +24,7 @@
 
 // Import Bulma's core
 @import "~bulma/sass/utilities/_all";
-@import url('https://fonts.googleapis.com/css?family=Dosis|Comfortaa|Merriweather');
+@import url('https://fonts.googleapis.com/css?family=Dosis:400,700,800|Comfortaa|Merriweather');
 // Import Variables
 @import './styles/variables.scss';
 
@@ -168,5 +168,25 @@ ol.resource__bullets {
         top: 0;
         left: -20px;
     }
+}
+
+// Grants
+
+.topContent {
+    margin: 32px 0;
+    font-size: 1.2rem;
+    p {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+}
+
+
+.more-info {
+    text-align: center;
+    p {
+		font-size: 0.8rem;
+		line-height: 1.5;
+	}
 }
 </style>
