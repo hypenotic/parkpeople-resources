@@ -57,31 +57,33 @@
 		<h3 v-html="data.meta_box._page_grant_resource_heading"></h3>
 		<div class="related-resources-copy" v-html="data.meta_box._page_grant_resource_copy"></div>
 		<div class="related-resources-copy"><strong><a href="http://parkpeople.hypenotic.com/">Browse our resource section.</a></strong></div>
-		<div class="columns is-multiline">
-			<div class="column is-one-quarter" v-for="related in relatedPosts" :key="related.title.rendered">
-				<div class="card">
-					<div class="card-image">
-						<figure class="image is-2by1">
-							<img v-if="related._embedded['wp:featuredmedia'] != undefined" :src="related._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
-						</figure>
-					</div>
-					<div class="card-content">
-						<div class="content">
-							<router-link :to="'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></router-link>
-							<p v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></p>
-							<div v-if="related.pure_taxonomies.activity">
-								<b>Do in parks</b>
-								<ul class="card__activity-list">
-									<li v-for="tax in related.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
-								</ul>
+		<div class="wide-container">
+			<div class="columns is-multiline">
+				<div class="column is-one-quarter" v-for="related in relatedPosts" :key="related.title.rendered">
+					<div class="card">
+						<div class="card-image">
+							<figure class="image is-2by1">
+								<img v-if="related._embedded['wp:featuredmedia'] != undefined" :src="related._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+							</figure>
+						</div>
+						<div class="card-content">
+							<div class="content">
+								<router-link :to="'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></router-link>
+								<p v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></p>
+								<div v-if="related.pure_taxonomies.activity">
+									<b>Do in parks</b>
+									<ul class="card__activity-list">
+										<li v-for="tax in related.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
+									</ul>
+								</div>
+								<div v-if="related.pure_taxonomies.learn">
+									<b>Know about parks</b>
+									<ul class="card__learn-list">
+										<li v-for="tax in related.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
+									</ul>
+								</div>
+								<small>{{ related.type | removeHyphen | toTitleCase }}</small>
 							</div>
-							<div v-if="related.pure_taxonomies.learn">
-								<b>Know about parks</b>
-								<ul class="card__learn-list">
-									<li v-for="tax in related.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
-								</ul>
-							</div>
-							<small>{{ related.type | removeHyphen | toTitleCase }}</small>
 						</div>
 					</div>
 				</div>
@@ -176,6 +178,11 @@ h1 {
 
 .container {
     max-width: 800px;
+    margin: 0 auto;
+}
+
+.wide-container {
+    max-width: 1080px;
     margin: 0 auto;
 }
 
@@ -395,6 +402,11 @@ img {
 		left: 0;
 		top: -15%;
 		z-index: 20;
+		@media #{$xlarge-and-up} {
+			width: 1300px;
+			left: 23%;
+			// right: 50%;
+		}
 	}
 	.clouds {
 		position: absolute;
@@ -407,6 +419,11 @@ img {
 		z-index: 10;
 		-webkit-animation: slide 40s linear infinite;
 		animation: slide 40s linear infinite;
+
+		@media #{$xlarge-and-up} {
+			// width: 1000px;
+			background-size: contain;
+		}
 	}
 }
 
@@ -422,6 +439,19 @@ img {
 		-moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
+	}
+	@media #{$xlarge-and-up} {
+        &:before {
+			content: url('https://parkpeople.ca/listings/custom/uploads/2018/01/birdflying_pp_small.gif');
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			top: 200px;
+			left: -120px;
+			-moz-transform: scaleX(-1);
+			-o-transform: scaleX(-1);
+			-webkit-transform: scaleX(-1);
+		}
 	}
 }
 </style>
