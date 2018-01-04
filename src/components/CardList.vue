@@ -14,15 +14,15 @@
   						<div class="card-content">
 							<div class="content">
 								<router-link :to="post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
-								<p v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></p>
-								<div v-if="post.pure_taxonomies.activity">
-									<b>Do in parks</b>
+								<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
+								<div v-if="post.pure_taxonomies.activity" class="activity-list-container">
+									<b>Do in parks:</b>
 									<ul class="card__activity-list">
 										<li v-for="tax in post.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
 									</ul>
 								</div>
-								<div v-if="post.pure_taxonomies.learn">
-									<b>Know about parks</b>
+								<div v-if="post.pure_taxonomies.learn" class="activity-list-container">
+									<b>Know about parks:</b>
 									<ul class="card__learn-list">
 										<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
 									</ul>

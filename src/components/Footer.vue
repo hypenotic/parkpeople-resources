@@ -1,6 +1,6 @@
 <template>
-    <div>   
-        <app-form></app-form>
+    <div>  
+        <app-form v-if="['/grants'].indexOf(this.$route.path) == -1"></app-form>
         <footer>
             <div class="columns">
                 <div class="column is-6" style="background-color: white;">
@@ -15,7 +15,6 @@
                 <div class="column is-6" style="background-color: green; color: white; padding: 40px;">
                     <div class="columns">
                         <div class="column is-6">
-                            
                             <ul>
                                 <li>Park People</li>
                                 <li>401 Richmond Street West</li>

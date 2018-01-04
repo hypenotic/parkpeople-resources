@@ -17,7 +17,7 @@
 					<h2>Eligibility</h2>
 					<ul>
 						<li v-for="point in data.meta_box._page_eligibility" :key="point['_page_eligibility_copy']">
-							<img src="http://via.placeholder.com/40x40" alt="">
+							<img :src="point['_page_eligibility_img']" alt="">
 							<span v-html="point['_page_eligibility_copy']"></span>
 						</li>
 					</ul>
@@ -72,15 +72,15 @@
 						<div class="card-content">
 							<div class="content">
 								<router-link :to="'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></router-link>
-								<p v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></p>
-								<div v-if="related.pure_taxonomies.activity">
-									<b>Do in parks</b>
+								<div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div>
+								<div v-if="related.pure_taxonomies.activity" class="activity-list-container">
+									<b>Do in parks:</b>
 									<ul class="card__activity-list">
 										<li v-for="tax in related.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
 									</ul>
 								</div>
-								<div v-if="related.pure_taxonomies.learn">
-									<b>Know about parks</b>
+								<div v-if="related.pure_taxonomies.learn" class="activity-list-container">
+									<b>Know about parks:</b>
 									<ul class="card__learn-list">
 										<li v-for="tax in related.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
 									</ul>
@@ -99,10 +99,10 @@
 
 <script>
 import axios from 'axios';
-import Mailchimp from '../components/Mailchimp.vue';
+import NewsletterForm from '../components/NewsletterForm.vue';
 export default {
 	components: {
-        appForm: Mailchimp
+        appForm: NewsletterForm
     },
 	data() {
 		return {
@@ -176,7 +176,9 @@ export default {
 
 h1 {
     color: $orange;
-    font-size: 56px;
+	font-size: 56px;
+	line-height: 1.2;
+	font-weight: 700;
 }
 
 .container {
@@ -185,7 +187,7 @@ h1 {
 }
 
 .wide-container {
-    max-width: 1080px;
+    max-width: 1160px;
     margin: 0 auto;
 }
 
@@ -265,6 +267,8 @@ img {
 		line-height: 1.5;
 		img {
 			margin-right: 16px;
+			max-height: 40px;
+			width: auto;
 		}
 	}
 }
@@ -346,6 +350,7 @@ img {
 }
 
 .grant-sponsors {
+	padding-top: 100px;
 	text-align: center;
 	font-size: 0.8rem;
 	line-height: 1.5;
@@ -419,7 +424,7 @@ img {
 		z-index: 20;
 		@media #{$xlarge-and-up} {
 			width: 1300px;
-			left: 23%;
+			left: 24%;
 			// right: 50%;
 		}
 	}
