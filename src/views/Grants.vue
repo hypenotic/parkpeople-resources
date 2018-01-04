@@ -42,7 +42,9 @@
 	<section class="grants-newsletter">
 		<div class="container">
 			<p>Receive Park People's Newsletter to stay up to date on the TD Park People Grants:</p>
-			<div></div>
+			<div>
+				<app-form></app-form>
+			</div>
 		</div>
 	</section>
 	<section class="grant-sponsors">
@@ -97,7 +99,11 @@
 
 <script>
 import axios from 'axios';
+import Mailchimp from '../components/Mailchimp.vue';
 export default {
+	components: {
+        appForm: Mailchimp
+    },
 	data() {
 		return {
 			data: {},
