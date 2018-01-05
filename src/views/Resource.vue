@@ -68,7 +68,7 @@
 
 				<ol class="resource__bullets">
 					<li v-for="item in post.meta_box._resource_list" :key="item['_resource_list_headline']">
-						<h2>{{ item['_resource_list_headline'] }}</h2>
+						<h2 class="resource__bullets__header">{{ item['_resource_list_headline'] }}</h2>
 						<div class="resource__bullets__content" v-html="item['_resource_list_content']"></div>
 					</li>
 				</ol>
@@ -626,6 +626,13 @@ ul.resource__tips__bullets {
 	}
 }
 
+.resource__bullets__header {
+	font-size: 1.5rem;
+	line-height: 1.2;
+	font-weight: bold;
+	padding-top: 0.5rem;
+}
+
 .resource__bullets__content,
 .resource__takeaways__content,
 .resource__content__copy {
@@ -647,17 +654,30 @@ ul.resource__tips__bullets {
 		font-size: 2rem;
 		line-height:1.5;
 	}
+	// h4 {
+	// 	font-size: 1.8rem !important;
+	// 	line-height:1.5 !important;
+	// 	padding-top: 0 !important;
+	// }
+	// h5 {
+	// 	font-size: 1.5rem;
+	// 	line-height:1.5;
+	// }
+	// h6 {
+	// 	font-size: 1.2rem;
+	// 	line-height:1.5;
+	// }
 	h4 {
-		font-size: 1.8rem !important;
+		font-size: 1.3rem !important;
 		line-height:1.5 !important;
 		padding-top: 0 !important;
 	}
 	h5 {
-		font-size: 1.5rem;
+		font-size: 1.2rem;
 		line-height:1.5;
 	}
 	h6 {
-		font-size: 1.2rem;
+		font-size: 1.1rem;
 		line-height:1.5;
 	}
 }

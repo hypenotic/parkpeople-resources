@@ -93,7 +93,7 @@
 			</div>
 		</div>
 	</section>
-	<div class="skewed-bg"></div>
+	<!-- <div class="skewed-bg"></div> -->
 </div>
 </template>
 
@@ -382,7 +382,9 @@ img {
 
 .related-resources {
 	padding: 50px;
+	padding-bottom: 150px;
 	margin-top: 50px;
+	margin-bottom: 300px;
 	h3 {
 		color: $green;
 		font-size: 40px;
