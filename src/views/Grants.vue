@@ -43,7 +43,7 @@
 		<div class="container">
 			<p>Receive Park People's Newsletter to stay up to date on the TD Park People Grants:</p>
 			<div>
-				<app-form></app-form>
+				<app-form skin="grants" button="Okay!"></app-form>
 			</div>
 		</div>
 	</section>
@@ -280,7 +280,7 @@ img {
 		margin-bottom: 5px;
 		position: relative;
 		padding-left: 70px;
-		padding-bottom: 30px;
+		padding-bottom: 24px;
 		margin-bottom: 24px;
 		font-size: 0.9rem;
 		line-height: 1.5;
@@ -454,7 +454,7 @@ img {
 		position: absolute;
 		width: 50px;
 		height: 50px;
-		top: 200px;
+		top: 100px;
 		left: -120px;
 		-moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);

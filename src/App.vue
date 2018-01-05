@@ -263,4 +263,12 @@ ol.resource__bullets {
         }
     }
 }
+
+// Footer
+footer {
+    font-size: 0.8rem;
+    p, ul, li {
+        font-size: 0.8rem;
+    }
+}
 </style>

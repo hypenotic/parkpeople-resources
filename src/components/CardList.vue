@@ -35,7 +35,7 @@
 			</div>
 		</div>
 	</section>
-	<div class="skewed-bg"></div>
+	<!-- <div class="skewed-bg"></div> -->
 </div>
 </template>
 
@@ -225,7 +225,7 @@ img {
 			display: inline;
 			font-weight: 700;
 			&:not(:last-child):after {
-				content: " | ";
+				content: ", ";
 			}
 		}
 	}

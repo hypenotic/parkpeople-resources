@@ -326,8 +326,9 @@ img.heading {
 @import '../styles/variables.scss';
 
 h1 {
-	font-size: 40px;
-	line-height: 50px;
+	color: $off-black;
+	font-size: 2.5rem;
+	line-height: 1.3;
 	margin-bottom: 24px;
 	font-weight: bold;
 }

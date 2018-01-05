@@ -36,10 +36,23 @@
 				</div>
 				<h1 v-html="post.title.rendered"></h1>
 				
-				<p><span class="type">{{ post.type }}</span> By {{ authorName }} |  {{ moment(post.date).format('MMM Do, YYYY') }}</p>
-				<ul class="category">
-					<li v-for="category in categories">{{ category }} {{lang}}</li>
-				</ul>
+				<div class="category-lists">
+					<div v-if="post.pure_taxonomies.hasOwnProperty('activity')">
+						<span>Do in parks:</span>
+						<ul>
+							<li v-for="category in post.pure_taxonomies.activity" :key="category.name">{{ category.name }} </li>
+						</ul>
+					</div>
+					<div v-if="post.pure_taxonomies.hasOwnProperty('learn')">
+						<span>Know about parks:</span>
+						<ul>
+							<li v-for="category in post.pure_taxonomies.learn" :key="category.name">{{ category.name }}</li>
+						</ul>
+					</div>
+				</div>
+
+				<p class="meta"><span class="capitalize">{{ post.type }}</span> | By {{ authorName }} |  {{ moment(post.date).format('MMM, YYYY') }}</p>
+
 				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 			</div>
 		</div>
@@ -51,18 +64,18 @@
 		<div class="columns" >
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white;">
 
-				<p v-html="post.content.rendered"></p>
+				<div v-html="post.content.rendered" class="resource__content__copy"></div>
 
 				<ol class="resource__bullets">
 					<li v-for="item in post.meta_box._resource_list" :key="item['_resource_list_headline']">
-						<h4>{{ item['_resource_list_headline'] }}</h4>
-						<p v-html="item['_resource_list_content']"></p>
+						<h2>{{ item['_resource_list_headline'] }}</h2>
+						<div class="resource__bullets__content" v-html="item['_resource_list_content']"></div>
 					</li>
 				</ol>
 
 				<div v-if="post.meta_box._resource_content_takeaway != ''" class="resource__takeaways">
 					<h3>Takeaways</h3>
-					<div v-html="post.meta_box._resource_content_takeaway"></div>
+					<div v-html="post.meta_box._resource_content_takeaway" class="resource__takeaways__content"></div>
 				</div>
 
 				<div v-if="post.meta_box._resource_tips > 0" class="resource__tips">
@@ -196,7 +209,7 @@ export default {
 		.then(response => {
 			// Let's put data into post
 			this.post = response.data
-			//console.log(this.post)
+			console.log(this.post)
 
 			// Let's get the categories
 			const tax1 = this.post.pure_taxonomies.activity
@@ -340,8 +353,9 @@ export default {
 @import '../styles/variables.scss';
 
 h1 {
-	font-size: 40px;
-	line-height: 50px;
+	color: $off-black;
+	font-size: 2.5rem;
+	line-height: 1.3;
 	margin-bottom: 24px;
 	font-weight: bold;
 }
@@ -420,11 +434,14 @@ ul.resource__tips__bullets {
 		padding-left: 70px;
 		padding-bottom: 30px;
 		margin-bottom: 50px;
+		h2 {
+			
+		}
 		h4 {
-			font-size: 24px;
-			// line-height: 35px;
-			font-weight: bold;
-			padding-top: 13px;
+			// font-size: 24px;
+			// // line-height: 35px;
+			// font-weight: bold;
+			// padding-top: 13px;
 		}
 	}
 	>li:not(:last-child) {
@@ -607,6 +624,65 @@ ul.resource__tips__bullets {
 			// color: $blue;
 		}
 	}
+}
+
+.resource__bullets__content,
+.resource__takeaways__content,
+.resource__content__copy {
+	h1,h2,h3,h4,h5,h6 {
+		color: $off-black;
+		font-weight: bold !important;
+		font-family: $family-sanserif;
+	}
+	h1 {
+		font-size: 2.8rem;
+		line-height:1.5;
+		margin-bottom: 1rem;
+	}
+	h2 {
+		font-size: 2.4rem;
+		line-height:1.5;
+	}
+	h3 {
+		font-size: 2rem;
+		line-height:1.5;
+	}
+	h4 {
+		font-size: 1.8rem !important;
+		line-height:1.5 !important;
+		padding-top: 0 !important;
+	}
+	h5 {
+		font-size: 1.5rem;
+		line-height:1.5;
+	}
+	h6 {
+		font-size: 1.2rem;
+		line-height:1.5;
+	}
+}
+
+.category-lists {
+	margin-bottom: 24px;
+	font-family: $family-sanserif;
+	font-weight: bold;
+	ul {
+		display: inline-block;
+		li {
+			display: inline-block;
+			color: rgba(0, 0, 0, 0.5);
+			text-transform: uppercase;
+			margin: 0 8px;
+		}
+	}
+}
+
+.meta {
+	font-size: 0.8rem;
+}
+
+.capitalize {
+	text-transform: capitalize;
 }
 
 </style>
