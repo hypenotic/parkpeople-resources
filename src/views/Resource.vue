@@ -110,7 +110,7 @@
 			</ul>
 		</div>
 	</section>
-	<section class="related-resources">
+	<section v-if="relatedPosts.length > 0" class="related-resources">
 		<h3>Related Resources</h3>
 		<!-- <ul class="resource__tips__bullets">
 			<li v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
@@ -155,6 +155,7 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
@@ -168,7 +169,7 @@ export default {
 			showSocialShare: false,
 			fullPath: this.$route.fullPath,
 			relatedPosts: [],
-			lang: ''
+			language: ''
 		}
 	},
 	filters: {

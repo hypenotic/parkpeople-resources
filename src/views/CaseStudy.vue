@@ -36,10 +36,23 @@
 				</div>
 				<h1 v-html="post.title.rendered"></h1>
 				
-				<p><span class="type">{{ post.type }}</span> By {{ authorName }} | {{ moment(post.date).format('MMM Do, YYYY') }}</p>
-				<ul class="category">
-					<li v-for="category in categories">{{ category }} {{lang}}</li>
-				</ul>
+				<div class="category-lists">
+					<div v-if="post.pure_taxonomies.hasOwnProperty('activity')">
+						<span>Do in parks:</span>
+						<ul>
+							<li v-for="category in post.pure_taxonomies.activity" :key="category.name">{{ category.name }} </li>
+						</ul>
+					</div>
+					<div v-if="post.pure_taxonomies.hasOwnProperty('learn')">
+						<span>Know about parks:</span>
+						<ul>
+							<li v-for="category in post.pure_taxonomies.learn" :key="category.name">{{ category.name }}</li>
+						</ul>
+					</div>
+				</div>
+
+				<p class="meta"><span class="capitalize">{{ post.type }}</span> | By {{ authorName }} |  {{ moment(post.date).format('MMM, YYYY') }}</p>
+
 				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 			</div>
 		</div>

@@ -99,6 +99,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex'
 import NewsletterForm from '../components/NewsletterForm.vue';
 export default {
 	components: {
@@ -134,8 +135,10 @@ export default {
 			});
 		},
 	},
-	computed:{
-    
+	computed() {
+		mapState([
+			'grantsData'
+		])
     },
 	methods: {
 
@@ -144,6 +147,7 @@ export default {
 
 	},
 	created() {
+		// console.log(store.state.count)
 		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/pages/630?_embed')
 		.then(response => {
 			

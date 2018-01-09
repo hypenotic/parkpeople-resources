@@ -88,13 +88,13 @@
 	<div v-if="post.pure_taxonomies.activity" class="research__activity-list">
 		<b>Do in parks: </b>
 		<ul>
-			<li v-for="tax in post.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
+			<li v-for="tax in post.pure_taxonomies.activity" :key="tax.name">{{ tax.name | toUppercase }}</li>
 		</ul>
 	</div>
 	<div v-if="post.pure_taxonomies.learn"  class="research__learn-list">
 		<b>Know about parks: </b>
 		<ul>
-			<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
+			<li v-for="tax in post.pure_taxonomies.learn" :key="tax.name">{{ tax.name | toUppercase }}</li>
 		</ul>
 	</div>
 
@@ -164,6 +164,33 @@
 				return moment();
 			}
 		},
+		filters: {
+			removeHyphen(value){
+				return value.replace("-", ' ');
+			},
+			capitalizeFirstLetter(value) {
+				return value.charAt(0).toUpperCase() + value.slice(1);
+			},
+			toUppercase(value) {
+				return value.toUpperCase();
+			},
+			readMore(value, length, suffix) {
+				if (value.length < length) {
+					return value;
+				} else {	
+					return value.substring(0, length) + suffix;
+				}
+			},
+			stripHTML(value) {
+				return value.replace(/(<([^>]+)>)/ig,"");
+			},
+			toTitleCase(value)
+				{
+				return value.replace(/\w\S*/g, (txt) => {
+					return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+				});
+			}
+		},
 		created() {
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/' + this.id + '?_embed')
 
@@ -195,7 +222,7 @@
 				}
 
 				// Let's get the WPML Lang id
-				this.lang = this.post.wpml_translations[0].id
+				// this.lang = this.post.wpml_translations[0].id
 
 				// Let's get the categories IDs
 				let taxID1 = this.post.activity
@@ -402,6 +429,33 @@ img.heading {
 		color: $white;
 		font-size: 24px;
 		font-weight: 300;
+	}
+}
+
+.content {
+	p {
+		font-size: 0.8rem;
+		line-height: 1.3rem;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0 0 10px 0;
+		li { 
+			color: rgba(0,0,0,0.5);
+			display: inline;
+			font-weight: 700;
+			&:not(:last-child):after {
+				content: " | ";
+			}
+		}
+	}
+
+	.card__activity-list,
+	.card__learn-list {
+		li {
+			font-family: $family-sanserif;
+			// color: $blue;
+		}
 	}
 }
 

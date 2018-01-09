@@ -156,20 +156,32 @@ export default {
 		})
 	},
 	created() {
-		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
-		])
-		.then(axios.spread((response, response1, response2) => {
-			
-			let allPosts  = response.data.concat(response1.data, response2.data);
-			//console.log(allPosts)
-			this.posts = allPosts
-		}))
-		.catch(e => {
-			this.errors.push(e)
-		})
+		// Check if we have already made calls to get the resources
+		// Technically we could just call 
+		if(this.$store.state.resourceList.length > 0) {
+			// If resourceList in the store (an array) has any items, just use the store data
+			console.log('NO CALL')
+			this.posts = this.$store.state.resourceList
+		} else {
+			// Else, we have no data, so make the calls
+			console.log('CALLING')
+			axios.all([
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
+			])
+			.then(axios.spread((response, response1, response2) => {
+				
+				let allPosts  = response.data.concat(response1.data, response2.data);
+				this.posts = allPosts
+				this.$store.commit('SET_RESOURCES', allPosts)
+
+			}))
+			.catch(e => {
+				this.errors.push(e)
+			})
+		}
+		
 	},
 };
 </script>
