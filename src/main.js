@@ -7,12 +7,15 @@ import { routes } from './routes'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 var SocialSharing = require('vue-social-sharing');
+import VuePaginate from 'vue-paginate'
+
 
 export const eventBus = new Vue();
 
 // Use
 Vue.use(Buefy);
 Vue.use(SocialSharing);
+Vue.use(VuePaginate)
 // Vue.use(Vuex);
 
 /* With the Vue Router imported 

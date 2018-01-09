@@ -3,6 +3,23 @@
 	<section class="section">
 		<div class="container">
 			<div class="columns is-multiline">
+
+			<paginate
+			name="languages"
+			:list="posts"
+			:per="12"
+			>
+			<li v-for="post in paginated('languages')">
+				{{ post.title.rendered }}
+			</li>
+			</paginate>
+
+			<paginate-links for="languages"></paginate-links>
+
+
+
+
+
   				<div class="column is-one-quarter" v-for="(post,index) in filteredList" :key='index'>
     				<!-- <div class="card" :data-category="getDataAtt(post)"> -->
 						<div class="card">
@@ -35,7 +52,6 @@
 			</div>
 		</div>
 	</section>
-	<!-- <div class="skewed-bg"></div> -->
 </div>
 </template>
 
@@ -46,6 +62,7 @@ export default {
 	data() {
 		return {
 			posts: [],
+			paginate: ['languages'],
 			errors: [],
 			categoryList: []
 		};
