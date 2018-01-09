@@ -1,28 +1,53 @@
 <template v-if="posts && posts.length">
 <div>
+	
 	<section class="section">
+		
 		<div class="container">
-			<div class="columns is-multiline">
-
 			<paginate
 			name="languages"
-			:list="posts"
+			:list="filteredList"
 			:per="12"
 			>
-			<li v-for="post in paginated('languages')">
-				{{ post.title.rendered }}
-			</li>
-			</paginate>
+			<div class="columns is-multiline">
 
-			<paginate-links for="languages"></paginate-links>
+			
+			<div class="column is-one-quarter" v-for="(post,index) in paginated('languages')" :key='index'>
+				<div class="card">
+					<div class="card-image">
+						<figure class="image is-2by1">
+							<img v-if="post._embedded['wp:featuredmedia'] != undefined" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+						</figure>
+					</div>
+					<div class="card-content">
+							<div class="content">
+								<router-link :to="post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
+								<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
+								<div v-if="post.pure_taxonomies.activity" class="activity-list-container">
+									<b>Do in parks:</b>
+									<ul class="card__activity-list">
+										<li v-for="tax in post.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
+									</ul>
+								</div>
+								<div v-if="post.pure_taxonomies.learn" class="activity-list-container">
+									<b>Know about parks:</b>
+									<ul class="card__learn-list">
+										<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
+									</ul>
+								</div>
+								<small>{{ post.type | removeHyphen | toTitleCase }}</small>
+    						</div>
+  						</div>
+				</div>
+			</div>
+			
 
 
 
 
-
+				<!--
   				<div class="column is-one-quarter" v-for="(post,index) in filteredList" :key='index'>
-    				<!-- <div class="card" :data-category="getDataAtt(post)"> -->
-						<div class="card">
+    				<div class="card" :data-category="getDataAtt(post)">
   						<div class="card-image">
 							<figure class="image is-2by1">
 								<img v-if="post._embedded['wp:featuredmedia'] != undefined" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
@@ -49,9 +74,15 @@
   						</div>
 					</div>
   				</div>
+				  -->
 			</div>
+			</paginate>
+
+			<paginate-links for="languages"></paginate-links>
 		</div>
+		
 	</section>
+	
 </div>
 </template>
 
