@@ -34,7 +34,13 @@
 					</div>
 				</div>
 			</paginate>
+			<section class="section">
+			<div class="column">
+				 <div class="column is-4 is-offset-5">
 			<paginate-links for="list"></paginate-links>
+			</div>
+			</div>
+			</section>
 		</div>
 	</section>
 </div>
