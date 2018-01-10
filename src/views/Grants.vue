@@ -41,10 +41,10 @@
 	</section>
 	<section class="grants-newsletter">
 		<div class="container">
-			<p>Receive Park People's Newsletter to stay up to date on the TD Park People Grants:</p>
-			<div>
+			<a class="button" href="http://parkpeople.us2.list-manage.com/subscribe?u=ba963c8c64482c0ad756245c3&id=efc9b053b8" target="_blank">Get the Park People newsletter!</a>
+			<!-- <div>
 				<app-form skin="grants" button="Okay!"></app-form>
-			</div>
+			</div> -->
 		</div>
 	</section>
 	<section class="grant-sponsors">
@@ -180,9 +180,14 @@ export default {
 
 h1 {
     color: $orange;
-	font-size: 56px;
+	font-size: 45px;
 	line-height: 1.2;
 	font-weight: 700;
+	@media #{$large-and-up} {
+		font-size: 56px;
+		line-height: 1.2;
+		font-weight: 700;
+	}
 }
 
 .container {
@@ -341,6 +346,9 @@ img {
 .more-info {
 	position: relative;
 	z-index: 500;
+	p {
+		font-size: 1.5rem;
+	}
 }
 
 .grants-newsletter {
@@ -371,6 +379,26 @@ img {
 				max-width: 100px;
 				height: auto;
 			}
+		}
+	}
+}
+
+.grants-newsletter {
+	.button {
+		background: $blue;
+		border: 2px solid $blue;
+		color: $white;
+		border-radius: 50px;
+		font-weight: bold;
+		padding: 16px 32px;
+		height: 50px;
+		@media #{$small-and-down} {
+			margin-top: 100px;
+		}
+		&:hover {
+			background: $white;
+			border: 2px solid $blue;
+			color: $blue;
 		}
 	}
 }
@@ -422,15 +450,26 @@ img {
 	margin-top: -200px;
 	z-index: 100;
 	padding-bottom: 15%;
-	min-height: 500px;
+	min-height: 300px;
+	@media #{$large-and-up} {
+		min-height: 500px;
+	}
 	.main-animation {
 		position: absolute;
 		left: 0;
-		top: -15%;
+		top: 100px;
 		z-index: 20;
+		@media #{$large-and-up} {
+			top: -15%;
+			width: 1300px;
+			left: 50%;
+			margin-left: -650px;
+			// right: 50%;
+		}
 		@media #{$xlarge-and-up} {
 			width: 1300px;
-			left: 24%;
+			left: 50%;
+			margin-left: -650px;
 			// right: 50%;
 		}
 	}

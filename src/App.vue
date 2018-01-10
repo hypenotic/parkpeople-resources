@@ -64,7 +64,10 @@ h1 {
 }
 
 h2 {
-    font-size: 3.375rem;
+    font-size: 2.375rem;
+    @media #{$large-and-up} {
+        font-size: 3.375rem;
+    }
 }
 
 h3 {
@@ -215,8 +218,12 @@ ol.resource__bullets {
 .more-info {
     text-align: center;
     p {
-		font-size: 0.8rem;
-		line-height: 1.5;
+		font-size: 1rem;
+        line-height: 1.5;
+        @media #{$large-and-up} {
+			font-size: 1.2rem;
+            line-height: 1.7;
+		}
     }
     a {
         border-bottom: 1px solid $blue;
