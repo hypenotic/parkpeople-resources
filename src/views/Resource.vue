@@ -58,7 +58,7 @@
 		</div>
 	</section>
 	
-	<img style="width: 100%; object-fit: cover; height: 300px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
+	<img style="width: 100%; object-fit: cover; height: 500px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
 	
 	<section class="section section__single-resource">
 		<div class="columns" >
