@@ -432,6 +432,10 @@ img.heading {
 	}
 }
 
+.card-image img {
+	object-fit: cover;
+}
+
 .content {
 	p {
 		font-size: 0.8rem;

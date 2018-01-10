@@ -3,7 +3,7 @@
     	<div class="container">
 			<div class="columns">
 				<div class="column is-12">
-      				<h4>Stand on the shoulders of Park People</h4>
+      				<h4>Inspiration and ideas to make something awesome happen in your park</h4>
 			  	</div>
 			</div>
 			<div class="columns">

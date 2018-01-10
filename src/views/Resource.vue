@@ -470,6 +470,10 @@ ul.resource__tips__bullets {
 	}
 }
 
+.card-image img {
+	object-fit: cover;
+}
+
 ul.resource__tips__bullets {
 	margin-top: 0;
 }

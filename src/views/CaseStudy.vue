@@ -610,6 +610,10 @@ ul.resource__tips__bullets {
 	}
 }
 
+.card-image img {
+	object-fit: cover;
+}
+
 .content {
 	p {
 		font-size: 0.8rem;
