@@ -1,54 +1,42 @@
 <template v-if="posts && posts.length">
 <div>
-	
 	<section class="section">
-		
 		<div class="container">
-			<paginate
-			name="languages"
-			:list="filteredList"
-			:per="12"
-			>
-			<div class="columns is-multiline">
-
-			
-			<div class="column is-one-quarter" v-for="(post,index) in paginated('languages')" :key='index'>
-				<div class="card">
-					<div class="card-image">
-						<figure class="image is-2by1">
-							<img v-if="post._embedded['wp:featuredmedia'] != undefined" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
-						</figure>
+			<paginate name="list" :list="filteredList" :per="16">
+				<div class="columns is-multiline">
+					<div class="column is-one-quarter" v-for="(post,index) in paginated('list')" :key='index'>
+						<div class="card">
+							<div class="card-image">
+								<figure class="image is-2by1">
+									<img v-if="post._embedded['wp:featuredmedia'] != undefined" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+								</figure>
+							</div>
+							<div class="card-content">
+									<div class="content">
+										<router-link :to="post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
+										<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
+										<div v-if="post.pure_taxonomies.activity" class="activity-list-container">
+											<b>Do in parks:</b>
+											<ul class="card__activity-list">
+												<li v-for="tax in post.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
+											</ul>
+										</div>
+										<div v-if="post.pure_taxonomies.learn" class="activity-list-container">
+											<b>Know about parks:</b>
+											<ul class="card__learn-list">
+												<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
+											</ul>
+										</div>
+										<small>{{ post.type | removeHyphen | toTitleCase }}</small>
+									</div>
+								</div>
+						</div>
 					</div>
-					<div class="card-content">
-							<div class="content">
-								<router-link :to="post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
-								<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
-								<div v-if="post.pure_taxonomies.activity" class="activity-list-container">
-									<b>Do in parks:</b>
-									<ul class="card__activity-list">
-										<li v-for="tax in post.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
-									</ul>
-								</div>
-								<div v-if="post.pure_taxonomies.learn" class="activity-list-container">
-									<b>Know about parks:</b>
-									<ul class="card__learn-list">
-										<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
-									</ul>
-								</div>
-								<small>{{ post.type | removeHyphen | toTitleCase }}</small>
-    						</div>
-  						</div>
 				</div>
-			</div>
-			
-			</div>
 			</paginate>
-
-			<paginate-links for="languages"></paginate-links>
+			<paginate-links for="list"></paginate-links>
 		</div>
-		
 	</section>
-	
 </div>
 </template>
 
@@ -59,7 +47,7 @@ export default {
 	data() {
 		return {
 			posts: [],
-			paginate: ['languages'],
+			paginate: ['list'],
 			errors: [],
 			categoryList: []
 		};

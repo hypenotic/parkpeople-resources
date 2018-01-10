@@ -7,7 +7,7 @@
                     <div class="column is-6">
                         <div class="columns is-centered">
                             <div class="column is-4">
-                                <p>Thank you Partners!</p>
+                                <p>Founding Sponsor</p>
                                 <img src="https://parkpeople.ca/listings/custom/uploads/2017/09/TD-logo.png">
                             </div>
                         </div>
@@ -21,7 +21,7 @@
                                     <li>Studio 119, City Builder’s Lab</li>
                                     <li>Toronto, ON M5V 3A8</li>
                                 </ul>
-                                <ul>
+                                <ul class="details">
                                     <li>Phone: <a href="tel:+14165835776">416-583-5776</a></li>
                                     <li>Email: <a href="mailto:info@parkpeople.ca">info@parkpeople.ca</a></li>
                                     <li>Charity #: 846449437RR0001</li>
@@ -35,7 +35,6 @@
     
                             </div>
                             <div class="column is-6">
-                                <p style="color: white;font-weight: bold;">When people activate the parks, every gets better.</p>
                                 <a class="button" href="https://parkpeople.ca/donate-now" target="_blank">Donate</a>
                             </div>
     
@@ -87,11 +86,9 @@
     }
 
     footer {
-        // margin-top: 300px;
         position: relative;
         padding-top: 60px;
         > div {
-            // background: #00bcd4;
             position: relative;
             &:before {
                 content: '';
@@ -130,8 +127,11 @@
     .social-links {
         li {
             display: inline-block;
-            a:hover {
-                color: $white;
+            a {
+                color: white;
+                &:hover {
+                    opacity: 0.6;
+                }
             }
             i {
                 font-size: 32px;
@@ -141,5 +141,11 @@
             margin-left: 16px;
         }
     }
-
+    .details a {
+        color: white;
+        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
+        }
+    }
 </style>
