@@ -1,7 +1,7 @@
 <template>
     <div>  
         <!-- <app-form v-if="['/grants'].indexOf(this.$route.path) == -1" skin="footer" button="Finally!"></app-form> -->
-        <footer v-if="['/grants'].indexOf(this.$route.path) == -1" class>
+        <footer v-if="['/grants'].indexOf(this.$route.path) == -1" class="resources-footer">
             <div>
                 <div class="columns">
                     <div class="column is-6">
@@ -127,7 +127,7 @@
         }
     }
 
-    footer {
+    footer.resources-footer {
         position: relative;
         padding-top: 60px;
         > div {
@@ -140,7 +140,6 @@
                 width: 100%;
                 height: 160px;
                 background: #fff;
-                
                 -webkit-transform: skewY(5deg);
                 -moz-transform: skewY(5deg);
                 -ms-transform: skewY(5deg);
