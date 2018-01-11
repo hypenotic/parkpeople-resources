@@ -419,10 +419,10 @@ img {
 }
 
 .related-resources {
-	padding: 50px;
+	padding: 80px 50px;
 	padding-bottom: 250px;
 	margin-top: 50px;
-	margin-bottom: -10 0px;
+	margin-bottom: -100px;
 	h3 {
 		color: $green;
 		font-size: 40px;
