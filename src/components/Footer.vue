@@ -1,7 +1,7 @@
 <template>
     <div>  
         <!-- <app-form v-if="['/grants'].indexOf(this.$route.path) == -1" skin="footer" button="Finally!"></app-form> -->
-        <footer v-if="['/grants'].indexOf(this.$route.path) == -1">
+        <footer v-if="['/grants'].indexOf(this.$route.path) == -1" class>
             <div>
                 <div class="columns">
                     <div class="column is-6">

@@ -20,7 +20,7 @@
         <div id="navbarExampleTransparentExample" class="navbar-menu">
             <div class="navbar-end">
                 <router-link to="/grants" class="navbar-item" exact>Home</router-link>
-                <router-link to="/faq" class="navbar-item" exact>FAQs</router-link>
+                <router-link to="/faq" class="navbar-item" exact>FAQs</router-link>                
             </div>
         </div>
     </nav>

@@ -11,7 +11,7 @@
 			</p>
 
 			<p><b>How do I find out more information?</b><br>
-			<b>A:</b> During the last weeks of January and February 2018, Park People will host conference calls where we will answer any questions about the grant and application process.Please sign up to receive our newsletter for updates on when these calls are taking place. If you have more detailed questions, please join us for these events. If you are unable to join us for those calls, please email your questions to admin@parkpeople.ca and a Park People staff member will be more than happy to answer any questions you may have about the grant. For questions about starting your own park group please check out our “How to Start a Park Group” page on the Park People website. 
+			<b>A:</b> During the last weeks of January and February 2018, Park People will host conference calls where we will answer any questions about the grant and application process. <a href="http://parkpeople.us2.list-manage.com/subscribe?u=ba963c8c64482c0ad756245c3&id=efc9b053b8" target="_blank">Please sign up to receive our newsletter</a> for updates on when these calls are taking place. If you have more detailed questions, please join us for these events. If you are unable to join us for those calls, please email your questions to admin@parkpeople.ca and a Park People staff member will be more than happy to answer any questions you may have about the grant. For questions about starting your own park group please check out our <a href="https://parkpeople.ca/start" target="_blank">"How to Start a Park Group"</a> page on the Park People website. 
 			</p>
 
 			<p><b>How are decisions made? </b><br>
@@ -36,7 +36,7 @@
 			</p>
 
 			<p><b>What kind of events will this grant fund? </b><br>
-			<b>A:</b> We hope that these events will help bring community members together and provide people with the opportunity to have fun and meet their neighbors. For example, your group could host a farmer’s market, picnic, nature walk, movie night or a pumpkin parade. You can find more ideas and guides on how to host events on Park People’s resources page and our parks group and events page. 
+			<b>A:</b> We hope that these events will help bring community members together and provide people with the opportunity to have fun and meet their neighbors. For example, your group could host a farmer’s market, picnic, nature walk, movie night or a pumpkin parade. You can find more ideas and guides on how to host events on Park People’s <a href="https://parkpeople.ca/start" target="_blank">resources</a> page and our <a href="https://parkpeople.ca/listings/" target="_blank">parks group and events</a> page. 
 			</p>
 
 			<p><b>Can I combine this funding with funding from other sources?</b><br>
@@ -44,7 +44,7 @@
 			</p>
 
 			<p><b>We are not based in one of the five cities listed above. Can we still apply for the grant? </b><br>
-			<b>A:</b> Currently we are only accepting applications from community groups based in the selected cities (Toronto, Montreal, Vancouver, Ottawa, and Calgary). That said we hope to expand our program in subsequent years. The best way to keep up to date on changes in the TD Park People Grant program or other funding opportunities is to sign up for our newsletter and creating a profile for your group on our website.
+			<b>A:</b> Currently we are only accepting applications from community groups based in the selected cities (Toronto, Montreal, Vancouver, Ottawa, and Calgary). That said we hope to expand our program in subsequent years. The best way to keep up to date on changes in the TD Park People Grant program or other funding opportunities is to sign up for our newsletter and creating a <a href="https://parkpeople.ca/listings/member-login/" target="_blank">profile for your group</a> on our website.
 			</p>
 
 			<p><b>How do we get a park permit and insurance? </b><br>
@@ -53,10 +53,10 @@
 
 			<p><b>To find information on park permits for each municipality, please follow the link below:</b> 
 			<ul>
-			<li>Calgary</li>
-			<li>Ottawa</li>
-			<li>Toronto</li>
-			<li>Vancouver </li>
+			<li><a href="http://www.calgary.ca/CSPS/Parks/Pages/Bookings/Park-bookings.aspx" target="_blank">Calgary</a></li>
+			<li><a href="https://ottawa.ca/en/residents/recreation-and-parks/parks-sports-fields-and-outdoor-recreation" target="_blank">Ottawa</a></li>
+			<li><a href="https://www1.toronto.ca/wps/portal/contentonly?vgnextoid=48841d94f4301410VgnVCM10000071d60f89RCRD" target="_blank">Toronto</a></li>
+			<li><a href="http://vancouver.ca/parks-recreation-culture/plan-and-book-an-event.aspx" target="_blank">Vancouver</a> </li>
 			<li>Montreal </li>
 			</ul>
 			</p>
@@ -264,7 +264,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 @import '../styles/variables.scss';
 
@@ -289,11 +289,13 @@ img.heading {
 }
 
 ul {
-	padding: 20px;
+	margin: 20px 0 0 40px;
 	li {
 		line-height: 1.5;
 		margin-bottom: 1rem;
-		list-style-type: circle;
+		list-style-type: disc;
+		font-size: .9rem;
+		padding-left: .6em;
 
 	}
 }
