@@ -135,10 +135,8 @@ export default {
 			});
 		},
 	},
-	computed() {
-		mapState([
-			'grantsData'
-		])
+	computed: {
+
     },
 	methods: {
 
@@ -150,15 +148,23 @@ export default {
 		// console.log(store.state.count)
 		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/pages/630?_embed')
 		.then(response => {
-			
             console.log(response.data)
 			this.data = response.data
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource?_embed&per_page=4')
-			.then(response => {
-				
-				console.log(response.data)
-				this.relatedPosts = response.data
-			})
+			axios.all([
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&categories=133&per_page=4'),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&categories=133&per_page=4'),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&categories=133&per_page=4')
+			])
+			.then(axios.spread((response, response1, response2) => {
+				// console.log(response.data)
+				let allPosts  = response.data.concat(response1.data, response2.data);
+				// console.log('old', allPosts)
+				allPosts.sort(function(a,b){
+					return new Date(b.date) - new Date(a.date)
+				})	
+				// console.log('sorted', allPosts)
+				this.relatedPosts = allPosts
+			}))
 			.catch(e => {
 				this.errors.push(e)
 			})
@@ -414,9 +420,9 @@ img {
 
 .related-resources {
 	padding: 50px;
-	padding-bottom: 150px;
+	padding-bottom: 250px;
 	margin-top: 50px;
-	margin-bottom: 300px;
+	margin-bottom: -10 0px;
 	h3 {
 		color: $green;
 		font-size: 40px;
