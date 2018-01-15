@@ -36,7 +36,7 @@
 				</div>
 				<h1 v-html="post.title.rendered"></h1>
 				
-				<div class="category-lists">
+				<div v-if="this.$route.params.lang == 'en'" class="category-lists">
 					<div v-if="post.pure_taxonomies.hasOwnProperty('activity')">
 						<span>Do in parks:</span>
 						<ul>
@@ -51,7 +51,7 @@
 					</div>
 				</div>
 
-				<p class="meta"><span class="capitalize">{{ post.type }}</span> | By {{ authorName }} |  {{ moment(post.date).format('MMM, YYYY') }}</p>
+				<p class="meta"><span class="capitalize">{{ post.type }}</span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
 
 				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 			</div>
@@ -110,7 +110,7 @@
 			</ul>
 		</div>
 	</section>
-	<section v-if="relatedPosts.length > 0" class="related-resources">
+	<section v-if="relatedPosts.length > 0" class="related-resources" style="display: none;">
 		<h3>Related Resources</h3>
 		<!-- <ul class="resource__tips__bullets">
 			<li v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
