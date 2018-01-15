@@ -5,7 +5,7 @@
 
 	<section style="margin-top: -200px;">
 		<div class="columns">
-			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 72px 72px 0;position: relative;margin-bottom: 30px;">
+			<div class="column top-column is-three-fifths is-offset-one-fifth" style="background-color: white;">
 				<div class="social-share-container">
 					<!-- <p>Share via:</p> -->
 					<div id="social-share-trigger" v-bind:class="{ 'social-menu-open': showSocialShare }" v-on:click="showSocialShare = !showSocialShare">
@@ -354,6 +354,21 @@ export default {
 <style lang="scss">
 
 @import '../styles/variables.scss';
+
+.column {
+	@media #{$small-and-down} {
+        padding: 16px;
+    }
+}
+
+.column.top-column {
+	padding: 72px 72px 0;
+	position: relative;
+	margin-bottom: 30px;
+	@media #{$small-and-down} {
+        padding: 72px 50px;
+    }
+}
 
 h1 {
 	color: $off-black;
