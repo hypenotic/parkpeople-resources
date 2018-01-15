@@ -15,7 +15,8 @@
 
         <div id="navbarExampleTransparentExample" class="navbar-menu">
             <div class="navbar-end">
-                <a href="https://parkpeople.ca" class="navbar-item">Home</a> 
+                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Home</a> 
+                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca" class="navbar-item">Page d'accueil</a>
                 <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Retour à Bourses</a>  
                 <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca/parkgrants" class="navbar-item" exact>Back to grant page</a>             
             </div>

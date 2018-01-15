@@ -51,7 +51,8 @@
 					</div>
 				</div>
 
-				<p class="meta"><span class="capitalize">{{ post.type }}</span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
+				<p v-if="this.$route.params.lang == 'en'" class="meta"><span class="capitalize">{{ post.type }}</span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
+				<p v-else class="meta"><span class="capitalize">Ressource</span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
 
 				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 			</div>
