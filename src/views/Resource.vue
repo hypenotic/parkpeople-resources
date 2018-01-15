@@ -162,6 +162,7 @@ export default {
 			errors: [],
 			slug: this.$route.params.slug,
 			id: this.$route.params.id,
+			lang: this.$route.params.lang,
 			post: [],
 			categories: [],
 			categoryIDs: [],

@@ -1,6 +1,6 @@
 export const state = {
-    resourceList: [],
-    grantsData: [],
+    resourceListEN: [],
+    resourceListFR: [],
     singlePostCache: {},
     language: ''
 }

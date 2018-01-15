@@ -1,21 +1,24 @@
 import { state } from './state'
 // export const state = {
-//   resourceList: [],
-//   grantsData: [],
-//   singlePostCache: {},
-//   language: ''
+    // resourceListEN: [],
+    // resourceListFR: [],
+    // singlePostCache: {},
+    // language: ''
 // }
 
 import { 
-    SET_RESOURCES, 
-    RECEIVE_GRANT_DATA, 
+    SET_RESOURCES_EN, 
+    SET_RESOURCES_FR,
     TOGGLE_LANGUAGE, 
     ADD_SINGLE_RESOURCE 
 } from './mutation-types'
 
 export const mutations = {
-    SET_RESOURCES(state, list) {
-        state.resourceList = list
+    SET_RESOURCES_EN(state, list) {
+        state.resourceListEN = list
+    },
+    SET_RESOURCES_FR(state, list) {
+        state.resourceListFR = list
     },
     TOGGLE_LANGUAGE(state, lang) {
         state.language = lang

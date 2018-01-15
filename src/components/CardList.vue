@@ -2,34 +2,34 @@
 <div>
 	<section class="section">
 		<div class="container">
-			<paginate name="list" :list="filteredList" :per="16">
+			<paginate name="postList" :list="filteredList" :per="16" tag="div">
 				<div class="columns is-multiline">
-					<div class="column is-one-quarter" v-for="(post,index) in paginated('list')" :key='index'>
+					<div class="column is-one-quarter" v-for="post in paginated('postList')" :key="post.id">
 						<div class="card">
 							<div class="card-image">
 								<figure class="image is-2by1">
-									<img v-if="post._embedded['wp:featuredmedia'] != undefined" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+									<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
 								</figure>
 							</div>
 							<div class="card-content">
-									<div class="content">
-										<router-link :to="post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
-										<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
-										<div v-if="post.pure_taxonomies.activity" class="activity-list-container">
-											<b>Do in parks:</b>
-											<ul class="card__activity-list">
-												<li v-for="tax in post.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
-											</ul>
-										</div>
-										<div v-if="post.pure_taxonomies.learn" class="activity-list-container">
-											<b>Know about parks:</b>
-											<ul class="card__learn-list">
-												<li v-for="tax in post.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
-											</ul>
-										</div>
-										<small>{{ post.type | removeHyphen | toTitleCase }}</small>
+								<div class="content">
+									<router-link :to="lang+ '/' +post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
+									<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
+									<div v-if="post.pure_taxonomies.activity" class="activity-list-container">
+										<b>Do in parks:</b>
+										<ul class="card__activity-list">
+											<li v-for="tax in post.pure_taxonomies.activity" :key="tax.name">{{ tax.name | toUppercase }}</li>
+										</ul>
 									</div>
+									<div v-if="post.pure_taxonomies.learn" class="activity-list-container">
+										<b>Know about parks:</b>
+										<ul class="card__learn-list">
+											<li v-for="tax in post.pure_taxonomies.learn" :key="tax.name">{{ tax.name | toUppercase }}</li>
+										</ul>
+									</div>
+									<small>{{ post.type | removeHyphen | toTitleCase }}</small>
 								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -37,7 +37,7 @@
 			<section class="section">
 			<div class="column">
 				 <div class="column is-4 is-offset-5">
-			<paginate-links for="list"></paginate-links>
+			<paginate-links for="postList" :async="true"></paginate-links>
 			</div>
 			</div>
 			</section>
@@ -53,8 +53,9 @@ export default {
 	data() {
 		return {
 			posts: [],
-			paginate: ['list'],
+			paginate: ['postList'],
 			errors: [],
+			lang: this.$route.params.lang,
 			categoryList: []
 		};
 	},
@@ -83,14 +84,16 @@ export default {
 		},
 	},
 	computed:{
-        filteredList(){
+        filteredList: function (){
         	if (!this.categoryList.length) {
+				console.log('filter step - default',this.posts)
 				let postsList = this.posts;
 				let byDate = postsList.sort(function(a,b){
 					return new Date(b.date) - new Date(a.date)
 				})	
 				return byDate
 			} else {
+				console.log('filter step - checked',this.posts)
 				let filterMatches = [];
 				for(let i = 0; i < this.posts.length; i++) {
 			
@@ -164,20 +167,57 @@ export default {
 		})
 	},
 	created() {
-		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
-		])
-		.then(axios.spread((response, response1, response2) => {
-			
-			let allPosts  = response.data.concat(response1.data, response2.data);
-			//console.log(allPosts)
-			this.posts = allPosts
-		}))
-		.catch(e => {
-			this.errors.push(e)
-		})
+		if (this.lang == 'en') {
+			// Check if we have already made calls to get the resources
+			if(this.$store.state.resourceListEN.length > 0) {
+				// If resourceList in the store (an array) has any items, just use the store data
+				console.log('NO CALL EN', this.$store.state.resourceListEN)
+				this.posts = this.$store.state.resourceListEN
+				console.log(this.posts)
+			} else {
+				// Else, we have no data, so make the calls
+				console.log('CALLING EN')
+				axios.all([
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
+				])
+				.then(axios.spread((response, response1, response2) => {
+					
+					let allENPosts  = response.data.concat(response1.data, response2.data);
+					this.posts = allENPosts
+					this.$store.commit('SET_RESOURCES_EN', allENPosts)
+				}))
+				.catch(e => {
+					this.errors.push(e)
+				})
+			}
+		} else {
+			// Check if we have already made calls to get the resources
+			if(this.$store.state.resourceListFR.length > 0) {
+				// If resourceList in the store (an array) has any items, just use the store data
+				console.log('NO CALL FR', this.$store.state.resourceListFR);
+				this.posts = this.$store.state.resourceListFR;
+			} else {
+				// Else, we have no data, so make the calls
+				console.log('CALLING FR');
+				axios.all([
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100&lang=fr'),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100&lang=fr'),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100&lang=fr')
+				])
+				.then(axios.spread((response, response1, response2) => {
+					let allFRPosts  = response.data.concat(response1.data, response2.data);
+					this.posts = allFRPosts;
+					console.log(allFRPosts);
+					this.$store.commit('SET_RESOURCES_FR', allFRPosts)
+				}))
+				.catch(e => {
+					this.errors.push(e)
+				})
+			}
+		}
+		
 	},
 };
 </script>

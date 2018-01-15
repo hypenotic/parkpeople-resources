@@ -1,27 +1,24 @@
 <template>
     <nav class="navbar green">
         <div class="navbar-brand">
-            <div v-if="['/grants'].indexOf(this.$route.path) == -1">
-            <a><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px;"></a>
+            <div v-if="this.$route.params.lang == 'fr'">
+            <router-link to="/fr"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px;"></router-link>
             </div>
             <div v-else>
-                <a><img src="https://parkpeople.ca/listings/custom/uploads/2018/01/TD_grants_white_nologos_nationalGrants_white_nologos.png" class="grants-logo"></a>
-                
+                <router-link to="/en" class="lang"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px;"></router-link>
             </div>
-            
         </div>
         <div class="lang">
-            <router-link to="" class="lang">EN</router-link>
-            <router-link to="" class="lang">FR</router-link>
-
-            {{ lang }}
+            <router-link v-if="this.$route.params.lang == 'fr'" to="/en" class="lang">EN</router-link>
+            <router-link v-if="this.$route.params.lang == 'en'" to="/fr" class="lang">FR</router-link>
         </div>
 
         <div id="navbarExampleTransparentExample" class="navbar-menu">
-            <div class="navbar-end">
-                <router-link to="/grants" class="navbar-item" exact>Home</router-link>
-                <router-link to="/faq" class="navbar-item" exact>FAQs</router-link>                
-            </div>
+            <!-- <div class="navbar-end">
+                <a href="https://parkpeople.ca" class="navbar-item">Home</a> 
+                <router-link v-if="this.$route.params.lang == 'fr' && this.$route.path != '/fr'" to="/fr" class="navbar-item" exact>Retour à toutes les ressources</router-link>  
+                <router-link v-if="this.$route.params.lang == 'en' && this.$route.path != '/en'" to="/en" class="navbar-item" exact>Back to all resources</router-link>             
+            </div> -->
         </div>
     </nav>
 </template>
@@ -31,8 +28,8 @@ import { eventBus } from '../main.js';
 export default {
     data() {
         return {
-            id: this.$route.params.id,
-            lang: ''
+            // id: this.$route.params.id,
+            lang: this.$route.params.lang
         }
     },
 };

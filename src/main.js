@@ -4,6 +4,7 @@ import store from './store'
 import App from './App.vue'
 // After install add Vue Router to our main app
 import VueRouter from 'vue-router'
+import VueAnalytics from 'vue-analytics'
 import { routes } from './routes'
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
@@ -16,7 +17,7 @@ export const eventBus = new Vue();
 // Use
 Vue.use(Buefy);
 Vue.use(SocialSharing);
-Vue.use(VuePaginate)
+Vue.use(VuePaginate);
 // Vue.use(Vuex);
 
 /* With the Vue Router imported 
@@ -35,10 +36,26 @@ Vue.use(VueRouter);
 const router = new VueRouter({
 	routes, // Have to pass an object where we setup the router. ES6 syntax (routes:routes)
   mode: 'history', // Remove the hash
+  base: '/resources',
   scrollBehavior (to, from, savedPosition) {
       return { x: 0, y: 0 }
     }
 })
+
+Vue.use(VueAnalytics, {
+	id: 'UA-73699301-1',
+	// commands: {
+	// 	trackClick (name = 'unknown') {
+	// 	   $ga.track('Social Link', 'click', 'Social Account', name)
+	// 	}
+	// }
+	// debug: {
+	// 	enabled: true,
+	// 	trace: false,
+	// 	sendHitTask: true
+	// },
+	router
+});
 
 new Vue({
   el: '#app',
