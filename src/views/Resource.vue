@@ -11,11 +11,11 @@
 					<div id="social-share-trigger" v-bind:class="{ 'social-menu-open': showSocialShare }" v-on:click="showSocialShare = !showSocialShare">
 						<i class="fa fa-share-alt" aria-hidden="true"></i>
 					</div>
-					<social-sharing :url="`https://parkpeople.ca${fullPath}`"
+					<social-sharing :url="`https://parkpeople.ca/resources${fullPath}`"
 					:title="post.title.rendered"
 					description=""
 					quote=""
-					hashtags=""
+					hashtags="ParkPeople, Resource"
 					twitter-user="Park_People"
 					inline-template>
 					<div class="social-share-buttons">
@@ -113,12 +113,6 @@
 	</section>
 	<section v-if="relatedPosts.length > 0" class="related-resources" style="display: none;">
 		<h3>Related Resources</h3>
-		<!-- <ul class="resource__tips__bullets">
-			<li v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
-				<h4 v-html="related.title.rendered"></h4>
-				<div v-html="related.title.rendered"></div>
-			</li>
-		</ul> -->
 		<div class="columns is-multiline">
 			<div class="column is-one-quarter" v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
 				<div class="card">
@@ -171,7 +165,8 @@ export default {
 			showSocialShare: false,
 			fullPath: this.$route.fullPath,
 			relatedPosts: [],
-			language: ''
+			language: '',
+			translated: false
 		}
 	},
 	filters: {

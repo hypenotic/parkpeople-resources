@@ -29,7 +29,6 @@
                                     <li><a href="https://parkpeople.ca/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
                                     <li><a href="https://twitter.com/Park_People" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                     <li><a href="https://www.facebook.com/ParkPeopleTO/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="https://plus.google.com/106245803846784989625" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
                                 </ul>
     
                             </div>
