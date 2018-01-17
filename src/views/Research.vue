@@ -83,7 +83,8 @@
 	<section class="section research__summary" v-if="post.content.rendered != ''">
 		<div class="columns">
 			<div class="column is-three-fifths is-offset-one-fifth">
-					<h3 class="is-size-4">Summary</h3>
+					<h3 v-if="lang=='fr'" class="is-size-4">Résumé</h3>
+					<h3 v-else class="is-size-4">Summary</h3>
 					<div v-html="post.content.rendered"></div>
 				</div>
 			</div>
@@ -115,13 +116,8 @@
 	</div>
 
 	<section v-if="relatedPosts.length > 0" class="related-resources" style="margin-top: 50px;">
-		<h3>Related Resources</h3>
-		<!-- <ul class="resource__tips__bullets">
-			<li v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
-				<h4 v-html="related.title.rendered"></h4>
-				<div v-html="related.title.rendered"></div>
-			</li>
-		</ul> -->
+		<h3 v-if="lang=='fr'">Ressources associées</h3>
+		<h3 v-else>Related Resources</h3>
 		<div class="columns is-multiline">
 			<div class="column is-one-quarter" v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
 				<div class="card">
@@ -175,6 +171,8 @@
 				fullPath: this.$route.fullPath,
 				relatedPosts: [],
 				lang: this.$route.params.lang,
+				translated: false,
+				translatedPost: []
 			}
 		},
 		methods: {
@@ -250,6 +248,58 @@
 
 				// Let's get the WPML Lang id
 				// this.lang = this.post.wpml_translations[0].id
+				// Let's see if there's a translation
+				if (this.post.wpml_translations.length >0) {
+					console.log('translation post', this.post)
+					console.log('translation exists', this.post.wpml_translations)
+					let translatedID = this.post.wpml_translations[0].id
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/' + translatedID + '?_embed') 
+					.then(response => {
+						console.log(response.data)
+						this.translatedPost = response.data
+						this.translated = true;
+						if (this.$route.params.lang == 'en') {
+							let langTag = 'fr'
+							let transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+							// How do I not repeat the next 3 lines – how do I move them out of the IF statement
+							console.log(transURL);
+							this.$store.commit('SET_TRANSLATION_CHECK', true)
+							this.$store.commit('SET_TRANSLATION_URL', transURL)
+							console.log(this.$store.state.translatedCheck)
+						} else {
+							let langTag = 'en'
+							let transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+							console.log(transURL);
+							this.$store.commit('SET_TRANSLATION_CHECK', true)
+							this.$store.commit('SET_TRANSLATION_URL', transURL)
+							console.log(this.$store.state.translatedCheck)
+						}
+						// let transalatedURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+						// console.log(transURL);
+						// this.$store.commit('SET_TRANSLATION_CHECK', true, transURL)
+						// console.log(this.$store.state.translatedCheck)
+					})
+					.catch(error => {
+						if (error.response) {
+						// The request was made and the server responded with a status code
+						// that falls out of the range of 2xx
+						console.log('Translated Post Call', error.response.data);
+						console.log('Translated Post Call', error.response.status);
+						console.log('Translated Post Call', error.response.headers);
+						} else if (error.request) {
+						// The request was made but no response was received
+						// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+						// http.ClientRequest in node.js
+						console.log('Translated Post Call', error.request);
+						} else {
+						// Something happened in setting up the request that triggered an Error
+						console.log('Error Translated Post Call', error.message);
+						}
+						console.log('Translated Post Call', error.config);
+					})
+				} else {
+					console.log('no translation')
+				}
 
 				// Let's get the categories IDs
 				let taxID1 = this.post.activity

@@ -73,62 +73,49 @@ export default {
 			
 
 			const allResponses = response1.data.concat(response2.data, response3.data);
-			// console.log(allResponses) 
+
+			function removeDuplicates(myArr, prop) {
+				return myArr.filter((obj, pos, arr) => {
+					return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+				});
+			}
 
 			// Activity Filter
 			const categories = []
 			for(let i = 0; i < allResponses.length; i++) {
-				// console.log('A1',allResponses[i].all_lang_taxonomies)
 				if(typeof(allResponses[i].all_lang_taxonomies.activity) != 'undefined') {
 					const array = allResponses[i].all_lang_taxonomies.activity
-					// console.log('not undefineddd ACT')
 					for(let j = 0; j < array.length; j++) {
 						let duo = {};
 						duo.name = array[j].name
 						duo.fr = array[j].activity_french[0]
-						// console.log(duo)
 						
 						let category = duo
 						categories.push(category)
 					}
 				}
 			}
-			// console.log('THIS.ACT.ALL', categories);
-			function removeDuplicates(myArr, prop) {
-				return myArr.filter((obj, pos, arr) => {
-					return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
-				});
-			}
+			
 			let uniqueActivities = removeDuplicates(categories, 'name')
-			// const catUnique = [...new Set(categories)]
 			this.activity = uniqueActivities
-			// console.log('THIS.ACT', this.activity);
 
 			// Learn Filter
-			// this.learn = response.data
-			// console.log('LEARN',this.learn)
 			const Lcategories = []
 			for(let i = 0; i < allResponses.length; i++) {
-				// console.log('L1',allResponses[i].all_lang_taxonomies)
 				if(typeof(allResponses[i].all_lang_taxonomies.learn) != 'undefined') {
 					const array = allResponses[i].all_lang_taxonomies.learn
-					// console.log(array)
-					// console.log('not undefineddd L')
 					for(let j = 0; j < array.length; j++) {
 						let duo = {};
 						duo.name = array[j].name
 						duo.fr = array[j].learn_french[0]
-						// console.log(duo)
 
 						let category = duo
 						Lcategories.push(category)
 					}
 				}
 			} 
-			// const catUniqueL = [...new Set(Lcategories)]
 			let uniqueLearns = removeDuplicates(Lcategories, 'name')
 			this.learn = uniqueLearns
-			// console.log('THIS.LEARN',this.learn)
 
 		}))
 		.catch(e => {

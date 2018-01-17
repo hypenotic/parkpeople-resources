@@ -158,6 +158,10 @@ ol.resource__bullets {
             font-size: 1.3rem;
             line-height: 1.8rem;
             font-style: italic;
+            @media #{$small-and-down} {
+                font-size: 1.3rem;
+                line-height: 1.5;
+            }
         }
     }
 }
@@ -179,6 +183,10 @@ ol.resource__bullets {
     line-height: 2.2rem;
     font-style: italic;
     position: relative;
+    @media #{$small-and-down} {
+        font-size: 1.3rem;
+        line-height: 1.5;
+    }
     &:after {
         content: '“';
         position: absolute;

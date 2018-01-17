@@ -41,6 +41,7 @@
 						<span v-if="this.$route.params.lang == 'fr'">Faire dans les parcs:</span>
 						<span v-else>Do in parks:</span>
 						<ul>
+							<!-- <li v-if="this.$route.params.lang == 'fr'" v-for="category in post.all_lang_taxonomies.activity" :key="category.name">{{ category.activity_french[0] }} </li> -->
 							<li v-for="category in post.pure_taxonomies.activity" :key="category.name">{{ category.name }} </li>
 						</ul>
 					</div>
@@ -48,6 +49,7 @@
 						<span v-if="this.$route.params.lang == 'fr'">Savoir les parcs:</span>
 						<span v-else>Know about parks:</span>
 						<ul>
+							<!-- <li v-if="this.$route.params.lang == 'fr'" v-for="category in post.all_lang_taxonomies.learn" :key="category.name">{{ category.learn_french[0] }}</li> -->
 							<li v-for="category in post.pure_taxonomies.learn" :key="category.name">{{ category.name }}</li>
 						</ul>
 					</div>
@@ -77,12 +79,14 @@
 				</ol>
 
 				<div v-if="post.meta_box._resource_content_takeaway != ''" class="resource__takeaways">
-					<h3>Takeaways</h3>
+					<h3 v-if="lang=='fr'">Résumé</h3>
+					<h3 v-else>Takeaways</h3>
 					<div v-html="post.meta_box._resource_content_takeaway" class="resource__takeaways__content"></div>
 				</div>
 
 				<div v-if="post.meta_box._resource_tips > 0" class="resource__tips">
-					<h3>Tips &amp; Bonus Ideas</h3>
+					<h3 v-if="lang=='fr'">Conseils et idées</h3>
+					<h3 v-else>Tips &amp; Bonus Ideas</h3>
 					<div>
 						<ul class="resource__tips__bullets">
 							<li v-for="tip in post.meta_box._resource_tips" :key="tip['_resource_tip_headline']">
@@ -96,13 +100,13 @@
 			</div>
 		</div>
 		<div class="quote" v-if="post.meta_box._resource_content_quote != undefined">
-			<h3>Quote</h3>
-				<div v-html="post.meta_box._resource_content_quote"></div>
-				<small v-html="post.meta_box._resource_quote_name"></small>
-				<small v-html="post.meta_box._resource_quote_group"></small>
+			<div v-html="post.meta_box._resource_content_quote"></div>
+			<small v-html="post.meta_box._resource_quote_name"></small>
+			<small v-html="post.meta_box._resource_quote_group"></small>
 		</div>
 		<div class="rec-link" v-if="post.meta_box._resource_links.length > 0">
-			<h3>Recommended Links</h3>
+			<h3 v-if="lang=='fr'">Liens recommandés</h3>
+			<h3 v-else>Recommended Links</h3>
 			<ul class="resource__rec-link__list">
 				<li v-for="link in post.meta_box._resource_links" :key="link['_resource_link_headline']">
 					<h4 v-html="link['_resource_link_headline']"></h4>
@@ -114,7 +118,8 @@
 		</div>
 	</section>
 	<section v-if="relatedPosts.length > 0" class="related-resources">
-		<h3>Related Resources</h3>
+		<h3 v-if="lang=='fr'">Ressources associées</h3>
+		<h3 v-else>Related Resources</h3>
 		<div class="columns is-multiline">
 			<div class="column is-one-quarter" v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
 				<div class="card">
@@ -250,7 +255,8 @@ export default {
 			// Let's get the WPML Lang id
 			// this.lang = this.post.wpml_translations[0].id
 			// Let's see if there's a translation
-			if (this.post.wpml_translations.length >0) {
+			if (this.post.wpml_translations.length > 0) {
+				console.log('translation post', this.post)
 				console.log('translation exists', this.post.wpml_translations)
 				let translatedID = this.post.wpml_translations[0].id
 				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + translatedID + '?_embed') 
