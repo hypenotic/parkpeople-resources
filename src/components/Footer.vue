@@ -1,5 +1,16 @@
 <template>
-    <div>  
+    <div>
+        <section class="newsletter">
+			<div class="container">
+				<p v-if="lang=='en'">Want to stay up-to-date on Park People news?</p>
+                <p v-else>Vous voulez se tenir au courant de les nouvelles de Park People?</p>
+				<a v-if="lang=='fr'" class="button" href="http://parkpeople.us2.list-manage.com/subscribe?u=ba963c8c64482c0ad756245c3&id=efc9b053b8" target="_blank">Recevez notre newsletter!</a>
+                <a v-else class="button" href="http://parkpeople.us2.list-manage.com/subscribe?u=ba963c8c64482c0ad756245c3&id=efc9b053b8" target="_blank">Get the Park People newsletter!</a>
+				<!-- <div>
+					<app-form skin="grants" button="Okay!"></app-form>
+				</div> -->
+			</div>
+		</section>
         <footer v-if="this.$route.params.lang == 'en'" class="resources-footer">
             <div>
                 <div class="columns">
@@ -88,6 +99,11 @@
 <script>
     import NewsletterForm from './NewsletterForm.vue';
     export default {
+        data() {
+            return {
+                lang: this.$route.params.lang
+            };
+        },
         components: {
             appForm: NewsletterForm
         }
@@ -98,6 +114,38 @@
 
     // Import Variables
     @import '../styles/variables.scss';
+
+    .newsletter {
+        padding: 50px 0;
+        text-align: center;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        margin-top: 40px;
+        p {
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+    }
+
+    .newsletter {
+        .button {
+            background: $white;
+            border: 2px solid $blue;
+            color: $blue;
+            border-radius: 50px;
+            font-weight: bold;
+            padding: 16px 32px;
+            height: 50px;
+            @media #{$small-and-down} {
+                margin-top: 100px;
+            }
+            &:hover {
+                background: $blue;
+                border: 2px solid $blue;
+                color: $white;
+            }
+        }
+    }
 
     .button {
         color: $white;
@@ -135,7 +183,7 @@
                 left: 0;
                 top: -70px;
                 width: 100%;
-                height: 160px;
+                height: 150px;
                 background: #fff;
                 -webkit-transform: skewY(5deg);
                 -moz-transform: skewY(5deg);

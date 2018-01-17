@@ -1,7 +1,7 @@
 <template>
 	<div v-if="post.meta_box">
 	
-	<img class="heading" src="/src/assets/placeimg_1000_500_nature.jpg">
+	<img class="heading" src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg">
 
 	<section style="margin-top: -200px;">
 		<div class="columns">

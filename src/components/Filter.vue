@@ -3,28 +3,37 @@
     	<div class="container">
 			<div class="columns">
 				<div class="column is-12">
-      				<h4>Inspiration and ideas to make something awesome happen in your park</h4>
+      				<h4 v-if="this.$route.params.lang == 'fr'">De l’inspiration et des idées pour organiser quelque chose de formidable dans votre parc.</h4>
+					<h4 v-else>Inspiration and ideas to make something awesome happen in your park</h4>
 			  	</div>
 			</div>
 			<div class="columns">
 			  	<div class="column is-6">
-					<h6>Things you can do in parks</h6>
-					<p>Events and activities to do in your park</p>
+					<h6 v-if="this.$route.params.lang == 'fr'">Ce que vous pouvez faire dans les parcs.</h6>
+					<h6 v-else>Things you can do in parks</h6>
+					<p v-if="this.$route.params.lang == 'fr'">Des événements et des activités à faire dans votre parc.</p>
+					<p v-else>Events and activities to do in your park</p>
 				  	<ul id="ck-button">
 						<li v-for="item in activity">
 							<label>
-							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item" /><span>{{item}}</span>
+							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item" />
+							<span v-if="lang=='fr'">{{item.fr}}</span>
+							<span v-if="lang=='en'">{{item.name}}</span>
 							</label>
 						</li>
 					</ul>
 				</div>
 				<div class="column is-6">
-					<h6>Things to know about parks and park groups</h6>
-					<p>Research and practical tools to guide your work in parks</p>
+					<h6 v-if="this.$route.params.lang == 'fr'">Ce qu’il faut savoir sur les parcs et les groupes de parcs.</h6>
+					<h6 v-else>Things to know about parks and park groups</h6>
+					<p v-if="this.$route.params.lang == 'fr'">Des outils de recherche et pratiques pour guider votre travail dans les parcs.</p>
+					<p v-else>Research and practical tools to guide your work in parks</p>
 				  	<ul id="ck-button">
-						<li v-for="item in learn" v-if="item.count > 0">
+						<li v-for="item in learn">
 							<label>
-							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item.name" /><span>{{item.name}}</span>
+							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item" />
+							<span v-if="lang=='fr'">{{item.fr}}</span>
+							<span v-if="lang=='en'">{{item.name}}</span>
 							</label>
 						</li>
 					</ul>
@@ -44,10 +53,12 @@ export default {
 			learn: [],
 			activity: [],
 			checkedCategories: [],
+			lang: this.$route.params.lang
 		};
 	},
 	methods: {
 		emitGlobalClickEvent() {
+			console.log('HIIII',this.checkedCategories);
       		eventBus.$emit('checked', this.checkedCategories);
     	}
 	},
@@ -60,24 +71,65 @@ export default {
 		])
 		.then(axios.spread((response, response1, response2, response3) => {
 			
-			// Learn Filter
-			this.learn = response.data
-			
-			// Activity Filter
+
 			const allResponses = response1.data.concat(response2.data, response3.data);
+			console.log(allResponses) 
+
+			// Activity Filter
 			const categories = []
 			for(let i = 0; i < allResponses.length; i++) {
-				if(typeof(allResponses[i].pure_taxonomies.activity) != 'undefined') {
-					const array = allResponses[i].pure_taxonomies.activity
-					//console.log(array)
+				console.log('A1',allResponses[i].all_lang_taxonomies)
+				if(typeof(allResponses[i].all_lang_taxonomies.activity) != 'undefined') {
+					const array = allResponses[i].all_lang_taxonomies.activity
+					// console.log('not undefineddd ACT')
 					for(let j = 0; j < array.length; j++) {
-						let category = array[j].name
+						let duo = {};
+						duo.name = array[j].name
+						duo.fr = array[j].activity_french[0]
+						// console.log(duo)
+						
+						let category = duo
 						categories.push(category)
 					}
 				}
 			}
-			const catUnique = [...new Set(categories)]
-			this.activity = catUnique
+			// console.log('THIS.ACT.ALL', categories);
+			function removeDuplicates(myArr, prop) {
+				return myArr.filter((obj, pos, arr) => {
+					return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+				});
+			}
+			let uniqueActivities = removeDuplicates(categories, 'name')
+			// const catUnique = [...new Set(categories)]
+			this.activity = uniqueActivities
+			console.log('THIS.ACT', this.activity);
+
+			// Learn Filter
+			// this.learn = response.data
+			// console.log('LEARN',this.learn)
+			const Lcategories = []
+			for(let i = 0; i < allResponses.length; i++) {
+				// console.log('L1',allResponses[i].all_lang_taxonomies)
+				if(typeof(allResponses[i].all_lang_taxonomies.learn) != 'undefined') {
+					const array = allResponses[i].all_lang_taxonomies.learn
+					// console.log(array)
+					// console.log('not undefineddd L')
+					for(let j = 0; j < array.length; j++) {
+						let duo = {};
+						duo.name = array[j].name
+						duo.fr = array[j].learn_french[0]
+						// console.log(duo)
+
+						let category = duo
+						Lcategories.push(category)
+					}
+				}
+			} 
+			// const catUniqueL = [...new Set(Lcategories)]
+			let uniqueLearns = removeDuplicates(Lcategories, 'name')
+			this.learn = uniqueLearns
+			console.log('THIS.LEARN',this.learn)
+
 		}))
 		.catch(e => {
 			this.errors.push(e)

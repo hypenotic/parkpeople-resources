@@ -2,5 +2,7 @@ export const state = {
     resourceListEN: [],
     resourceListFR: [],
     singlePostCache: {},
-    language: ''
+    language: '',
+    translatedCheck: false,
+    translatedURL: ''
 }

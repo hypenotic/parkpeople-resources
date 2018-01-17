@@ -38,13 +38,15 @@
 				
 				<div v-if="this.$route.params.lang == 'en'" class="category-lists">
 					<div v-if="post.pure_taxonomies.hasOwnProperty('activity')">
-						<span>Do in parks:</span>
+						<span v-if="this.$route.params.lang == 'fr'">Faire dans les parcs:</span>
+						<span v-else>Do in parks:</span>
 						<ul>
 							<li v-for="category in post.pure_taxonomies.activity" :key="category.name">{{ category.name }} </li>
 						</ul>
 					</div>
 					<div v-if="post.pure_taxonomies.hasOwnProperty('learn')">
-						<span>Know about parks:</span>
+						<span v-if="this.$route.params.lang == 'fr'">Savoir les parcs:</span>
+						<span v-else>Know about parks:</span>
 						<ul>
 							<li v-for="category in post.pure_taxonomies.learn" :key="category.name">{{ category.name }}</li>
 						</ul>
@@ -59,7 +61,7 @@
 		</div>
 	</section>
 	
-	<img style="width: 100%; object-fit: cover; height: 500px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
+	<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia')" style="width: 100%; object-fit: cover; height: 500px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
 	
 	<section class="section section__single-resource">
 		<div class="columns" >
@@ -111,7 +113,7 @@
 			</ul>
 		</div>
 	</section>
-	<section v-if="relatedPosts.length > 0" class="related-resources" style="display: none;">
+	<section v-if="relatedPosts.length > 0" class="related-resources">
 		<h3>Related Resources</h3>
 		<div class="columns is-multiline">
 			<div class="column is-one-quarter" v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
@@ -123,7 +125,7 @@
 					</div>
 					<div class="card-content">
 						<div class="content">
-							<router-link :to="'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></router-link>
+							<router-link :to="lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></router-link>
 							<p v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></p>
 							<div v-if="related.pure_taxonomies.activity">
 								<b>Do in parks</b>
@@ -165,8 +167,8 @@ export default {
 			showSocialShare: false,
 			fullPath: this.$route.fullPath,
 			relatedPosts: [],
-			language: '',
-			translated: false
+			translated: false,
+			translatedPost: []
 		}
 	},
 	filters: {
@@ -202,6 +204,9 @@ export default {
 		},
 	},
 	created() {
+		this.$store.commit('SET_TRANSLATION_CHECK', false, '')
+		console.log(this.$store.state.translatedCheck)
+
 		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + this.id + '?_embed')
 
 		.then(response => {
@@ -233,6 +238,57 @@ export default {
 
 			// Let's get the WPML Lang id
 			// this.lang = this.post.wpml_translations[0].id
+			// Let's see if there's a translation
+			if (this.post.wpml_translations.length >0) {
+				console.log('translation exists', this.post.wpml_translations)
+				let translatedID = this.post.wpml_translations[0].id
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + translatedID + '?_embed') 
+				.then(response => {
+					console.log(response.data)
+					this.translatedPost = response.data
+					this.translated = true;
+					if (this.$route.params.lang == 'en') {
+						let langTag = 'fr'
+						let transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+						// How do I not repeat the next 3 lines – how do I move them out of the IF statement
+						console.log(transURL);
+						this.$store.commit('SET_TRANSLATION_CHECK', true)
+						this.$store.commit('SET_TRANSLATION_URL', transURL)
+						console.log(this.$store.state.translatedCheck)
+					} else {
+						let langTag = 'en'
+						let transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+						console.log(transURL);
+						this.$store.commit('SET_TRANSLATION_CHECK', true)
+						this.$store.commit('SET_TRANSLATION_URL', transURL)
+						console.log(this.$store.state.translatedCheck)
+					}
+					// let transalatedURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+					// console.log(transURL);
+					// this.$store.commit('SET_TRANSLATION_CHECK', true, transURL)
+					// console.log(this.$store.state.translatedCheck)
+				})
+				.catch(error => {
+					if (error.response) {
+					// The request was made and the server responded with a status code
+					// that falls out of the range of 2xx
+					console.log('Translated Post Call', error.response.data);
+					console.log('Translated Post Call', error.response.status);
+					console.log('Translated Post Call', error.response.headers);
+					} else if (error.request) {
+					// The request was made but no response was received
+					// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+					// http.ClientRequest in node.js
+					console.log('Translated Post Call', error.request);
+					} else {
+					// Something happened in setting up the request that triggered an Error
+					console.log('Error Translated Post Call', error.message);
+					}
+					console.log('Translated Post Call', error.config);
+				})
+			} else {
+				console.log('no translation')
+			}
 
 			// Let's get the categories IDs
 			let taxID1 = this.post.activity
@@ -249,15 +305,22 @@ export default {
 			}
 			
 			console.log(stringID1, stringID2)
+			
+			let langString = ''
+			if (this.lang == 'en'){
+				langString = ''
+			} else {
+				langString = '&lang=fr'
+			}
 
 			// Let's make a call to get related posts
 			axios.all([
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2)
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1+langString),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1+langString),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1+langString),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2+langString),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2+langString),
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2+langString)
 			])
 			.then(axios.spread((response, response1, response2, response3, response4, response5) => {
 				
@@ -268,6 +331,8 @@ export default {
 				}
 
 				let allPosts  = response.data.concat(response1.data, response2.data, response3.data, response4.data, response5.data)
+
+				console.log('all posts', allPosts)
 
 				let noDups = removeDuplicates(allPosts, 'id')
 

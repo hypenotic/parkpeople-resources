@@ -9,8 +9,10 @@
             </div>
         </div>
         <div class="lang">
-            <!-- <router-link v-if="this.$route.params.lang == 'fr'" to="/en" class="lang">EN</router-link>
-            <router-link v-if="this.$route.params.lang == 'en'" to="/fr" class="lang">FR</router-link> -->
+            <router-link v-if="this.$route.params.lang == 'fr' && this.$route.path == '/en'" to="/en" class="lang">EN</router-link>
+            <router-link v-if="this.$route.params.lang == 'en' && this.$route.path == '/fr'" to="/fr" class="lang">FR</router-link>
+            <router-link v-if="this.$route.params.lang == 'fr' && this.$store.state.translatedCheck == true" to="/en" class="lang">EN</router-link>
+            <router-link v-if="this.$route.params.lang == 'en' && this.$store.state.translatedCheck == true" to="/fr" class="lang">FR</router-link>
         </div>
 
         <div id="mobile-menu-trigger" v-on:click="showMobileMenu = !showMobileMenu">
@@ -21,8 +23,8 @@
             <div class="navbar-end">
                 <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Home</a> 
                 <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca" class="navbar-item">Page d'accueil</a>
-                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Retour à Bourses</a>  
-                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca/parkgrants" class="navbar-item" exact>Back to grant page</a>             
+                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Bourses TD Park People</a>  
+                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca/parkgrants" class="navbar-item" exact>TD Park People Grants</a>             
             </div>
         </div>
     </nav>
@@ -36,20 +38,22 @@
             </div>
         </div>
         <div class="lang">
-            <!-- <router-link v-if="this.$route.params.lang == 'fr'" to="/en" class="lang">EN</router-link>
-            <router-link v-if="this.$route.params.lang == 'en'" to="/fr" class="lang">FR</router-link> -->
+            <router-link v-if="this.$route.params.lang == 'fr' && this.$route.path == '/fr'" to="/en" class="lang">EN</router-link>
+            <router-link v-if="this.$route.params.lang == 'en' && this.$route.path == '/en'" to="/fr" class="lang">FR</router-link>
+            <router-link v-if="this.$route.params.lang == 'fr' && this.$store.state.translatedCheck == true" :to="this.$store.state.translatedURL" class="lang">EN</router-link>
+            <router-link v-if="this.$route.params.lang == 'en' && this.$store.state.translatedCheck == true" :to="this.$store.state.translatedURL" class="lang">FR</router-link>
         </div>
 
         <div id="mobile-menu-trigger" v-on:click="showMobileMenu = !showMobileMenu">
             <i class="fa fa-bars" aria-hidden="true"></i>
         </div>
 
-        <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div id="navbarExampleTransparentExample" class="navbar-menu" v-bind:class="{ 'menu-open': showMobileMenu }">
             <div class="navbar-end">
                 <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Home</a> 
                 <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca" class="navbar-item">Page d'accueil</a>
-                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Retour à Bourses</a>  
-                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca/parkgrants" class="navbar-item" exact>Back to grant page</a>             
+                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Bourses TD Park People</a>  
+                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca/parkgrants" class="navbar-item">TD Park People Grants</a>             
             </div>
         </div>
     </nav>
@@ -94,6 +98,7 @@ export default {
         }
     },
     created: function () {
+        console.log('header check', this.$store.state.translatedCheck);
         // window.addEventListener('scroll', this.handleScroll);
         if (window.addEventListener){
             // console.log('Option 1');

@@ -8,26 +8,32 @@
 						<div class="card">
 							<div class="card-image">
 								<figure class="image is-2by1">
-									<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+									<!-- THIS IS CAUSING IT TO BREAK - CARDS DON'T RENDER -->
+									<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang != 'fr'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+									<img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang == 'fr' && post.type != 'research'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+									<img v-else src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
 								</figure>
 							</div>
 							<div class="card-content">
 								<div class="content">
-									<router-link :to="lang+ '/' +post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
+									<small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(post.type) | removeHyphen | toTitleCase }}</small>
+									<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ post.type | removeHyphen | toTitleCase }}</small>
+									<!-- <a :href="'https://parkpeople.ca/resources/en/'+post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></a> -->
+									<router-link :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
 									<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
-									<div v-if="post.pure_taxonomies.activity" class="activity-list-container">
-										<b>Do in parks:</b>
-										<ul class="card__activity-list">
-											<li v-for="tax in post.pure_taxonomies.activity" :key="tax.name">{{ tax.name | toUppercase }}</li>
-										</ul>
+									<div v-if="post.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
+										<strong>Faire dans les parcs</strong>: <span v-for="tax in post.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
 									</div>
-									<div v-if="post.pure_taxonomies.learn" class="activity-list-container">
-										<b>Know about parks:</b>
-										<ul class="card__learn-list">
-											<li v-for="tax in post.pure_taxonomies.learn" :key="tax.name">{{ tax.name | toUppercase }}</li>
-										</ul>
+									<div v-if="post.pure_taxonomies.activity && lang == 'en'" class="activity-list-container">
+										<strong>Do in parks</strong>: <span v-for="tax in post.pure_taxonomies.activity" :key="tax.name">{{ tax.name  }}</span>
 									</div>
-									<small>{{ post.type | removeHyphen | toTitleCase }}</small>
+									<div v-if="post.pure_taxonomies.learn && lang == 'fr'" class="activity-list-container">
+										<strong>Savoir les parcs:</strong> <span v-for="tax in post.all_lang_taxonomies.learn" :key="tax.name">{{ tax.learn_french[0] }}</span>
+									</div>
+									<div v-if="post.pure_taxonomies.learn && lang == 'en'" class="activity-list-container">
+										<strong>Know about parks:</strong> <span v-for="tax in post.pure_taxonomies.learn" :key="tax.name">{{ tax.name }}</span>
+									</div>
+									
 								</div>
 							</div>
 						</div>
@@ -60,6 +66,15 @@ export default {
 		};
 	},
 	filters: {
+		translatedType(type){
+			if (type == 'resource') {
+				return 'ressource'
+			} else if ( type == 'research') {
+				return 'recherche'
+			} else {
+				return 'étude de cas'
+			}
+		},
 		removeHyphen(value){
 			return value.replace("-", ' ');
 		},
@@ -87,6 +102,7 @@ export default {
         filteredList: function (){
         	if (!this.categoryList.length) {
 				console.log('filter step - default',this.posts)
+				console.log('HEY',this.categoryList)
 				let postsList = this.posts;
 				let byDate = postsList.sort(function(a,b){
 					return new Date(b.date) - new Date(a.date)
@@ -94,6 +110,7 @@ export default {
 				return byDate
 			} else {
 				console.log('filter step - checked',this.posts)
+				console.log('HEY',this.categoryList)
 				let filterMatches = [];
 				for(let i = 0; i < this.posts.length; i++) {
 			
@@ -117,7 +134,14 @@ export default {
 						});
 					}
 
-					var test = findOne(combined,this.categoryList)
+					let nameArray = [];
+					for(let n = 0; n < this.categoryList.length; n++) {
+						let name = this.categoryList[n].name
+						console.log(name)
+						nameArray.push(name)
+					}
+
+					var test = findOne(combined,nameArray)
 
 					// console.log(i,test,combined,this.categoryList)
 
@@ -209,7 +233,7 @@ export default {
 				.then(axios.spread((response, response1, response2) => {
 					let allFRPosts  = response.data.concat(response1.data, response2.data);
 					this.posts = allFRPosts;
-					console.log(allFRPosts);
+					console.log('ALL FR Posts', allFRPosts);
 					this.$store.commit('SET_RESOURCES_FR', allFRPosts)
 				}))
 				.catch(e => {
@@ -233,8 +257,10 @@ export default {
 .content a h4 {
 	color: rgba(30,177,242, 1);
 	font-size: 1.2rem;
-	line-height: 1.8rem;
+	line-height: 1.7rem;
 	font-weight: 700;
+	margin-bottom: 0.3rem;
+	margin-top: 0.3rem;
 	// line-height: 1.4;
 	&:hover {
 		color: rgba(30,177,242,0.7);
@@ -285,6 +311,40 @@ img {
 		font-family: $family-sanserif;
 		// color: $blue;
 		display: inline-block;
+	}
+}
+
+.card .content {
+	p {
+		margin-bottom: 0.3rem;
+	}
+}
+
+.activity-list-container,
+.activity-list-container span,
+.activity-list-container strong {
+	font-size: 12px;
+	line-height: 1.5;
+	color: rgba(0,0,0,0.4) !important;
+}
+
+.activity-list-container span {
+	display:inline-block;
+	margin-right: 5px;
+	position: relative;
+	&:after {
+		content: ',';
+		position: absolute;
+		bottom: 0;
+		right: -2px;
+		color: rgba(0,0,0,0.4) !important;
+	}
+}
+
+.activity-list-container span:last-child {
+	margin-right: 0px;
+	&:after {
+		display: none;
 	}
 }
 

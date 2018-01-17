@@ -3,14 +3,17 @@ import { state } from './state'
     // resourceListEN: [],
     // resourceListFR: [],
     // singlePostCache: {},
-    // language: ''
+    // language: '',
+    // translated: false
 // }
 
 import { 
     SET_RESOURCES_EN, 
     SET_RESOURCES_FR,
     TOGGLE_LANGUAGE, 
-    ADD_SINGLE_RESOURCE 
+    ADD_SINGLE_RESOURCE,
+    SET_TRANSLATION_CHECK,
+    SET_TRANSLATION_URL  
 } from './mutation-types'
 
 export const mutations = {
@@ -30,10 +33,16 @@ export const mutations = {
             console.log('POST ALREADY IN STORE')
             return
         } else {
-            console.log('ADDING PSOT TO STORE')
+            console.log('ADDING POST TO STORE')
             copy[id] = post;
             state.singlePostCache = copy
         }
         
+    },
+    SET_TRANSLATION_CHECK(state, check) {
+        state.translatedCheck = check
+    },
+    SET_TRANSLATION_URL(state, url) {
+        state.translatedURL = url
     },
 }

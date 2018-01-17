@@ -111,6 +111,7 @@ small {
     p {
 		font-size: 0.8rem;
 		line-height: 1.3rem;
+        margin-bottom: 0.8rem;
 	}
 }
 
@@ -184,6 +185,12 @@ ol.resource__bullets {
         top: 0;
         left: -20px;
     }
+}
+
+.card .content {
+	p {
+		margin-bottom: 0.5rem;
+	}
 }
 
 // Grants
