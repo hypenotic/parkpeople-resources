@@ -55,13 +55,15 @@
 							<h6 v-html="post.meta_box._research_link_title"></h6>
 							<p><span v-html="post.meta_box._research_link_subtitle"></span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
 							<div class="research__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
-							<a :href="post.meta_box._research_link_button" class="button button--rounded button--orange" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Read</a>
+							<a v-if="lang == 'fr'" :href="post.meta_box._research_link_button" class="button button--rounded button--orange" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i>Lis</a>
+							<a v-else :href="post.meta_box._research_link_button" class="button button--rounded button--orange" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Read</a>
 						</div>
 						<div v-else>
 							<h6 v-html="post.meta_box._research_pdf_title"></h6>
 							<p><span v-html="post.meta_box._research_pdf_subtitle"></span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
 							<div class="research__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
-							<a :href="post.meta_box._research_pdf_file[0].url" class="button button--rounded button--orange" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Click to download</a>
+							<a v-if="lang == 'fr'" :href="post.meta_box._research_pdf_file[0].url" class="button button--rounded button--orange" target="_blank"><i class="fa fa-download" aria-hidden="true"></i>Cliquez pour télécharger</a>
+							<a v-else :href="post.meta_box._research_pdf_file[0].url" class="button button--rounded button--orange" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Click to download</a>
 						</div>
 						
 					</div>
@@ -87,13 +89,25 @@
 			</div>
 	</section>
 
-	<div v-if="post.pure_taxonomies.activity" class="research__activity-list">
+	<div v-if="post.pure_taxonomies.activity && lang=='fr'" class="research__activity-list">
+		<b>Faire dans les parcs: </b>
+		<ul>
+			<li v-for="tax in post.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0] | toUppercase }}</li>
+		</ul>
+	</div>
+	<div v-if="post.pure_taxonomies.learn && lang=='fr'"  class="research__learn-list">
+		<b>Savoir les parcs: </b>
+		<ul>
+			<li v-for="tax in post.all_lang_taxonomies.learn" :key="tax.name">{{ tax.learn_french[0] | toUppercase }}</li>
+		</ul>
+	</div>
+	<div v-if="post.pure_taxonomies.activity && lang=='en'" class="research__activity-list">
 		<b>Do in parks: </b>
 		<ul>
 			<li v-for="tax in post.pure_taxonomies.activity" :key="tax.name">{{ tax.name | toUppercase }}</li>
 		</ul>
 	</div>
-	<div v-if="post.pure_taxonomies.learn"  class="research__learn-list">
+	<div v-if="post.pure_taxonomies.learn && lang=='en'"  class="research__learn-list">
 		<b>Know about parks: </b>
 		<ul>
 			<li v-for="tax in post.pure_taxonomies.learn" :key="tax.name">{{ tax.name | toUppercase }}</li>
@@ -118,15 +132,16 @@
 					</div>
 					<div class="card-content">
 						<div class="content">
-							<small style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | translatedType| removeHyphen | toTitleCase }}</small>
+							<small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
+							<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | removeHyphen | toTitleCase }}</small>
 
-							<a :href="'https://parkpeople.ca/resources/fr/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
+							<a :href="'https://parkpeople.ca/resources/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
 							<div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div>
 							<div v-if="related.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
-								<strong>Faire dans les parcs</strong>: <span v-for="tax in related.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
+								<strong>Faire dans les parcs:</strong>: <span v-for="tax in related.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
 							</div>
 							<div v-if="related.pure_taxonomies.activity && lang == 'en'" class="activity-list-container">
-								<strong>Do in parks</strong>: <span v-for="tax in related.pure_taxonomies.activity" :key="tax.name">{{ tax.name  }}</span>
+								<strong>Do in parks:</strong>: <span v-for="tax in related.pure_taxonomies.activity" :key="tax.name">{{ tax.name  }}</span>
 							</div>
 							<div v-if="related.pure_taxonomies.learn && lang == 'fr'" class="activity-list-container">
 								<strong>Savoir les parcs:</strong> <span v-for="tax in related.all_lang_taxonomies.learn" :key="tax.name">{{ tax.learn_french[0] }}</span>
@@ -168,6 +183,15 @@
 			}
 		},
 		filters: {
+			translatedType(type){
+				if (type == 'resource') {
+					return 'ressource'
+				} else if ( type == 'research') {
+					return 'recherche'
+				} else {
+					return 'étude de cas'
+				}
+			},
 			removeHyphen(value){
 				return value.replace("-", ' ');
 			},
@@ -243,14 +267,21 @@
 				
 				console.log(stringID1, stringID2)
 
+				let langString = ''
+				if (this.lang == 'en'){
+					langString = ''
+				} else {
+					langString = '&lang=fr'
+				}
+
 				// Let's make a call to get related posts
 				axios.all([
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2)
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2+langString)
 				])
 				.then(axios.spread((response, response1, response2, response3, response4, response5) => {
 					
@@ -361,6 +392,17 @@ img.heading {
 	p {
 		font-size: 0.8rem;
 	line-height: 1.5;
+	}
+}
+
+.content a h4 {
+	color: rgba(30,177,242, 1);
+	font-size: 1.2rem;
+	line-height: 1.8rem;
+	font-weight: 700;
+
+	&:hover {
+		color: rgba(30,177,242,0.7);
 	}
 }
 

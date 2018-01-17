@@ -3,8 +3,8 @@
     	<div class="container">
 			<div class="columns">
 				<div class="column is-12">
-      				<h4 v-if="this.$route.params.lang == 'fr'">De l’inspiration et des idées pour organiser quelque chose de formidable dans votre parc.</h4>
-					<h4 v-else>Inspiration and ideas to make something awesome happen in your park</h4>
+      				<h2 v-if="this.$route.params.lang == 'fr'">De l’inspiration et des idées pour organiser quelque chose de formidable dans votre parc.</h2>
+					<h2 v-else>Inspiration and ideas to make something awesome happen in your park</h2>
 			  	</div>
 			</div>
 			<div class="columns">
@@ -73,12 +73,12 @@ export default {
 			
 
 			const allResponses = response1.data.concat(response2.data, response3.data);
-			console.log(allResponses) 
+			// console.log(allResponses) 
 
 			// Activity Filter
 			const categories = []
 			for(let i = 0; i < allResponses.length; i++) {
-				console.log('A1',allResponses[i].all_lang_taxonomies)
+				// console.log('A1',allResponses[i].all_lang_taxonomies)
 				if(typeof(allResponses[i].all_lang_taxonomies.activity) != 'undefined') {
 					const array = allResponses[i].all_lang_taxonomies.activity
 					// console.log('not undefineddd ACT')
@@ -102,7 +102,7 @@ export default {
 			let uniqueActivities = removeDuplicates(categories, 'name')
 			// const catUnique = [...new Set(categories)]
 			this.activity = uniqueActivities
-			console.log('THIS.ACT', this.activity);
+			// console.log('THIS.ACT', this.activity);
 
 			// Learn Filter
 			// this.learn = response.data
@@ -128,7 +128,7 @@ export default {
 			// const catUniqueL = [...new Set(Lcategories)]
 			let uniqueLearns = removeDuplicates(Lcategories, 'name')
 			this.learn = uniqueLearns
-			console.log('THIS.LEARN',this.learn)
+			// console.log('THIS.LEARN',this.learn)
 
 		}))
 		.catch(e => {
@@ -141,6 +141,21 @@ export default {
 <style lang="scss" scoped>
 
 @import '../styles/variables.scss';
+
+.container {
+	padding: 0 24px;
+	@media #{$large-and-up} {
+        padding: 0;
+	}
+}
+
+h2 {
+	color: $white;
+	font-size: 35px;
+	@media #{$large-and-up} {
+        font-size: 45px;
+	}
+}
 
 .bg-filter {
 	background-color: #4a4a4a;
@@ -185,6 +200,19 @@ export default {
 	& input:checked + span {
     	background-color: rgba(30,177,242, 1);
     	color: rgba(250,250,250, 0.8);
+	}
+}
+
+#ck-button {
+	@media #{$small-and-down} {
+		li {
+			display: inline-block;
+		}
+		span {
+			float: none !important;
+			display: inline-block;
+			font-size: 0.8rem;
+		}
 	}
 }
 

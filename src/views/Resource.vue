@@ -125,9 +125,10 @@
 					</div>
 					<div class="card-content">
 						<div class="content">
-							<small style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | translatedType| removeHyphen | toTitleCase }}</small>
+							<small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
+							<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | removeHyphen | toTitleCase }}</small>
 
-							<a :href="'https://parkpeople.ca/resources/fr/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
+							<a :href="'https://parkpeople.ca/resources/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
 							<div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div>
 							<div v-if="related.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
 								<strong>Faire dans les parcs</strong>: <span v-for="tax in related.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
@@ -173,6 +174,15 @@ export default {
 		}
 	},
 	filters: {
+		translatedType(type){
+			if (type == 'resource') {
+				return 'ressource'
+			} else if ( type == 'research') {
+				return 'recherche'
+			} else {
+				return 'étude de cas'
+			}
+		},
 		removeHyphen(value){
 			return value.replace("-", ' ');
 		},
