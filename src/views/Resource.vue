@@ -125,21 +125,22 @@
 					</div>
 					<div class="card-content">
 						<div class="content">
-							<router-link :to="lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></router-link>
-							<p v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></p>
-							<div v-if="related.pure_taxonomies.activity">
-								<b>Do in parks</b>
-								<ul class="card__activity-list">
-									<li v-for="tax in related.pure_taxonomies.activity">{{ tax.name | toUppercase }}</li>
-								</ul>
+							<small style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | translatedType| removeHyphen | toTitleCase }}</small>
+
+							<a :href="'https://parkpeople.ca/resources/fr/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
+							<div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div>
+							<div v-if="related.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
+								<strong>Faire dans les parcs</strong>: <span v-for="tax in related.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
 							</div>
-							<div v-if="related.pure_taxonomies.learn">
-								<b>Know about parks</b>
-								<ul class="card__learn-list">
-									<li v-for="tax in related.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
-								</ul>
+							<div v-if="related.pure_taxonomies.activity && lang == 'en'" class="activity-list-container">
+								<strong>Do in parks</strong>: <span v-for="tax in related.pure_taxonomies.activity" :key="tax.name">{{ tax.name  }}</span>
 							</div>
-							<small>{{ related.type | removeHyphen | toTitleCase }}</small>
+							<div v-if="related.pure_taxonomies.learn && lang == 'fr'" class="activity-list-container">
+								<strong>Savoir les parcs:</strong> <span v-for="tax in related.all_lang_taxonomies.learn" :key="tax.name">{{ tax.learn_french[0] }}</span>
+							</div>
+							<div v-if="related.pure_taxonomies.learn && lang == 'en'" class="activity-list-container">
+								<strong>Know about parks:</strong> <span v-for="tax in related.pure_taxonomies.learn" :key="tax.name">{{ tax.name }}</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -786,5 +787,34 @@ ul.resource__tips__bullets {
 .capitalize {
 	text-transform: capitalize;
 }
+
+.activity-list-container,
+.activity-list-container span,
+.activity-list-container strong {
+	font-size: 12px;
+	line-height: 1.5;
+	color: rgba(0,0,0,0.4) !important;
+}
+
+.activity-list-container span {
+	display:inline-block;
+	margin-right: 5px;
+	position: relative;
+	&:after {
+		content: ',';
+		position: absolute;
+		bottom: 0;
+		right: -2px;
+		color: rgba(0,0,0,0.4) !important;
+	}
+}
+
+.activity-list-container span:last-child {
+	margin-right: 0px;
+	&:after {
+		display: none;
+	}
+}
+
 
 </style>

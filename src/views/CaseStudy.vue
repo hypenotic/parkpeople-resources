@@ -51,7 +51,7 @@
 					</div>
 				</div>
 
-				<p class="meta"><span class="capitalize">{{ post.type }}</span> | By {{ authorName }} |  {{ moment(post.date).format('MMM, YYYY') }}</p>
+				<p class="meta"><span class="capitalize">{{ post.type }}</span> |  {{ moment(post.date).format('MMM, YYYY') }}</p>
 
 				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 			</div>

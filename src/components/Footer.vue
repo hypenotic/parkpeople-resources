@@ -2,9 +2,9 @@
     <div>
         <section class="newsletter">
 			<div class="container">
-				<p v-if="lang=='en'">Want to stay up-to-date on Park People news?</p>
+				<p v-if="this.$route.params.lang=='en'">Want to stay up-to-date on Park People news?</p>
                 <p v-else>Vous voulez se tenir au courant de les nouvelles de Park People?</p>
-				<a v-if="lang=='fr'" class="button" href="http://parkpeople.us2.list-manage.com/subscribe?u=ba963c8c64482c0ad756245c3&id=efc9b053b8" target="_blank">Recevez notre newsletter!</a>
+				<a v-if="this.$route.params.lang=='fr'" class="button" href="http://parkpeople.us2.list-manage.com/subscribe?u=ba963c8c64482c0ad756245c3&id=efc9b053b8" target="_blank">Recevez notre newsletter!</a>
                 <a v-else class="button" href="http://parkpeople.us2.list-manage.com/subscribe?u=ba963c8c64482c0ad756245c3&id=efc9b053b8" target="_blank">Get the Park People newsletter!</a>
 				<!-- <div>
 					<app-form skin="grants" button="Okay!"></app-form>
