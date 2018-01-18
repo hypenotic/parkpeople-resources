@@ -252,8 +252,6 @@ export default {
 				}
 			}
 
-			// Let's get the WPML Lang id
-			// this.lang = this.post.wpml_translations[0].id
 			// Let's see if there's a translation
 			if (this.post.wpml_translations.length > 0) {
 				console.log('translation post', this.post)
@@ -280,10 +278,6 @@ export default {
 						this.$store.commit('SET_TRANSLATION_URL', transURL)
 						console.log(this.$store.state.translatedCheck)
 					}
-					// let transalatedURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
-					// console.log(transURL);
-					// this.$store.commit('SET_TRANSLATION_CHECK', true, transURL)
-					// console.log(this.$store.state.translatedCheck)
 				})
 				.catch(error => {
 					if (error.response) {
