@@ -1,4 +1,4 @@
-<template v-if="posts && posts.length">
+<template v-if="posts && posts.length > 0">
 <div>
 	<section class="section">
 		<div class="container">
@@ -8,17 +8,15 @@
 						<div class="card">
 							<div class="card-image">
 								<figure class="image is-2by1">
-									<!-- THIS IS CAUSING IT TO BREAK - CARDS DON'T RENDER -->
 									<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang != 'fr'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
-									<img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang == 'fr' && post.type != 'research'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+									<img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang == 'fr'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
 									<img v-else src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
 								</figure>
 							</div>
 							<div class="card-content">
 								<div class="content">
-									<small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(post.type) | removeHyphen | toTitleCase }}</small>
+									<small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(post.type) }}</small>
 									<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ post.type | removeHyphen | toTitleCase }}</small>
-									<!-- <a :href="'https://parkpeople.ca/resources/en/'+post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></a> -->
 									<router-link :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
 									<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
 									<div v-if="post.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
@@ -58,21 +56,23 @@ import { eventBus } from '../main.js';
 export default {
 	data() {
 		return {
-			posts: [],
-			paginate: ['postList'],
+			categoryList: [],
 			errors: [],
 			lang: this.$route.params.lang,
-			categoryList: []
+			posts: [],
+			paginate: ['postList']
 		};
 	},
 	filters: {
 		translatedType(type){
 			if (type == 'resource') {
-				return 'ressource'
+				return 'Ressource'
 			} else if ( type == 'research') {
-				return 'recherche'
+				return 'Recherche'
+			} else if ('case-study') {
+				return 'Ètude de cas'
 			} else {
-				return 'étude de cas'
+				return 'Ressource'
 			}
 		},
 		removeHyphen(value){
@@ -101,16 +101,12 @@ export default {
 	computed:{
         filteredList: function (){
         	if (!this.categoryList.length) {
-				console.log('filter step - default',this.posts)
-				console.log('HEY',this.categoryList)
 				let postsList = this.posts;
 				let byDate = postsList.sort(function(a,b){
 					return new Date(b.date) - new Date(a.date)
 				})	
 				return byDate
 			} else {
-				console.log('filter step - checked',this.posts)
-				console.log('HEY',this.categoryList)
 				let filterMatches = [];
 				for(let i = 0; i < this.posts.length; i++) {
 			
@@ -137,13 +133,10 @@ export default {
 					let nameArray = [];
 					for(let n = 0; n < this.categoryList.length; n++) {
 						let name = this.categoryList[n].name
-						console.log(name)
 						nameArray.push(name)
 					}
 
 					var test = findOne(combined,nameArray)
-
-					// console.log(i,test,combined,this.categoryList)
 
 					if (test == true) {
 						filterMatches.push(this.posts[i])
@@ -192,23 +185,21 @@ export default {
 	},
 	created() {
 		if (this.lang == 'en') {
-			// Check if we have already made calls to get the resources
+			// Check if we have already made calls to get the EN resources
 			if(this.$store.state.resourceListEN.length > 0) {
 				// If resourceList in the store (an array) has any items, just use the store data
-				console.log('NO CALL EN', this.$store.state.resourceListEN)
 				this.posts = this.$store.state.resourceListEN
-				console.log(this.posts)
+				console.log('EN - resourceList exists', this.posts)
 			} else {
 				// Else, we have no data, so make the calls
-				console.log('CALLING EN')
+				console.log('EN - resourceList does not exists')
 				axios.all([
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
 				])
 				.then(axios.spread((response, response1, response2) => {
-					
-					let allENPosts  = response.data.concat(response1.data, response2.data);
+					let allENPosts  = response.data.concat(response1.data, response2.data)
 					this.posts = allENPosts
 					this.$store.commit('SET_RESOURCES_EN', allENPosts)
 				}))
@@ -217,24 +208,29 @@ export default {
 				})
 			}
 		} else {
-			// Check if we have already made calls to get the resources
+			// Check if we have already made calls to get the FR resources
 			if(this.$store.state.resourceListFR.length > 0) {
 				// If resourceList in the store (an array) has any items, just use the store data
-				console.log('NO CALL FR', this.$store.state.resourceListFR);
-				this.posts = this.$store.state.resourceListFR;
+				this.posts = this.$store.state.resourceListFR
+				console.log('FR - resourceList exists', this.posts)
 			} else {
 				// Else, we have no data, so make the calls
-				console.log('CALLING FR');
 				axios.all([
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100&lang=fr'),
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100&lang=fr'),
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100&lang=fr')
 				])
 				.then(axios.spread((response, response1, response2) => {
-					let allFRPosts  = response.data.concat(response1.data, response2.data);
-					this.posts = allFRPosts;
-					console.log('ALL FR Posts', allFRPosts);
+					let allFRPosts  = response.data.concat(response1.data, response2.data)
+					this.posts = allFRPosts
+					for(let j = 0; j < this.posts.length; j++) {
+						// if (j != 2 || j != 3 || j != 4) {
+						// 	console.log(j, this.posts[j].title.rendered, this.posts[j]._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url)
+						// }
+						console.log(j, this.posts[j].title.rendered, this.posts[j])
+					}
 					this.$store.commit('SET_RESOURCES_FR', allFRPosts)
+					console.log('FR - resourceList does not exists', this.posts)
 				}))
 				.catch(e => {
 					this.errors.push(e)

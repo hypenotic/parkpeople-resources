@@ -1,13 +1,10 @@
 <template>
-<div v-if="post.meta_box">
-	
+<div v-if="post != null">
 	<img class="heading" src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg">
-
 	<section style="margin-top: -200px;">
 		<div class="columns">
 			<div class="column top-column is-three-fifths is-offset-one-fifth" style="background-color: white;">
 				<div class="social-share-container">
-					<!-- <p>Share via:</p> -->
 					<div id="social-share-trigger" v-bind:class="{ 'social-menu-open': showSocialShare }" v-on:click="showSocialShare = !showSocialShare">
 						<i class="fa fa-share-alt" aria-hidden="true"></i>
 					</div>
@@ -163,17 +160,17 @@ import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			errors: [],
-			slug: this.$route.params.slug,
-			id: this.$route.params.id,
-			lang: this.$route.params.lang,
-			post: [],
+			authorName: '',
 			categories: [],
 			categoryIDs: [],
-			authorName: '',
-			showSocialShare: false,
+			errors: [],
 			fullPath: this.$route.fullPath,
+			id: this.$route.params.id,
+			lang: this.$route.params.lang,
+			post: null,
 			relatedPosts: [],
+			showSocialShare: false,
+			slug: this.$route.params.slug,
 			translated: false,
 			translatedPost: []
 		}
@@ -228,7 +225,7 @@ export default {
 		.then(response => {
 			// Let's put data into post
 			this.post = response.data
-			console.log(this.post)
+			console.log('THIS IS THE POST', this.post);
 
 			// Let's get the categories
 			const tax1 = this.post.pure_taxonomies.activity
@@ -262,22 +259,18 @@ export default {
 					console.log(response.data)
 					this.translatedPost = response.data
 					this.translated = true;
+					let langTag = ''
+					let transURL = ''
 					if (this.$route.params.lang == 'en') {
-						let langTag = 'fr'
-						let transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
-						// How do I not repeat the next 3 lines – how do I move them out of the IF statement
-						console.log(transURL);
-						this.$store.commit('SET_TRANSLATION_CHECK', true)
-						this.$store.commit('SET_TRANSLATION_URL', transURL)
-						console.log(this.$store.state.translatedCheck)
+						langTag = 'fr'
+						transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
 					} else {
-						let langTag = 'en'
-						let transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
-						console.log(transURL);
-						this.$store.commit('SET_TRANSLATION_CHECK', true)
-						this.$store.commit('SET_TRANSLATION_URL', transURL)
-						console.log(this.$store.state.translatedCheck)
+						langTag = 'en'
+						transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
 					}
+					this.$store.commit('SET_TRANSLATION_CHECK', true)
+					this.$store.commit('SET_TRANSLATION_URL', transURL)
+					console.log(this.$store.state.translatedCheck)
 				})
 				.catch(error => {
 					if (error.response) {

@@ -1,5 +1,5 @@
 <template>
-<div v-if="post.meta_box">
+<div v-if="post != null">
 
 	<img class="heading" src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg">
 
@@ -7,7 +7,6 @@
 		<div class="columns">
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem;position:relative;">
 				<div class="social-share-container">
-					<!-- <p>Share via:</p> -->
 					<div id="social-share-trigger" v-bind:class="{ 'social-menu-open': showSocialShare }" v-on:click="showSocialShare = !showSocialShare">
 						<i class="fa fa-share-alt" aria-hidden="true"></i>
 					</div>
@@ -160,17 +159,17 @@
 	export default {
 		data() {
 			return {
-				errors: [],
-				slug: this.$route.params.slug,
-				id: this.$route.params.id,
-				post: [],
+				authorName: '',
 				categories: [],
 				categoryIDs: [],
-				authorName: '',
-				showSocialShare: false,
+				errors: [],
 				fullPath: this.$route.fullPath,
-				relatedPosts: [],
+				id: this.$route.params.id,
 				lang: this.$route.params.lang,
+				post: null,
+				relatedPosts: [],
+				showSocialShare: false,
+				slug: this.$route.params.slug,
 				translated: false,
 				translatedPost: []
 			}
@@ -233,7 +232,6 @@
 
 				// Let's concat
 				let taxAll = [];
-				// const taxAll = tax1.concat(tax2)
 				if(typeof(tax1) != 'undefined'){
 					taxAll = tax1.concat(tax2);
 				} else if(typeof(tax2) != 'undefined') {
@@ -259,22 +257,19 @@
 						console.log(response.data)
 						this.translatedPost = response.data
 						this.translated = true;
+						let langTag = ''
+						let transURL = ''
 						if (this.$route.params.lang == 'en') {
-							let langTag = 'fr'
-							let transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
-							// How do I not repeat the next 3 lines – how do I move them out of the IF statement
-							console.log(transURL);
-							this.$store.commit('SET_TRANSLATION_CHECK', true)
-							this.$store.commit('SET_TRANSLATION_URL', transURL)
-							console.log(this.$store.state.translatedCheck)
+							langTag = 'fr'
+							transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
 						} else {
-							let langTag = 'en'
-							let transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
-							console.log(transURL);
-							this.$store.commit('SET_TRANSLATION_CHECK', true)
-							this.$store.commit('SET_TRANSLATION_URL', transURL)
-							console.log(this.$store.state.translatedCheck)
+							langTag = 'en'
+							transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
 						}
+						console.log(transURL);
+						this.$store.commit('SET_TRANSLATION_CHECK', true)
+						this.$store.commit('SET_TRANSLATION_URL', transURL)
+						console.log(this.$store.state.translatedCheck)
 					})
 					.catch(error => {
 						if (error.response) {
