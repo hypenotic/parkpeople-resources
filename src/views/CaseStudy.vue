@@ -107,7 +107,7 @@
 
 			</div>
 		</div>
-		<div class="quote" v-if="post.meta_box._casestudy_content_quote != undefined">
+		<div class="quote" v-if="post.meta_box._casestudy_content_quote != undefined && post.meta_box._casestudy_content_quote != ''">
 			<blockquote class="full-width-quote" v-html="post.meta_box._casestudy_content_quote"></blockquote>
 			<cite>
 				<small v-html="post.meta_box._casestudy_quote_name"></small>
@@ -126,7 +126,7 @@
 			</ul>
 		</div>
 	</section>
-	<section class="related-resources">
+	<section v-if="relatedPosts.length > 0" class="related-resources">
 		<h3>Related Resources</h3>
 		<div class="columns is-multiline">
 			<div class="column is-one-quarter" v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
