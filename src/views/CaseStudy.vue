@@ -219,23 +219,12 @@
 		created() {
 			// Reset store check values
 			this.$store.commit('SET_TRANSLATION_CHECK', false)
-			this.$store.commit('SET_GRANTS_CHECK', false)
 			
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/' + this.id + '?_embed')
 
 			.then(response => {
 				// Let's put data into post
 				this.post = response.data
-				
-				// Let's check if it's a featured resource for Grants
-				let grantCheckLang = 133
-				if (this.$route.params.lang == 'fr') {
-					grantCheckLang = 134
-				} else { return }
-				if (this.post.categories.includes(grantCheckLang)) {
-					this.grantResource = true
-					this.$store.commit('SET_GRANTS_CHECK', true)
-				} else { return }
 
 				// Let's get the categories
 				const tax1 = this.post.pure_taxonomies.activity

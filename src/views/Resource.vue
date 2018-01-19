@@ -220,7 +220,6 @@ export default {
 	created() {
 		// Reset store check values
 		this.$store.commit('SET_TRANSLATION_CHECK', false)
-		this.$store.commit('SET_GRANTS_CHECK', false)
 
 		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + this.id + '?_embed')
 
@@ -228,25 +227,6 @@ export default {
 			// Let's put data into post
 			this.post = response.data
 			console.log('THIS IS THE POST', this.post)
-
-			// Let's check if it's a featured resource for Grants
-			if (this.$route.params.lang == 'fr') {
-				if (this.post.categories.includes(134)) {
-					this.grantResource = true
-					this.$store.commit('SET_GRANTS_CHECK', true)
-					console.log(grantCheckLang)
-				} else { 
-					return 
-				}
-			} else { 
-				if (this.post.categories.includes(133)) {
-					this.grantResource = true
-					this.$store.commit('SET_GRANTS_CHECK', true)
-					console.log(grantCheckLang)
-				} else { 
-					return 
-				}
-			}
 			
 			// Let's get the categories
 			const tax1 = this.post.pure_taxonomies.activity
