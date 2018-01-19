@@ -4,5 +4,6 @@ export const state = {
     singlePostCache: {},
     language: '',
     translatedCheck: false,
-    translatedURL: ''
+    translatedURL: '',
+    grantsCheck: false
 }

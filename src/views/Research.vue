@@ -164,6 +164,7 @@
 				categoryIDs: [],
 				errors: [],
 				fullPath: this.$route.fullPath,
+				grantResource: false,
 				id: this.$route.params.id,
 				lang: this.$route.params.lang,
 				post: null,
@@ -216,15 +217,25 @@
 			}
 		},
 		created() {
-			this.$store.commit('SET_TRANSLATION_CHECK', false, '')
-			console.log(this.$store.state.translatedCheck)
+			// Reset store check values
+			this.$store.commit('SET_TRANSLATION_CHECK', false)
+			this.$store.commit('SET_GRANTS_CHECK', false)
 
 			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/' + this.id + '?_embed')
 
 			.then(response => {
 				// Let's put data into post
 				this.post = response.data
-				//console.log(this.post)
+				
+				// Let's check if it's a featured resource for Grants
+				let grantCheckLang = 133
+				if (this.$route.params.lang == 'fr') {
+					grantCheckLang = 134
+				} else { return }
+				if (this.post.categories.includes(grantCheckLang)) {
+					this.grantResource = true
+					this.$store.commit('SET_GRANTS_CHECK', true)
+				} else { return }
 
 				// Let's get the categories
 				const tax1 = this.post.pure_taxonomies.activity

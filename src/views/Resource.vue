@@ -165,6 +165,7 @@ export default {
 			categoryIDs: [],
 			errors: [],
 			fullPath: this.$route.fullPath,
+			grantResource: false,
 			id: this.$route.params.id,
 			lang: this.$route.params.lang,
 			post: null,
@@ -217,16 +218,36 @@ export default {
 		},
 	},
 	created() {
-		this.$store.commit('SET_TRANSLATION_CHECK', false, '')
-		console.log(this.$store.state.translatedCheck)
+		// Reset store check values
+		this.$store.commit('SET_TRANSLATION_CHECK', false)
+		this.$store.commit('SET_GRANTS_CHECK', false)
 
 		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + this.id + '?_embed')
 
 		.then(response => {
 			// Let's put data into post
 			this.post = response.data
-			console.log('THIS IS THE POST', this.post);
+			console.log('THIS IS THE POST', this.post)
 
+			// Let's check if it's a featured resource for Grants
+			if (this.$route.params.lang == 'fr') {
+				if (this.post.categories.includes(134)) {
+					this.grantResource = true
+					this.$store.commit('SET_GRANTS_CHECK', true)
+					console.log(grantCheckLang)
+				} else { 
+					return 
+				}
+			} else { 
+				if (this.post.categories.includes(133)) {
+					this.grantResource = true
+					this.$store.commit('SET_GRANTS_CHECK', true)
+					console.log(grantCheckLang)
+				} else { 
+					return 
+				}
+			}
+			
 			// Let's get the categories
 			const tax1 = this.post.pure_taxonomies.activity
 			const tax2 = this.post.pure_taxonomies.learn
@@ -235,11 +256,11 @@ export default {
 			let taxAll = [];
 			// const taxAll = tax1.concat(tax2)
 			if(typeof(tax1) != 'undefined'){
-				taxAll = tax1.concat(tax2);
+				taxAll = tax1.concat(tax2)
 			} else if(typeof(tax2) != 'undefined') {
-				taxAll = tax2.concat(tax1);
+				taxAll = tax2.concat(tax1)
 			} else {
-				return;
+				return
 			}
 			
 			// Let's loop, skip over undefined and push

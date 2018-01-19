@@ -13,7 +13,8 @@ import {
     TOGGLE_LANGUAGE, 
     ADD_SINGLE_RESOURCE,
     SET_TRANSLATION_CHECK,
-    SET_TRANSLATION_URL  
+    SET_TRANSLATION_URL,
+    SET_GRANTS_CHECK  
 } from './mutation-types'
 
 export const mutations = {
@@ -44,5 +45,8 @@ export const mutations = {
     },
     SET_TRANSLATION_URL(state, url) {
         state.translatedURL = url
+    },
+    SET_GRANTS_CHECK(state, check) {
+        state.grantsCheck = check
     },
 }

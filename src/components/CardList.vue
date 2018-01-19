@@ -17,7 +17,7 @@
 								<div class="content">
 									<small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(post.type) }}</small>
 									<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ post.type | removeHyphen | toTitleCase }}</small>
-									<router-link :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
+									<router-link :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug+'?grants=true'"><h4 v-html="post.title.rendered"></h4></router-link>
 									<div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div>
 									<div v-if="post.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
 										<strong>Faire dans les parcs</strong>: <span v-for="tax in post.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
