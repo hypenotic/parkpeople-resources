@@ -24,7 +24,11 @@
                 <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Home</a> 
                 <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca" class="navbar-item">Page d'accueil</a>
                 <a v-if="this.$route.params.lang == 'fr' && this.$store.state.grantsCheck== true" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Bourses TD Park People</a>  
-                <a v-if="this.$route.params.lang == 'en' && this.$store.state.grantsCheck== true" href="https://parkpeople.ca/parkgrants" class="navbar-item" exact>TD Park People Grants</a>            
+                <a v-if="this.$route.params.lang == 'en' && this.$store.state.grantsCheck== true" href="https://parkpeople.ca/parkgrants" class="navbar-item" exact>TD Park People Grants</a>  
+                <!-- <a v-if="this.$route.params.lang == 'fr' && this.$route.path != '/fr'" href="/" class="navbar-item">Toutes les ressources</a>  
+                <a v-if="this.$route.params.lang == 'en' && this.$route.path != '/en'" href="/" class="navbar-item">All Resources</a>             -->
+                <router-link v-if="this.$route.params.lang == 'fr' && this.$route.path != '/fr'" to="/fr" class="navbar-item">Toutes les ressources</router-link>
+                <router-link v-if="this.$route.params.lang == 'en' && this.$route.path != '/en'" to="/en" class="navbar-item">All Resources</router-link> 
             </div>
         </div>
     </nav>
@@ -54,8 +58,10 @@
                 <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca" class="navbar-item">Page d'accueil</a>
                 <a v-if="this.$route.params.lang == 'fr' && this.$route.query.bourses== 'true'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Bourses TD Park People</a>  
                 <a v-if="this.$route.params.lang == 'en' && this.$route.query.grants == 'true'" href="https://parkpeople.ca/parkgrants" class="navbar-item">TD Park People Grants</a> 
-                <a v-if="this.$route.params.lang == 'fr' && this.$route.path != '/fr'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Toutes les ressources</a>  
-                <a v-if="this.$route.params.lang == 'en' && this.$route.path != '/en'" href="https://parkpeople.ca/parkgrants" class="navbar-item">All Resources</a>               
+                <!-- <a v-if="this.$route.params.lang == 'fr' && this.$route.path != '/fr'" href="/" class="navbar-item">Toutes les ressources</a>  
+                <a v-if="this.$route.params.lang == 'en' && this.$route.path != '/en'" href="/" class="navbar-item">All Resources</a>                -->
+                <router-link v-if="this.$route.params.lang == 'fr' && this.$route.path != '/fr'" to="/fr" class="navbar-item">Toutes les ressources</router-link>
+                <router-link v-if="this.$route.params.lang == 'en' && this.$route.path != '/en'" to="/en" class="navbar-item">All Resources</router-link> 
             </div>
         </div>
     </nav>
