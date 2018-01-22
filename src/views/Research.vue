@@ -95,7 +95,8 @@
 		<ul class="resource__rec-link__list">
 			<li v-for="link in post.meta_box._research_links" :key="link['_research_link_headline']">
 				<h4 v-html="link['_research_link_headline']"></h4>
-				<p>{{ link['_research_link_type'] }} | {{ link['_research_link_author'] }}</p>
+				<p class="rec-link__meta">{{ link['_research_link_type'] }} | {{ link['_research_link_author'] }}</p>
+				<p class="rec-link__excerpt" v-if="link['_research_link_excerpt'] != undefined && link['_research_link_excerpt'] != ''" v-html="link['_research_link_excerpt']"></p>
 				<a v-if="link['_research_link_file_upload'] != undefined" class="button button--ghost button--orange" :href="link['_research_link_file_upload']" target="_blank">
 					<span v-if="lang == 'fr'">Téléchargez</span>
 					<span v-else>Click to download</span>
@@ -527,6 +528,12 @@ img.heading {
 
 .rec-link {
 	margin-bottom: 50px;
+	.rec-link__excerpt {
+		font-size: 0.8rem;
+	}
+	.rec-link__meta {
+		margin-bottom: 8px;
+	}
 }
 
 .resource__rec-link__list {
