@@ -101,7 +101,7 @@
 			<small v-html="post.meta_box._resource_quote_name"></small>
 			<small v-html="post.meta_box._resource_quote_group"></small>
 		</div>
-		<div class="rec-link" v-if="post.meta_box._resource_links.length > 0">
+		<div class="rec-link" v-if="post.meta_box.hasOwnProperty('_resource_links') && post.meta_box._resource_links.length > 0">
 			<h3 v-if="lang=='fr'">Liens recommandés</h3>
 			<h3 v-else>Recommended Links</h3>
 			<ul class="resource__rec-link__list">
@@ -226,7 +226,7 @@ export default {
 		.then(response => {
 			// Let's put data into post
 			this.post = response.data
-			console.log('THIS IS THE POST', this.post)
+			console.log('THIS IS THE RESOURCE', this.post)
 			
 			// Let's get the categories
 			const tax1 = this.post.pure_taxonomies.activity

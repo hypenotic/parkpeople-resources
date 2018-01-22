@@ -39,7 +39,7 @@
 				<div class="columns" style="margin-top: 32px;">
 					<div class="column is-6">
 						<div v-if="post.meta_box._research_link_title != ''" class="research__thumbnail">
-							<img :src="post.meta_box._research_link_thumbnail[0].full_url" :alt="post.meta_box._research_link_title">
+							<img :src="post.meta_box._research_link_thumbnail[0].full_url" :alt="post.meta_box._research_link_title">   
 						</div>
 						<div v-else class="research__thumbnail research__thumbnail--pdf">
 							<div>
@@ -52,14 +52,14 @@
 					<div class="column is-6">
 						<div v-if="post.meta_box._research_link_title != ''">
 							<h6 v-html="post.meta_box._research_link_title"></h6>
-							<p><span v-html="post.meta_box._research_link_subtitle"></span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
+							<p><span v-html="post.meta_box._research_link_subtitle"></span> | <span v-if="post.meta_box.hasOwnProperty('_research_link_date') && post.meta_box._research_link_date != ''" v-html="post.meta_box._research_link_date"></span> </p>
 							<div class="research__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 							<a v-if="lang == 'fr'" :href="post.meta_box._research_link_button" class="button button--rounded button--orange" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i>Lis</a>
 							<a v-else :href="post.meta_box._research_link_button" class="button button--rounded button--orange" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Read</a>
 						</div>
 						<div v-else>
 							<h6 v-html="post.meta_box._research_pdf_title"></h6>
-							<p><span v-html="post.meta_box._research_pdf_subtitle"></span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
+							<p><span v-html="post.meta_box._research_pdf_subtitle"></span> | <span v-if="post.meta_box.hasOwnProperty('_research_pdf_date') && post.meta_box._research_pdf_date != ''" v-html="post.meta_box._research_pdf_date"></span> </p>
 							<div class="research__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 							<a v-if="lang == 'fr'" :href="post.meta_box._research_pdf_file[0].url" class="button button--rounded button--orange" target="_blank"><i class="fa fa-download" aria-hidden="true"></i>Cliquez pour télécharger</a>
 							<a v-else :href="post.meta_box._research_pdf_file[0].url" class="button button--rounded button--orange" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Click to download</a>
@@ -88,6 +88,25 @@
 				</div>
 			</div>
 	</section>
+
+	<div class="rec-link" v-if="post.meta_box.hasOwnProperty('_research_links') && post.meta_box._research_links.length > 0">
+		<h3 v-if="lang=='fr'">Liens recommandés</h3>
+		<h3 v-else>Recommended Links</h3>
+		<ul class="resource__rec-link__list">
+			<li v-for="link in post.meta_box._research_links" :key="link['_research_link_headline']">
+				<h4 v-html="link['_research_link_headline']"></h4>
+				<p>{{ link['_research_link_type'] }} | {{ link['_research_link_author'] }}</p>
+				<a v-if="link['_research_link_file_upload'] != undefined" class="button button--ghost button--orange" :href="link['_research_link_file_upload']" target="_blank">
+					<span v-if="lang == 'fr'">Téléchargez</span>
+					<span v-else>Click to download</span>
+				</a>
+				<a v-else class="button button--ghost button--orange" :href="link['_research_link_url']" target="_blank">
+					<span v-if="lang == 'fr'">Lis</span>
+					<span v-else>View</span>
+				</a>
+			</li>
+		</ul>
+	</div>
 
 	<div v-if="post.pure_taxonomies.activity && lang=='fr'" class="research__activity-list">
 		<b>Faire dans les parcs: </b>
@@ -225,6 +244,7 @@
 			.then(response => {
 				// Let's put data into post
 				this.post = response.data
+				console.log('THIS IS THE RESEARCH', this.post)
 
 				// Let's get the categories
 				const tax1 = this.post.pure_taxonomies.activity
@@ -502,6 +522,25 @@ img.heading {
 .related-resources {
 	h3 {
 		text-align: center;
+	}
+}
+
+.rec-link {
+	margin-bottom: 50px;
+}
+
+.resource__rec-link__list {
+	@media #{$large-and-up} {
+        display: flex;
+		justify-content: center;
+		>li {
+			width: 30%;
+			margin: 0 1%;
+		}
+	}
+	h4 {
+		font-size: 32px;
+		font-weight: bold;
 	}
 }
 
@@ -785,8 +824,17 @@ img.heading {
 		font-family: $family-sanserif;
 	}
 	li {
+		display: inline-block;
 		text-transform: uppercase;
-		margin: 0 10px;
+		margin: 0 5px;
+		position: relative;
+		&:not(:last-child):after {
+			content: ',';
+			position: absolute;
+			bottom: 0;
+			right: -4px;
+			color: rgba(0,0,0,0.7) !important;
+		}
 	}
 }
 
