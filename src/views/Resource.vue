@@ -114,7 +114,7 @@
 			</ul>
 		</div>
 	</section>
-	<section v-if="relatedPosts.length > 0" class="related-resources">
+	<section v-if="relatedPosts.length > 0" class="related-resources" style="display:none;">
 		<h3 v-if="lang=='fr'">Ressources associées</h3>
 		<h3 v-else>Related Resources</h3>
 		<div class="columns is-multiline">
