@@ -74,11 +74,16 @@ export default {
 
 			const allResponses = response1.data.concat(response2.data, response3.data);
 
+			// This function checks that two objects don't have the name values for a property
 			function removeDuplicates(myArr, prop) {
 				return myArr.filter((obj, pos, arr) => {
 					return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
 				});
 			}
+
+			// The all_lang_taxonomies adds the FR translation to what the pure_taxonomies plugin provides
+			// !!! So all this code is dependent on a custom function in the WP CMS
+			// https://github.com/hypenotic/pp-map/commit/14f73fdda1e5675d4a2d988d0617404af932be4c
 
 			// Activity Filter
 			const categories = []
@@ -86,11 +91,17 @@ export default {
 				if(typeof(allResponses[i].all_lang_taxonomies.activity) != 'undefined') {
 					const array = allResponses[i].all_lang_taxonomies.activity
 					for(let j = 0; j < array.length; j++) {
+						// We have to make sure the EN and FR taxonomy names are in one object, so it's easy to toggle between the two
+						// Create an object to hold the EN and FR taxonomy names
 						let duo = {};
+						// Add the key 'name' that hold the EN version
 						duo.name = array[j].name
+						// Add the key 'fr' that holds the FR version
 						duo.fr = array[j].activity_french[0]
 						
+						// Might be able to delete this...we can just pass 'duo' at this point...
 						let category = duo
+						// 
 						categories.push(category)
 					}
 				}
