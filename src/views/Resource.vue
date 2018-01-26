@@ -109,9 +109,11 @@
 			<ul class="resource__rec-link__list">
 				<li v-for="link in post.meta_box._resource_links" :key="link['_resource_link_headline']">
 					<h4 v-html="link['_resource_link_headline']"></h4>
-					<p>{{ link['_resource_link_type'] }} | {{ link['_resource_link_author'] }}</p>
+					<!-- <p>{{ link['_resource_link_type'] }} | {{ link['_resource_link_author'] }}</p> -->
+					<p v-if="link['_resource_link_excerpt'] != undefined" v-html="link['_resource_link_excerpt']"></p>
 					<a v-if="link['_resource_link_file_upload'] != undefined" class="button button--ghost button--orange" :href="link['_resource_link_file_upload']" target="_blank">Click to download</a>
-					<a v-else class="button button--ghost button--orange" :href="link['_resource_link_url']" target="_blank">Visit Article</a>
+					<a v-else class="button button--ghost button--orange" :href="link['_resource_link_url']" target="_blank"><span v-if="lang == 'fr'">Lis</span>
+					<span v-else>View</span></a>
 				</li>
 			</ul>
 		</div>
@@ -494,6 +496,10 @@ img.heading {
 	}
 }
 
+.rec-link {
+	padding: 80px 0 0;
+}
+
 ul.category {
 	list-style-type: none;
 	margin: 0 0 1.5rem 0;
@@ -654,16 +660,21 @@ ul.resource__tips__bullets {
 
 .resource__rec-link__list {
 	@media #{$large-and-up} {
+		margin-top: 32px;
         display: flex;
 		justify-content: center;
 		>li {
-			width: 30%;
-			margin: 0 1%;
+			width: 25%;
+			margin: 0 4%;
 		}
 	}
 	h4 {
 		font-size: 32px;
 		font-weight: bold;
+		@media #{$large-and-up} {
+			font-size: 1.2rem;
+			line-height: 1.5;
+		}
 	}
 }
 
@@ -674,6 +685,11 @@ ul.resource__tips__bullets {
 	color: $orange;
 	font-size: 0.8rem;
 	font-weight: bold;
+	&:hover {
+		border: 2px solid $orange;
+		background: $orange;
+		color: $white;
+	}
 }
 
 .content a h4 {
