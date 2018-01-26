@@ -97,9 +97,11 @@
 			</div>
 		</div>
 		<div class="quote" v-if="post.meta_box._resource_quotation_body != undefined">
-			<div v-html="post.meta_box._resource_quotation_body"></div>
-			<small v-html="post.meta_box._resource_quotation_name"></small>
-			<small v-html="post.meta_box._resource_quotation_group"></small>
+			<blockquote class="full-width-quote" v-html="post.meta_box._resource_quotation_body"></blockquote>
+			<cite>
+				<small v-html="post.meta_box._resource_quotation_name"></small>
+				<small v-html="post.meta_box._resource_quotation_group"></small>
+			</cite>
 		</div>
 		<div class="rec-link" v-if="post.meta_box.hasOwnProperty('_resource_links') && post.meta_box._resource_links.length > 0">
 			<h3 v-if="lang=='fr'">Liens recommandés</h3>
