@@ -63,16 +63,26 @@ export default {
     	}
 	},
 	created() {
-		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/learn'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study'),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research'),
-		])
-		.then(axios.spread((response, response1, response2, response3) => {
-			
+		
+		// Let's check if we have to add a language check query string
+		let langString = ''
+		if (this.lang == 'en'){
+			langString = ''
+		} else {
+			langString = '&lang=fr'
+		}
 
+		// Make a call to all the CPTs
+		axios.all([
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource?per_page=100'+langString),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study?per_page=100'+langString),
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research?per_page=100'+langString),
+		])
+		.then(axios.spread((response1, response2, response3) => {
+			
+			console.log(response1, response2, response3);
 			const allResponses = response1.data.concat(response2.data, response3.data);
+			console.log(allResponses);
 
 			// This function checks that two objects don't have the name values for a property
 			function removeDuplicates(myArr, prop) {
@@ -107,6 +117,8 @@ export default {
 				}
 			}
 			
+			console.log(categories);
+
 			let uniqueActivities = removeDuplicates(categories, 'name')
 			this.activity = uniqueActivities
 

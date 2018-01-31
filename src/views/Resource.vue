@@ -96,7 +96,7 @@
 
 			</div>
 		</div>
-		<div class="quote" v-if="post.meta_box._resource_quotation_body != undefined">
+		<div class="quote" v-if="post.meta_box._resource_quotation_body != undefined && post.meta_box._resource_quotation_body != ''">
 			<blockquote class="full-width-quote" v-html="post.meta_box._resource_quotation_body"></blockquote>
 			<cite>
 				<small v-html="post.meta_box._resource_quotation_name"></small>
