@@ -187,12 +187,12 @@ ol.resource__bullets {
         font-size: 1.3rem;
         line-height: 1.5;
     }
-    &:after {
-        content: '“';
-        position: absolute;
-        top: 0;
-        left: -20px;
-    }
+    // &:after {
+    //     content: '“';
+    //     position: absolute;
+    //     top: 0;
+    //     left: -20px;
+    // }
 }
 
 .card .content {

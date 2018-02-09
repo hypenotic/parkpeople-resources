@@ -19,14 +19,16 @@ export const routes = [
 	{ path:'/:lang/case-study/:id/:slug', component: CaseStudy, props: true },
 	{ path:'/:lang/research/:id/:slug', component: Research, props: true },
 	{ path:'/:lang/resource/:id/:slug', component: Resource, props: true },
-	{ path:'/:lang', redirect: to => {
-		// the function receives the target route as the argument
-		// return redirect path/location here.
-		window.location = "https://parkpeople.ca"
-	  } },
-	{ path:'/', redirect: to => {
-		// the function receives the target route as the argument
-		// return redirect path/location here.
-		window.location = "https://parkpeople.ca"
-	} }
+	{ path:'/:lang', component: Home, props: true },
+	{ path:'/', redirect: '/en' }
+	// { path:'/:lang', redirect: to => {
+	// 	// the function receives the target route as the argument
+	// 	// return redirect path/location here.
+	// 	window.location = "https://parkpeople.ca"
+	//   } },
+	// { path:'/', redirect: to => {
+	// 	// the function receives the target route as the argument
+	// 	// return redirect path/location here.
+	// 	window.location = "https://parkpeople.ca"
+	// } }
 ]
