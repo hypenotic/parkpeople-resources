@@ -5,5 +5,6 @@ export const state = {
     language: '',
     translatedCheck: false,
     translatedURL: '',
-    grantsCheck: false
+    grantsCheck: false,
+    activeTab: 'how-to'
 }

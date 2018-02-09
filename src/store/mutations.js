@@ -14,7 +14,8 @@ import {
     ADD_SINGLE_RESOURCE,
     SET_TRANSLATION_CHECK,
     SET_TRANSLATION_URL,
-    SET_GRANTS_CHECK  
+    SET_GRANTS_CHECK,
+    SET_ACTIVE_TAB   
 } from './mutation-types'
 
 export const mutations = {
