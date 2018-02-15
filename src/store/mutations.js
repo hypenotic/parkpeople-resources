@@ -1,11 +1,4 @@
 import { state } from './state'
-// export const state = {
-    // resourceListEN: [],
-    // resourceListFR: [],
-    // singlePostCache: {},
-    // language: '',
-    // translated: false
-// }
 
 import { 
     SET_RESOURCES_EN, 
@@ -15,7 +8,8 @@ import {
     SET_TRANSLATION_CHECK,
     SET_TRANSLATION_URL,
     SET_GRANTS_CHECK,
-    SET_ACTIVE_TAB   
+    SET_ACTIVE_TAB,
+    SET_ACTIVE_LIST   
 } from './mutation-types'
 
 export const mutations = {
@@ -50,4 +44,28 @@ export const mutations = {
     SET_GRANTS_CHECK(state, check) {
         state.grantsCheck = check
     },
+    SET_ACTIVE_TAB(state, info) {
+        state.activeTab = {'order:': info.order, 'slug': info.slug, 'name': info.name, 'id': info.id}
+    },
+    SET_ACTIVE_LIST(state, list) {
+        // Now we have to get the posts that fall under the active tab
+        let active = [];
+        // Grab the active section ID
+        let activeSectionID = state.activeTab.id;
+        // Go through each post, and check if the section property's value (an array), contains the active section ID
+        for(let i = 0; i < list.length; i++) {
+            if (list[i].hasOwnProperty("section")) {
+                console.log('has section property')
+                if (list[i].section.includes(activeSectionID)) {
+                    console.log('has section id');
+                    // Add this posts to the active[]
+                    active.push(list[i]);
+                }
+            }
+        }
+        // Set activePosts prop as active[]
+        // this.activePosts = active
+        // this.$store.commit('SET_ACTIVE_LIST', active)s
+        state.activeList = active
+    }
 }

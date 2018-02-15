@@ -1,11 +1,10 @@
 <template>
     <div>
-    
         <app-header></app-header>
         <div class="main-tabs">
-            <a href="" class="active-tab">Park Activity How-tos</a>
-            <a href="">Park Admin Resources</a>
-            <a href="">Park People Resources</a>
+            <a href="" :id="tabOne['slug']" v-on:click="updateActiveTab($event, tabOne['slug'], tabOne['name'], tabOne['id'], 1)" class="tab-trigger active-tab">{{tabOne['name']}}</a>
+            <a href="" :id="tabTwo['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabTwo['slug'], tabTwo['name'], tabTwo['id'], 2)">{{tabTwo['name']}}</a>
+            <a href="" :id="tabThree['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabThree['slug'], tabThree['name'], tabThree['id'], 3)">{{tabThree['name']}}</a>
         </div>
         <transition name="fade">
             <router-view :key="$route.fullPath"></router-view>
@@ -15,12 +14,34 @@
 </template>
 
 <script>
-    import Header from './components/Header.vue';
-    import Footer from './components/Footer.vue';
-    export default {
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
+let tab1 = {'order:': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135};
+let tab2 = {'order:': 2, 'slug': 'planning', 'name': 'Planning', 'id': 137};
+let tab3 = {'order:': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 136};
+export default {
     components: {
         appHeader: Header,
         appFooter: Footer
+    },
+    data() {
+		return {
+            tabOne: tab1,
+            tabTwo: tab2,
+            tabThree: tab3
+		}
+	},
+    methods: {
+        updateActiveTab(event, slug, name, taxID, order) {
+            if (event) event.preventDefault()
+            let tabs = document.getElementsByClassName("tab-trigger")
+            for(var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active-tab")
+            }
+            let activeTab = document.getElementById(slug)
+            activeTab.classList.add("active-tab")
+            this.$store.dispatch("updateTab", {'slug': slug, 'name': name, 'id': taxID, 'order': order})
+        }
     }
 }
 </script>

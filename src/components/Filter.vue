@@ -3,7 +3,6 @@
     	<div class="container">
 			<div class="columns">
 				<div class="column is-12">
-
       				<!-- <ul id="ck-button">
 						<li v-for="item in activity">
 							<label>
@@ -22,6 +21,7 @@
 <script>
 import axios from 'axios';
 import { eventBus } from '../main.js';
+import { updateTab } from '../store/actions.js';
 export default {
 	data() {
 		return {
