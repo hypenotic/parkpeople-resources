@@ -60,7 +60,7 @@ export default {
 			errors: [],
 			lang: this.$route.params.lang,
 			posts: [],
-			activePosts: this.$store.state.activeList,
+			// activePosts: this.$store.state.activeList,
 			paginate: ['postList']
 		};
 	},
@@ -225,24 +225,6 @@ export default {
 					let allENPosts  = response.data.concat(response1.data, response2.data)
 					this.posts = allENPosts
 					this.$store.commit('SET_RESOURCES_EN', allENPosts)
-
-					// // Now we have to get the posts that fall under the active tab
-					// let active = [];
-					// // Grab the active section ID
-					// let activeSectionID = this.$store.state.activeTab.id;
-					// // Go through each post, and check if the section property's value (an array), contains the active section ID
-					// for(let i = 0; i < this.posts.length; i++) {
-					// 	if (this.posts[i].hasOwnProperty("section")) {
-					// 		console.log('has section property')
-					// 		if (this.posts[i].section.includes(activeSectionID)) {
-					// 			console.log('has section id');
-					// 			// Add this posts to the active[]
-					// 			active.push(this.posts[i]);
-					// 		}
-					// 	}
-					// }
-					// // Set activePosts prop as active[]
-					// this.activePosts = active
 					this.$store.commit('SET_ACTIVE_LIST', allENPosts)
 				}))
 				.catch(e => {

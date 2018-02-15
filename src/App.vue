@@ -41,6 +41,7 @@ export default {
             let activeTab = document.getElementById(slug)
             activeTab.classList.add("active-tab")
             this.$store.dispatch("updateTab", {'slug': slug, 'name': name, 'id': taxID, 'order': order})
+            this.$store.commit('SET_ACTIVE_LIST', this.$store.state.resourceListEN)
         }
     }
 }

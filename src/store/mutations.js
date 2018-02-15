@@ -63,9 +63,6 @@ export const mutations = {
                 }
             }
         }
-        // Set activePosts prop as active[]
-        // this.activePosts = active
-        // this.$store.commit('SET_ACTIVE_LIST', active)s
         state.activeList = active
     }
 }
