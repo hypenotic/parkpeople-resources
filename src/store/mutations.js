@@ -9,7 +9,10 @@ import {
     SET_TRANSLATION_URL,
     SET_GRANTS_CHECK,
     SET_ACTIVE_TAB,
-    SET_ACTIVE_LIST   
+    SET_ACTIVE_LIST,
+    SET_FILTERED_LIST,
+    SET_CHECKED_LIST,
+    SET_FILTERS      
 } from './mutation-types'
 
 export const mutations = {
@@ -45,24 +48,28 @@ export const mutations = {
         state.grantsCheck = check
     },
     SET_ACTIVE_TAB(state, info) {
+        // Clear category list
+        state.categoryList = []
+        // Set new active tab info
         state.activeTab = {'order:': info.order, 'slug': info.slug, 'name': info.name, 'id': info.id}
     },
-    SET_ACTIVE_LIST(state, list) {
-        // Now we have to get the posts that fall under the active tab
-        let active = [];
-        // Grab the active section ID
-        let activeSectionID = state.activeTab.id;
-        // Go through each post, and check if the section property's value (an array), contains the active section ID
-        for(let i = 0; i < list.length; i++) {
-            if (list[i].hasOwnProperty("section")) {
-                console.log('has section property')
-                if (list[i].section.includes(activeSectionID)) {
-                    console.log('has section id');
-                    // Add this posts to the active[]
-                    active.push(list[i]);
-                }
-            }
-        }
+    SET_ACTIVE_LIST(state, active) {
+        console.log('SET_ACTIVE_LIST')
         state.activeList = active
+        state.filteredList = active
+    },
+    SET_FILTERED_LIST(state, matches) {
+        console.log('SET_FILTERED_LIST')
+        state.filteredList = matches
+    },
+    SET_CHECKED_LIST(state, checked) {
+        console.log('SET_CHECKED_LIST')
+        state.checkedList = checked
+    },
+    SET_DISPLAYED_LIST(state, list) {
+        
+    },
+    SET_FILTERS(state, filters) {
+        state.filterButtons = filters
     }
 }

@@ -1,6 +1,6 @@
 <template>
 <div v-if="post != null">
-	<img class="heading" src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg">
+	<div class="heading"></div>
 	<section style="margin-top: -200px;">
 		<div class="columns">
 			<div class="column top-column is-three-fifths is-offset-one-fifth" style="background-color: white;">
@@ -134,7 +134,7 @@
 							<small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
 							<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | removeHyphen | toTitleCase }}</small>
 
-							<a :href="'https://parkpeople.ca/resources/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
+							<a :href="'https://parkpeople.ca/resources/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered" v-on:click="relatedClick"></h4></a>
 							<div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div>
 							<div v-if="related.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
 								<strong>Faire dans les parcs</strong>: <span v-for="tax in related.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
@@ -220,6 +220,10 @@ export default {
 		moment: () => {
 			return moment();
 		},
+		relatedClick() {
+			console.log('relatedclick');
+			this.$ga.event('category', 'action', 'label', 123)
+		}
 	},
 	created() {
 		// Reset store check values
@@ -447,16 +451,17 @@ h1 {
 	font-weight: bold;
 }
 
-img.heading {
+div.heading {
 	position: relative;
 	z-index: -1;
 	margin-top: -60px;
 	height: 300px;
 	width: 100%;
-	object-fit:cover;
-  	object-position: 0 20%;
+	// object-fit:cover;
+  	// object-position: 0 20%;
 	-webkit-clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
-    clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+	clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+	background-color: #fff3ed;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='24' viewBox='0 0 88 24'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='autumn' fill='%23ff7834' fill-opacity='0.22'%3E%3Cpath d='M10 0l30 15 2 1V2.18A10 10 0 0 0 41.76 0H39.7a8 8 0 0 1 .3 2.18v10.58L14.47 0H10zm31.76 24a10 10 0 0 0-5.29-6.76L4 1 2 0v13.82a10 10 0 0 0 5.53 8.94L10 24h4.47l-6.05-3.02A8 8 0 0 1 4 13.82V3.24l31.58 15.78A8 8 0 0 1 39.7 24h2.06zM78 24l2.47-1.24A10 10 0 0 0 86 13.82V0l-2 1-32.47 16.24A10 10 0 0 0 46.24 24h2.06a8 8 0 0 1 4.12-4.98L84 3.24v10.58a8 8 0 0 1-4.42 7.16L73.53 24H78zm0-24L48 15l-2 1V2.18A10 10 0 0 1 46.24 0h2.06a8 8 0 0 0-.3 2.18v10.58L73.53 0H78z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .type {

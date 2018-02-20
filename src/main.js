@@ -12,7 +12,7 @@ var SocialSharing = require('vue-social-sharing');
 import VuePaginate from 'vue-paginate'
 
 
-export const eventBus = new Vue();
+// export const  = new Vue();
 
 // Use
 Vue.use(Buefy);

@@ -1,42 +1,91 @@
 <template>
-	<section class="hero bg-filter">
-    	<div class="container">
-			<div class="columns">
-				<div class="column is-12">
-      				<!-- <ul id="ck-button">
-						<li v-for="item in activity">
-							<label>
-							<input type="checkbox" @change="emitGlobalClickEvent" hidden v-model="checkedCategories" :value="item" />
-							<span v-if="lang=='fr'">{{item.fr}}</span>
-							<span v-if="lang=='en'">{{item.name}}</span>
-							</label>
-						</li>
-					</ul> -->
-			  	</div>
+	<div>
+		<div class="main-tabs">
+	            <a href="" :id="tabOne['slug']" v-on:click="updateActiveTab($event, tabOne['slug'], tabOne['name'], tabOne['id'], 1, lang)" class="tab-trigger active-tab">{{tabOne['name']}}</a>
+	            <a href="" :id="tabTwo['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabTwo['slug'], tabTwo['name'], tabTwo['id'], 2, lang)">{{tabTwo['name']}}</a>
+	            <a href="" :id="tabThree['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabThree['slug'], tabThree['name'], tabThree['id'], 3, lang)">{{tabThree['name']}}</a>
+	    </div>
+		<section class="hero bg-filter">
+	    	<div class="container">
+				<div class="columns">
+					<div class="column is-12">
+						<div class="filter-description">
+							<p v-if="this.$store.state.activeTab.slug == 'activities-and-events'">How-to guides for activating parks</p>
+							<p v-if="this.$store.state.activeTab.slug == 'organizational-planning'">Information and inspiration to help you lead park groups and programs</p>
+							<p v-if="this.$store.state.activeTab.slug == 'park-people-research'">Papers and reports we've published </p>
+						</div>
+						<div class="filter-tabs">
+							<!-- <p>Filters:</p> -->
+							<ul id="ck-button">
+								<li>
+									<label>
+									<input id="clear-filter-trigger" type="checkbox" @change="clearFilters($event)" hidden value="all" v-model="clearFilterCheck"/>
+									<span v-if="lang=='fr'">Tout</span>
+									<span v-if="lang=='en'">All</span>
+									</label>
+								</li>
+								<li v-for="item in this.$store.state.filterButtons" :key="item.name">
+									<label>
+									<input type="checkbox" @change="filterChange" hidden v-model="checkedCategories" :value="item.name" />
+									<span v-if="lang=='fr'">{{item.fr}}</span>
+									<span v-if="lang=='en'">{{item.name}}</span>
+									</label>
+								</li>
+							</ul>
+						</div>
+				  	</div>
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</div>
 </template>
 
 <script>
 import axios from 'axios';
-import { eventBus } from '../main.js';
+// import { eventBus } from '../main.js';
 import { updateTab } from '../store/actions.js';
+import { createNamespacedHelpers } from 'vuex';
+let tab1 = {'order:': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135};
+let tab2 = {'order:': 2, 'slug': 'organizational-planning', 'name': 'Organizational Planning', 'id': 137};
+let tab3 = {'order:': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 136};
 export default {
 	data() {
 		return {
+			tabOne: tab1,
+            tabTwo: tab2,
+            tabThree: tab3,
 			errors: [],
 			learn: [],
 			activity: [],
 			checkedCategories: [],
+			clearFilterCheck: ['all'],
 			lang: this.$route.params.lang
 		};
 	},
 	methods: {
-		emitGlobalClickEvent() {
-			console.log('HIIII',this.checkedCategories);
-      		eventBus.$emit('checked', this.checkedCategories);
-    	}
+		updateActiveTab(event, slug, name, taxID, order, lang) {
+			this.checkedCategories = [];
+            if (event) event.preventDefault()
+				let tabs = document.getElementsByClassName("tab-trigger");
+				for(var i = 0; i < tabs.length; i++) {
+					tabs[i].classList.remove("active-tab");
+            }
+            let activeTab = document.getElementById(slug);
+            activeTab.classList.add("active-tab");
+            this.$store.dispatch("updateTab", {'slug': slug, 'name': name, 'id': taxID, 'order': order, 'lang': lang});
+        },
+		filterChange() {
+			this.$store.dispatch("filterChange", this.checkedCategories);
+			this.clearFilterCheck = [];
+		},
+		clearFilters(event) {
+			if (event.target.checked) {
+				this.$store.dispatch("clearFilters", 'active');
+				this.checkedCategories = [];
+			} else {
+				return
+			}
+		}
 	},
 	created() {
 		
@@ -48,78 +97,6 @@ export default {
 			langString = '&lang=fr'
 		}
 
-		// Make a call to all the CPTs
-		axios.all([
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource?per_page=100'+langString),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study?per_page=100'+langString),
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research?per_page=100'+langString),
-		])
-		.then(axios.spread((response1, response2, response3) => {
-			
-			console.log(response1, response2, response3);
-			const allResponses = response1.data.concat(response2.data, response3.data);
-			console.log(allResponses);
-
-			// This function checks that two objects don't have the name values for a property
-			function removeDuplicates(myArr, prop) {
-				return myArr.filter((obj, pos, arr) => {
-					return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
-				});
-			}
-
-			// The all_lang_taxonomies adds the FR translation to what the pure_taxonomies plugin provides
-			// !!! So all this code is dependent on a custom function in the WP CMS
-			// https://github.com/hypenotic/pp-map/commit/14f73fdda1e5675d4a2d988d0617404af932be4c
-
-			// Activity Filter
-			const categories = []
-			for(let i = 0; i < allResponses.length; i++) {
-				if(typeof(allResponses[i].all_lang_taxonomies.activity) != 'undefined') {
-					const array = allResponses[i].all_lang_taxonomies.activity
-					for(let j = 0; j < array.length; j++) {
-						// We have to make sure the EN and FR taxonomy names are in one object, so it's easy to toggle between the two
-						// Create an object to hold the EN and FR taxonomy names
-						let duo = {};
-						// Add the key 'name' that hold the EN version
-						duo.name = array[j].name
-						// Add the key 'fr' that holds the FR version
-						duo.fr = array[j].activity_french[0]
-						
-						// Might be able to delete this...we can just pass 'duo' at this point...
-						let category = duo
-						// 
-						categories.push(category)
-					}
-				}
-			}
-			
-			console.log(categories);
-
-			let uniqueActivities = removeDuplicates(categories, 'name')
-			this.activity = uniqueActivities
-
-			// Learn Filter
-			const Lcategories = []
-			for(let i = 0; i < allResponses.length; i++) {
-				if(typeof(allResponses[i].all_lang_taxonomies.learn) != 'undefined') {
-					const array = allResponses[i].all_lang_taxonomies.learn
-					for(let j = 0; j < array.length; j++) {
-						let duo = {};
-						duo.name = array[j].name
-						duo.fr = array[j].learn_french[0]
-
-						let category = duo
-						Lcategories.push(category)
-					}
-				}
-			} 
-			let uniqueLearns = removeDuplicates(Lcategories, 'name')
-			this.learn = uniqueLearns
-
-		}))
-		.catch(e => {
-			this.errors.push(e)
-		})
 	}
 };
 </script>
@@ -173,22 +150,22 @@ h2 {
 		margin: 10px 10px 5px 0;
     	overflow:auto;
     	float:left;
-		background-color: rgba(30,177,242, .2);
-		color: rgba(250,250,250, 0.5);
+		background-color: rgba(30,177,242, .3);
+		color: rgba(250,250,250, 1);
 		border-radius: 18px;
 		padding: 8px 12px;
 		&:hover, &:active {
 			background-color: rgba(30,177,242, 1);
-			color: rgba(250,250,250, 0.8);
+			color: rgba(250,250,250, 1);
 		}
 		&:not(:checked) {
-			background-color: rgba(30,177,242, .2);
-			color: rgba(250,250,250, 0.5);
+			background-color: rgba(30,177,242, .3);
+			color: rgba(250,250,250, 0.8);
 		}
 	}
 	& input:checked + span {
     	background-color: rgba(30,177,242, 1);
-    	color: rgba(250,250,250, 0.8);
+    	color: rgba(250,250,250, 1);
 	}
 }
 
@@ -202,6 +179,32 @@ h2 {
 			display: inline-block;
 			font-size: 0.8rem;
 		}
+	}
+}
+
+.filter-tabs, .filter-description {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.filter-tabs {
+	width: 78%;
+	margin: 0 !important;
+	p {
+		margin: 0;
+		color: $off-black;
+		font-weight: bold;
+	}
+	ul {
+		margin: 0 !important;
+	}
+}
+
+.filter-description {
+	width: 20%;
+	margin-right: 1.5%;
+	p {
+		color: $off-black;
 	}
 }
 

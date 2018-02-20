@@ -21,4 +21,14 @@ export const routes = [
 	{ path:'/:lang/resource/:id/:slug', component: Resource, props: true },
 	{ path:'/:lang', component: Home, props: true },
 	{ path:'/', redirect: '/en' }
+	// { path:'/:lang', redirect: to => {
+	// 	// the function receives the target route as the argument
+	// 	// return redirect path/location here.
+	// 	window.location = "https://parkpeople.ca"
+	//   } },
+	// { path:'/', redirect: to => {
+	// 	// the function receives the target route as the argument
+	// 	// return redirect path/location here.
+	// 	window.location = "https://parkpeople.ca"
+	// } }
 ]
