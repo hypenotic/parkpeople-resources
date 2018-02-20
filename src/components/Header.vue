@@ -5,7 +5,7 @@
             <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 15px 10px 10px;"></a>
             </div>
             <div v-else>
-                <a href="https://parkpeople.ca" class="lang"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px; padding: 15px 10px 10px;"></a>
+                <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px; padding: 15px 10px 10px;"></a>
             </div>
         </div>
         <div class="lang">
@@ -35,10 +35,10 @@
     <nav v-else class="navbar green">
         <div class="navbar-brand">
             <div v-if="this.$route.params.lang == 'fr'">
-            <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 15px 10px 10px;"></a>
+            <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 100px; height: auto; padding: 15px 10px 10px;margin-left: 12px;"></a>
             </div>
             <div v-else>
-                <a href="https://parkpeople.ca" class="lang"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 80px; height: auto; padding: 10px; padding: 15px 10px 10px;"></a>
+                <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/themes/parkpeople/dist/images/parkpeople-logo-PMS.png" style="width: 100px; height: auto; padding: 10px; padding: 15px 10px 10px;margin-left: 12px;"></a>
             </div>
         </div>
         <div class="lang">
@@ -219,9 +219,17 @@ nav#scrolling {
     }
 }
 
-.lang {
+div.lang {
+    display: flex;
+    align-items: center;
+}
+
+a.lang {
     color: white;
-    margin: 1em;
+    margin: 0 0 0 1em;
+    // height: 100%;
+    display: block;
+    position: relative;
 }
 
 .navbar-item {

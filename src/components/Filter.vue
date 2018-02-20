@@ -1,18 +1,39 @@
 <template>
 	<div>
 		<div class="main-tabs">
-	            <a href="" :id="tabOne['slug']" v-on:click="updateActiveTab($event, tabOne['slug'], tabOne['name'], tabOne['id'], 1, lang)" class="tab-trigger active-tab">{{tabOne['name']}}</a>
-	            <a href="" :id="tabTwo['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabTwo['slug'], tabTwo['name'], tabTwo['id'], 2, lang)">{{tabTwo['name']}}</a>
-	            <a href="" :id="tabThree['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabThree['slug'], tabThree['name'], tabThree['id'], 3, lang)">{{tabThree['name']}}</a>
+	            <a href="" :id="tabOne['slug']" v-on:click="updateActiveTab($event, tabOne['slug'], tabOne['name'], tabOne['id'], 1, lang)" class="tab-trigger active-tab">
+					<span v-if="lang=='fr'">{{tabOne['frName']}}</span>
+					<span v-else>{{tabOne['name']}}</span>
+				</a>
+	            <a href="" :id="tabTwo['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabTwo['slug'], tabTwo['name'], tabTwo['id'], 2, lang)">
+					<span v-if="lang=='fr'">{{tabTwo['frName']}}</span>
+					<span v-else>{{tabTwo['name']}}</span>
+				</a>
+	            <a href="" :id="tabThree['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabThree['slug'], tabThree['name'], tabThree['id'], 3, lang)">
+					<span v-if="lang=='fr'">{{tabThree['frName']}}</span>
+					<span v-else>{{tabThree['name']}}</span>
+				</a>
 	    </div>
 		<section class="hero bg-filter">
 	    	<div class="container">
 				<div class="columns">
 					<div class="column is-12">
 						<div class="filter-description">
-							<p v-if="this.$store.state.activeTab.slug == 'activities-and-events'">How-to guides for activating parks</p>
-							<p v-if="this.$store.state.activeTab.slug == 'organizational-planning'">Information and inspiration to help you lead park groups and programs</p>
-							<p v-if="this.$store.state.activeTab.slug == 'park-people-research'">Papers and reports we've published </p>
+							<p v-if="this.$store.state.activeTab.slug == 'activities-and-events'">
+								<span v-if="lang=='fr'">Guides pratiques pour l’animation des parcs</span>
+								<span v-else>How-to guides for activating parks</span>
+								
+							</p>
+							<p v-if="this.$store.state.activeTab.slug == 'organizational-planning'">
+								<span v-if="lang=='fr'">Information et inspiration pour vous aider à guider des groupes et des programmes de parcs</span>
+								<span v-else>Information and inspiration to help you lead park groups and programs</span>
+								
+							</p>
+							<p v-if="this.$store.state.activeTab.slug == 'park-people-research'">
+								<span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
+								<span v-else>Papers and reports we've published</span>
+								
+							</p>
 						</div>
 						<div class="filter-tabs">
 							<!-- <p>Filters:</p> -->
@@ -45,9 +66,9 @@ import axios from 'axios';
 // import { eventBus } from '../main.js';
 import { updateTab } from '../store/actions.js';
 import { createNamespacedHelpers } from 'vuex';
-let tab1 = {'order:': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135};
-let tab2 = {'order:': 2, 'slug': 'organizational-planning', 'name': 'Organizational Planning', 'id': 137};
-let tab3 = {'order:': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 136};
+let tab1 = {'order:': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'frName': 'Activités et événements'};
+let tab2 = {'order:': 2, 'slug': 'organizational-planning', 'name': 'Organizational Planning', 'id': 137, 'frName': 'Planification organisationnelle'};
+let tab3 = {'order:': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 136, 'frName': 'Recherche de Park People'};
 export default {
 	data() {
 		return {
@@ -147,7 +168,7 @@ h2 {
 	text-transform: uppercase;
 	font-family: $family-sanserif;
 	& input + span {
-		margin: 10px 10px 5px 0;
+		margin: 0px 10px 5px 0;
     	overflow:auto;
     	float:left;
 		background-color: rgba(30,177,242, .3);
