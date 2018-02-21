@@ -141,6 +141,11 @@ export default {
     background-color: #067f1b;
 }
 
+nav {
+    position: relative;
+    z-index: 999999999999;
+}
+
 nav#scrolling {
     @media #{$small-and-down} {
 		display: block;

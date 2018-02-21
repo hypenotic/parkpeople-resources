@@ -1,5 +1,5 @@
 <template>
-<div v-if="post != null">
+<div v-if="post != null" class="resource-body">
 	<div class="heading"></div>
 	<section style="margin-top: -200px;">
 		<div class="columns">
