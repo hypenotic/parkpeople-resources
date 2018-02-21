@@ -198,12 +198,15 @@ export default {
 		})
 	},
 	created() {
+		// Set translation check to FALSE just incase someone presses the back button from a single resource instead of the home link
+		this.$store.commit('SET_TRANSLATION_CHECK', false);
 		if (this.lang == 'en') {
 			// Check if we have already made calls to get the EN resources
 			if(this.$store.state.resourceListEN.length > 0) {
 				// If resourceList in the store (an array) has any items, just use the store data
-				this.posts = this.$store.state.resourceListEN
+				// this.posts = this.$store.state.resourceListEN
 				console.log('EN - resourceList exists', this.posts)
+				this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListEN, 'lang': this.lang})
 			} else {
 				// Else, we have no data, so make the calls
 				console.log('EN - resourceList does not exists')
@@ -230,6 +233,7 @@ export default {
 				// If resourceList in the store (an array) has any items, just use the store data
 				this.posts = this.$store.state.resourceListFR
 				console.log('FR - resourceList exists', this.posts)
+				this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListFR, 'lang': this.lang})
 			} else {
 				// Else, we have no data, so make the calls
 				axios.all([
