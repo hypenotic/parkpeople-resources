@@ -342,5 +342,12 @@ footer {
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
+    h4 {
+        margin: 0;
+        margin-top: 1rem;
+    }
+    h4 + p {
+        margin-top: 0.5rem;
+    }
 }
 </style>
