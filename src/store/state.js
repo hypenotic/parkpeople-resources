@@ -1,9 +1,15 @@
 export const state = {
+    activeList: [],
+    // activeTab: {'order': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'lang': 'en'},
+    activeTab: {'order': '', 'slug': '', 'name': '', 'id': '', 'lang': ''},
+    checkedList: [],
+    filterButtons: [],
+    filteredList: null,
+    grantsCheck: false,
+    language: '',
     resourceListEN: [],
     resourceListFR: [],
     singlePostCache: {},
-    language: '',
     translatedCheck: false,
     translatedURL: '',
-    grantsCheck: false
 }

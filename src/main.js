@@ -12,7 +12,7 @@ var SocialSharing = require('vue-social-sharing');
 import VuePaginate from 'vue-paginate'
 
 
-export const eventBus = new Vue();
+// export const  = new Vue();
 
 // Use
 Vue.use(Buefy);
@@ -35,11 +35,15 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
 	routes, // Have to pass an object where we setup the router. ES6 syntax (routes:routes)
-  mode: 'history', // Remove the hash
-  base: '/resources',
-  scrollBehavior (to, from, savedPosition) {
-      return { x: 0, y: 0 }
-    }
+	mode: 'history', // Remove the hash
+	base: '/resources',
+	scrollBehavior (to, from, savedPosition) {
+		if (savedPosition) {
+			return savedPosition
+		} else {
+			return { x: 0, y: 0 }
+		}
+	}
 })
 
 Vue.use(VueAnalytics, {
