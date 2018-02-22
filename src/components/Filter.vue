@@ -36,7 +36,7 @@
 								<span v-else>Papers and reports we've published</span>
 								
 							</p>
-							<img src="https://parkpeople.ca/listings/custom/uploads/2018/02/notation_original_green.png" alt="accent" class="description-arrow">
+							<img src="https://parkpeople.ca/listings/custom/uploads/2018/02/notation_original_grey.png" alt="accent" class="description-arrow">
 						</div>
 						<div class="filter-tabs">
 							<!-- <p>Filters:</p> -->
@@ -71,8 +71,8 @@ import axios from 'axios';
 import { updateTab } from '../store/actions.js';
 import { createNamespacedHelpers } from 'vuex';
 let tab1 = {'order': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'frName': 'Activités et événements'};
-let tab2 = {'order': 2, 'slug': 'organizational-planning', 'name': 'Organizational Planning', 'id': 137, 'frName': 'Planification organisationnelle'};
-let tab3 = {'order': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 136, 'frName': 'Recherche de Park People'};
+let tab2 = {'order': 2, 'slug': 'organizational-planning', 'name': 'Organizational Planning', 'id': 136, 'frName': 'Planification organisationnelle'};
+let tab3 = {'order': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 137, 'frName': 'Recherche de Park People'};
 export default {
 	data() {
 		return {
@@ -347,11 +347,12 @@ h2 {
 }
 
 .description-arrow {
-	height: 150px;
+	height: 120px;
 	width: auto;
 	position: absolute;
 	right: -12%;
-	top: -30px;
+	top: -10px;
+	opacity: 0.5;
 }
 
 </style>

@@ -12,7 +12,7 @@
 					:title="post.title.rendered"
 					description=""
 					quote=""
-					hashtags="ParkPeople, Resource"
+					hashtags="ParkPeople"
 					twitter-user="Park_People"
 					inline-template>
 					<div class="social-share-buttons">
