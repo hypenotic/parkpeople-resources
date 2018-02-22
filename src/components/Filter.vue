@@ -20,25 +20,28 @@
 	    	<div class="container">
 				<div class="columns">
 					<div class="column is-12">
-						<div class="filter-description">
+						<div class="filter-description filter-description--long" v-if="this.$store.state.activeTab.order == 3">
+							<p v-if="this.$store.state.activeTab.slug == 'park-people-research'">
+								<span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
+								<span v-else>Papers and reports we've published</span>
+							</p>
+						</div>
+						<div class="filter-description" v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2">
 							<p v-if="this.$store.state.activeTab.slug == 'activities-and-events'">
 								<span v-if="lang=='fr'">Guides pratiques pour l’animation des parcs</span>
 								<span v-else>How-to guides for activating parks</span>
-								
 							</p>
 							<p v-if="this.$store.state.activeTab.slug == 'organizational-planning'">
 								<span v-if="lang=='fr'">Information et inspiration pour vous aider à guider des groupes et des programmes de parcs</span>
 								<span v-else>Information and inspiration to help you lead park groups and programs</span>
-								
 							</p>
 							<p v-if="this.$store.state.activeTab.slug == 'park-people-research'">
 								<span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
 								<span v-else>Papers and reports we've published</span>
-								
 							</p>
 							<img src="https://parkpeople.ca/listings/custom/uploads/2018/02/notation_original_grey.png" alt="accent" class="description-arrow">
 						</div>
-						<div class="filter-tabs">
+						<div class="filter-tabs" v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2">
 							<!-- <p>Filters:</p> -->
 							<ul id="ck-button">
 								<li>
@@ -344,6 +347,11 @@ h2 {
 		line-height: 1.3;
 		// font-weight: bold;
 	}
+}
+
+.filter-description.filter-description--long {
+	width: 100%;
+	text-align: center;
 }
 
 .description-arrow {

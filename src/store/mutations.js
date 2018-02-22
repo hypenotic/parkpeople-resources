@@ -51,7 +51,7 @@ export const mutations = {
         // Clear category list
         state.categoryList = []
         // Set new active tab info
-        state.activeTab = {'order:': info.order, 'slug': info.slug, 'name': info.name, 'id': info.id}
+        state.activeTab = {'order': info.order, 'slug': info.slug, 'name': info.name, 'id': info.id}
     },
     SET_ACTIVE_LIST(state, active) {
         console.log('SET_ACTIVE_LIST', active)
