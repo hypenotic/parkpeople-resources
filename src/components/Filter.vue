@@ -1,15 +1,16 @@
 <template>
 	<div v-if="this.$store.state.filteredList != null"> 
 		<div class="main-tabs">
-			<a href="" :id="tabOne['slug']" v-on:click="updateActiveTab($event, tabOne['slug'], tabOne['name'], tabOne['id'], 1, lang)" class="tab-trigger active-tab">
+			<!-- Change these to buttons -->
+			<a href="" :id="tabOne['slug']" v-on:click="updateActiveTab($event, tabOne['slug'], tabOne['name'], tabOne['id'], 1, lang)" class="tab-trigger" v-bind:class="{'active-tab': activeTabOneCheck}"> 
 				<span v-if="lang=='fr'">{{tabOne['frName']}}</span>
 				<span v-else>{{tabOne['name']}}</span>
 			</a>
-			<a href="" :id="tabTwo['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabTwo['slug'], tabTwo['name'], tabTwo['id'], 2, lang)">
+			<a href="" :id="tabTwo['slug']" class="tab-trigger" v-bind:class="{'active-tab': activeTabTwoCheck}" v-on:click="updateActiveTab($event, tabTwo['slug'], tabTwo['name'], tabTwo['id'], 2, lang)">
 				<span v-if="lang=='fr'">{{tabTwo['frName']}}</span>
 				<span v-else>{{tabTwo['name']}}</span>
 			</a>
-			<a href="" :id="tabThree['slug']" class="tab-trigger" v-on:click="updateActiveTab($event, tabThree['slug'], tabThree['name'], tabThree['id'], 3, lang)">
+			<a href="" :id="tabThree['slug']" class="tab-trigger" v-bind:class="{'active-tab': activeTabThreeCheck}" v-on:click="updateActiveTab($event, tabThree['slug'], tabThree['name'], tabThree['id'], 3, lang)">
 				<span v-if="lang=='fr'">{{tabThree['frName']}}</span>
 				<span v-else>{{tabThree['name']}}</span>
 			</a>
@@ -68,9 +69,9 @@ import axios from 'axios';
 // import { eventBus } from '../main.js';
 import { updateTab } from '../store/actions.js';
 import { createNamespacedHelpers } from 'vuex';
-let tab1 = {'order:': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'frName': 'Activités et événements'};
-let tab2 = {'order:': 2, 'slug': 'organizational-planning', 'name': 'Organizational Planning', 'id': 137, 'frName': 'Planification organisationnelle'};
-let tab3 = {'order:': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 136, 'frName': 'Recherche de Park People'};
+let tab1 = {'order': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'frName': 'Activités et événements'};
+let tab2 = {'order': 2, 'slug': 'organizational-planning', 'name': 'Organizational Planning', 'id': 137, 'frName': 'Planification organisationnelle'};
+let tab3 = {'order': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 136, 'frName': 'Recherche de Park People'};
 export default {
 	data() {
 		return {
@@ -82,19 +83,20 @@ export default {
 			activity: [],
 			checkedCategories: [],
 			clearFilterCheck: ['all'],
-			lang: this.$route.params.lang
+			lang: this.$route.params.lang,
 		};
 	},
 	methods: {
 		updateActiveTab(event, slug, name, taxID, order, lang) {
+			console.log('firing');
 			this.checkedCategories = [];
-            if (event) event.preventDefault()
-				let tabs = document.getElementsByClassName("tab-trigger");
-				for(var i = 0; i < tabs.length; i++) {
-					tabs[i].classList.remove("active-tab");
-            }
-            let activeTab = document.getElementById(slug);
-            activeTab.classList.add("active-tab");
+            if (event) event.preventDefault();
+			// let tabs = document.getElementsByClassName("tab-trigger");
+			// for(var i = 0; i < tabs.length; i++) {
+			// 	tabs[i].classList.remove("active-tab");
+			// }
+            // let activeTab = document.getElementById(slug);
+            // activeTab.classList.add("active-tab");
             this.$store.dispatch("updateTab", {'slug': slug, 'name': name, 'id': taxID, 'order': order, 'lang': lang});
         },
 		filterChange() {
@@ -110,8 +112,63 @@ export default {
 			}
 		}
 	},
+	computed: {
+		activeTabOneCheck() {
+			if (this.$store.state.activeTab.slug == this.tabOne['slug']) {
+				return true
+			} else {
+				return false
+			}
+		},
+		activeTabTwoCheck() {
+			if (this.$store.state.activeTab.slug == this.tabTwo['slug']) {
+				return true
+			} else {
+				return false
+			}
+		},
+		activeTabThreeCheck() {
+			if (this.$store.state.activeTab.slug == this.tabThree['slug']) {
+				return true
+			} else {
+				return false
+			}
+		},
+	},
+	mounted() {
+		if (this.$store.state.activeTab['name'] != '') {
+			// updateActiveTab(event, 'activities-and-events', 'Activities and Events', 135, q, lang);
+			// this.$store.dispatch("updateTab", {'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'order': 1, 'lang': this.lang});
+			this.$store.commit('SET_ACTIVE_TAB', {'order': this.$store.state.activeTab['order'], 'slug': this.$store.state.activeTab['slug'], 'name': this.$store.state.activeTab['name'], 'id': this.$store.state.activeTab['id'], 'lang': this.lang});
+
+			if (this.lang == 'en') {
+				console.log('ENGLISH');
+				dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListEN});
+			} else {
+				console.log('FRENCH');
+				dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListFR});
+			} 
+		} else {
+			console.log('first load - 2');
+
+
+			this.$store.commit('SET_ACTIVE_TAB', {'order': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'lang': this.lang});
+
+			
+			// let activeTab = document.getElementById('activities-and-events');
+			// activeTab.classList.add("active-tab");
+
+			if (this.lang == 'en') {
+				console.log('ENGLISH');
+				dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListEN});
+			} else {
+				console.log('FRENCH');
+				dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListFR});
+			} 
+			// this.updateActiveTab($event, 'activities-and-events', 'Activities and Events', 135, 1, this.lang);
+		}
+	},
 	created() {
-		
 		// Let's check if we have to add a language check query string
 		let langString = ''
 		if (this.lang == 'en'){

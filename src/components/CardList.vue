@@ -205,8 +205,17 @@ export default {
 			if(this.$store.state.resourceListEN.length > 0) {
 				// If resourceList in the store (an array) has any items, just use the store data
 				// this.posts = this.$store.state.resourceListEN
-				console.log('EN - resourceList exists', this.posts)
-				this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListEN, 'lang': this.lang})
+				console.log('EN - resourceList exists', this.posts);
+				// this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListEN, 'lang': this.lang});
+
+				if (this.$store.state.activeTab['name'] != '') {
+					// updateActiveTab(event, 'activities-and-events', 'Activities and Events', 135, q, lang);
+					// this.$store.dispatch("updateTab", {'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'order': 1, 'lang': this.lang});
+					this.$store.dispatch("renderList", {'type': 'tab-change', 'list': this.$store.state.resourceListEN, 'lang': this.lang});
+					// return
+				} else {
+					this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListEN, 'lang': this.lang});
+				}
 			} else {
 				// Else, we have no data, so make the calls
 				console.log('EN - resourceList does not exists')
@@ -218,6 +227,7 @@ export default {
 				.then(axios.spread((response, response1, response2) => {
 					let allENPosts  = response.data.concat(response1.data, response2.data)
 					this.posts = allENPosts
+
 					this.$store.commit('SET_RESOURCES_EN', allENPosts)
 					// this.$store.commit('SET_ACTIVE_LIST', allENPosts)
 					this.$store.dispatch("renderList", {'type': 'initial-load', 'list': allENPosts, 'lang': this.lang})
@@ -233,7 +243,15 @@ export default {
 				// If resourceList in the store (an array) has any items, just use the store data
 				this.posts = this.$store.state.resourceListFR
 				console.log('FR - resourceList exists', this.posts)
-				this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListFR, 'lang': this.lang})
+				// this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListFR, 'lang': this.lang})
+
+				if (this.$store.state.activeTab['name'] != '') {
+					// updateActiveTab(event, 'activities-and-events', 'Activities and Events', 135, q, lang);
+					// this.$store.dispatch("updateTab", {'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'order': 1, 'lang': this.lang});
+					this.$store.dispatch("renderList", {'type': 'tab-change', 'list': this.$store.state.resourceListFR, 'lang': this.lang})
+				} else {
+					this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListFR, 'lang': this.lang})
+				}
 			} else {
 				// Else, we have no data, so make the calls
 				axios.all([

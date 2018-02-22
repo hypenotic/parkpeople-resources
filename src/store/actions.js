@@ -25,8 +25,13 @@ export const actions = {
         } else if (info.type == 'filter-change') {
             // When secondary filters are clicked
             dispatch('createFilteredList', {'checked': info.checked, 'list': info.list});
+        } else if (info.type == 'back-button') {
+            // If user presses back button and a tab either than the first one was active
+            console.log('back button');
+            dispatch('createActiveList', info.list);
         } else {
-            // Initial load
+             // Initial load
+            console.log('Initial load');
             dispatch('createActiveList', info.list);
         }
         // Dispatch the action to create the filters

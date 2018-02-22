@@ -52,8 +52,8 @@ a {
 }
 
 p {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
     margin-bottom: 1.5rem;
     color: $body-color;
 }
@@ -338,6 +338,11 @@ footer {
 
 // Resources
 .resource__bullets__content {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    p {
+        line-height: 1.5;
+    }
     ul {
         margin-top: 1rem;
         margin-bottom: 1rem;
@@ -345,9 +350,19 @@ footer {
     h4 {
         margin: 0;
         margin-top: 1rem;
+        // margin-bottom: 0.2rem;
     }
     h4 + p {
         margin-top: 0.5rem;
+    }
+    ul {
+        li {
+            // margin-bottom: 100px !important;
+        }
+    }
+    li {
+        line-height: 1.5;
+        margin-bottom: 0.5rem !important;
     }
 }
 </style>
