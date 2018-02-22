@@ -36,6 +36,7 @@
 								<span v-else>Papers and reports we've published</span>
 								
 							</p>
+							<img src="https://parkpeople.ca/listings/custom/uploads/2018/02/notation_original_green.png" alt="accent" class="description-arrow">
 						</div>
 						<div class="filter-tabs">
 							<!-- <p>Filters:</p> -->
@@ -315,7 +316,7 @@ h2 {
 .filter-tabs {
 	margin: 0 !important;
 	@media #{$medium-and-up} {
-		width: 78%;
+		width: 75%;
 	}
 	p {
 		margin: 0;
@@ -328,13 +329,29 @@ h2 {
 }
 
 .filter-description {
-	margin-right: 1.5%;
+	margin-right: 4%;
+	padding-right: 20px;
+	position: relative;
+	font-family: $handwritten;
+	color: $med-green;
 	@media #{$medium-and-up} {
 		width: 20%;
 	}
 	p {
 		color: $off-black;
+		color: $med-green;
+		font-size: 1.2rem;
+		line-height: 1.2;
+		font-weight: bold;
 	}
+}
+
+.description-arrow {
+	height: 150px;
+	width: auto;
+	position: absolute;
+	right: -12%;
+	top: -30px;
 }
 
 </style>
