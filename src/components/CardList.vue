@@ -409,9 +409,9 @@ img {
 	color: rgba(0,0,0,0.5);
 	font-family: $family-sanserif;
 	font-family: $handwritten;
-	font-size: 1rem !important;
+	font-size: 0.8rem !important;
 	font-weight: bold;
-	// text-transform: uppercase;
+	text-transform: uppercase;
 	opacity: 0.5;
 	margin-top: 16px;
 }

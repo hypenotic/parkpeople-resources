@@ -341,8 +341,8 @@ h2 {
 		color: $off-black;
 		color: $med-green;
 		font-size: 1.2rem;
-		line-height: 1.2;
-		font-weight: bold;
+		line-height: 1.3;
+		// font-weight: bold;
 	}
 }
 
