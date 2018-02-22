@@ -355,7 +355,7 @@ h2 {
 }
 
 .description-arrow {
-	height: 125px;
+	height: 120px;
 	width: auto;
 	position: absolute;
 	right: -12%;
