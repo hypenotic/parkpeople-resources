@@ -139,7 +139,8 @@
 		<h3 v-else>Related Resources</h3>
 		<div class="columns is-multiline">
 			<div class="column is-one-quarter" v-for="related in relatedPosts.slice(0, 4)" :key="related.title.rendered">
-				<div class="card">
+				<router-link :to="'/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug" class="related-card">
+				<a class="card">
 					<div class="card-image">
 						<figure class="image is-2by1">
 							<img v-if="related._embedded['wp:featuredmedia'] != undefined" :src="related._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
@@ -147,12 +148,12 @@
 					</div>
 					<div class="card-content">
 						<div class="content">
-							<small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
-							<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | removeHyphen | toTitleCase }}</small>
+							<!-- <small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
+							<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | removeHyphen | toTitleCase }}</small> -->
 
-							<a :href="'https://parkpeople.ca/resources/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
-							<div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div>
-							<div v-if="related.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
+							<a :to="'/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
+							<!-- <div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div> -->
+							<!-- <div v-if="related.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
 								<strong>Faire dans les parcs:</strong>: <span v-for="tax in related.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
 							</div>
 							<div v-if="related.pure_taxonomies.activity && lang == 'en'" class="activity-list-container">
@@ -163,10 +164,13 @@
 							</div>
 							<div v-if="related.pure_taxonomies.learn && lang == 'en'" class="activity-list-container">
 								<strong>Know about parks:</strong> <span v-for="tax in related.pure_taxonomies.learn" :key="tax.name">{{ tax.name }}</span>
-							</div>
+							</div> -->
+							<small v-if="lang == 'fr'" class="card-type-label">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
+							<small v-else class="card-type-label"> {{ related.type | removeHyphen | toTitleCase }}</small> 
 						</div>
 					</div>
-				</div>
+				</a>
+				</router-link>
 			</div>
 		</div>
 	</section>

@@ -5,6 +5,11 @@
             <router-view :key="$route.fullPath"></router-view>
         </transition>
         <app-footer></app-footer>
+        <div class="credits">
+            <div class="container">
+                <p>Made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://hypenotic.com" target="_blank">Hypenotic</a>.</p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,6 +50,7 @@ html, body {
     line-height: 26px;
     font-family: $family-cursive;
     color: $body-color;
+    position: relative;
 }
 
 a {
@@ -219,6 +225,17 @@ ol.resource__bullets {
 	}
 }
 
+.card-type-label {
+	color: rgba(0,0,0,0.5);
+	font-family: $family-sanserif;
+	font-family: $handwritten;
+	font-size: 0.8rem !important;
+	font-weight: bold;
+	text-transform: uppercase;
+	opacity: 0.5;
+	margin-top: 16px;
+}
+
 // Grants
 
 .topContent {
@@ -363,6 +380,25 @@ footer {
     li {
         line-height: 1.5;
         margin-bottom: 0.5rem !important;
+    }
+}
+
+.credits {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    p {
+        margin: 0;
+        font-size: 0.7rem;
+        color: $white;
+        text-align: right;
+        padding: 16px;
+        opacity: 0.4;
+        a {
+            color: $white;
+            // text-decoration: underline;
+            border-bottom: 1px solid $white;
+        }
     }
 }
 </style>
