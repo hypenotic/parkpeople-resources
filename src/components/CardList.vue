@@ -2,45 +2,9 @@
 <div v-if="this.$store.state.filteredList != null">
 	<section class="section">
 		<div class="container">
-			<!-- NOTE: Technically :list should use the store's filteredList prop -->
 			<paginate name="postList" :list="this.$store.state.filteredList" :per="16" tag="div">
 				<div class="columns is-multiline">
-					<div class="column is-one-quarter single-card" v-for="post in paginated('postList')" :key="post.id">
-						<router-link :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug">
-						<a class="card">
-							<div class="card-image">
-								<figure class="image is-2by1">
-									<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang != 'fr'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
-									<img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang == 'fr'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
-									<img v-else src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
-								</figure>
-							</div>
-					  		<div class="card-content">
-								<div class="content">
-									<!-- <small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(post.type) }}</small>
-									<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ post.type | removeHyphen | toTitleCase }}</small> -->
-									<router-link :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
-									<p v-if="lang == 'fr'" class="card-type-label">{{ $options.filters.translatedType(post.type) }}</p>
-									<p v-else class="card-type-label"> {{ post.type | removeHyphen | toTitleCase }}</p> 
-									<!-- <div v-html="$options.filters.readMore(post.excerpt.rendered, 100, '...')"></div> -->
-									<!-- <div v-if="post.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
-										<strong>Faire dans les parcs</strong>: <span v-for="tax in post.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
-									</div>
-									<div v-if="post.pure_taxonomies.activity && lang == 'en'" class="activity-list-container">
-										<strong>Do in parks</strong>: <span v-for="tax in post.pure_taxonomies.activity" :key="tax.name">{{ tax.name  }}</span>
-									</div>
-									<div v-if="post.pure_taxonomies.learn && lang == 'fr'" class="activity-list-container">
-										<strong>Savoir les parcs:</strong> <span v-for="tax in post.all_lang_taxonomies.learn" :key="tax.name">{{ tax.learn_french[0] }}</span>
-									</div>
-									<div v-if="post.pure_taxonomies.learn && lang == 'en'" class="activity-list-container">
-										<strong>Know about parks:</strong> <span v-for="tax in post.pure_taxonomies.learn" :key="tax.name">{{ tax.name }}</span>
-									</div> -->
-									
-								</div>
-							</div>
-						</a>
-						</router-link>
-					</div>
+					<app-card v-for="post in paginated('postList')" :key="post.id" :post="post"></app-card>
 				</div>
 			</paginate>
 			<section class="section">
@@ -66,7 +30,11 @@
 <script>
 import axios from 'axios';
 // import { eventBus } from '../main.js';
+import Card from './Card.vue';
 export default {
+	components: {
+        appCard: Card
+    },
 	data() {
 		return {
 			categoryList: [],
@@ -74,7 +42,7 @@ export default {
 			lang: this.$route.params.lang,
 			posts: [],
 			paginate: ['postList']
-		};
+		}
 	},
 	filters: {
 		translatedType(type){
@@ -222,10 +190,11 @@ export default {
 				axios.all([
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100')
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100'),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/video/?_embed&per_page=100')
 				])
-				.then(axios.spread((response, response1, response2) => {
-					let allENPosts  = response.data.concat(response1.data, response2.data)
+				.then(axios.spread((response, response1, response2, response3) => {
+					let allENPosts  = response.data.concat(response1.data, response2.data, response3.data)
 					this.posts = allENPosts
 
 					this.$store.commit('SET_RESOURCES_EN', allENPosts)

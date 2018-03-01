@@ -1,18 +1,20 @@
 <template>
-<div v-if="post != null" class="resource-body">
+<div v-if="post != null" class="video-body">
+
 	<div class="heading"></div>
-	<section style="margin-top: -200px;">
+
+	<section style="margin-top: -160px;">
 		<div class="columns">
-			<div class="column top-column is-three-fifths is-offset-one-fifth" style="background-color: white;">
+			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white; padding: 3rem;position:relative;">
 				<div class="social-share-container">
 					<div id="social-share-trigger" v-bind:class="{ 'social-menu-open': showSocialShare }" v-on:click="showSocialShare = !showSocialShare">
 						<i class="fa fa-share-alt" aria-hidden="true"></i>
 					</div>
-					<social-sharing :url="`https://parkpeople.ca/resources${fullPath}`"
+					<social-sharing :url="`https://parkpeople.ca${fullPath}`"
 					:title="post.title.rendered"
 					description=""
 					quote=""
-					hashtags="ParkPeople"
+					hashtags=""
 					twitter-user="Park_People"
 					inline-template>
 					<div class="social-share-buttons">
@@ -31,94 +33,83 @@
 					</div>
 					</social-sharing>
 				</div>
-				<h1 v-html="post.title.rendered"></h1>
-				
-				<div v-if="this.$route.params.lang == 'en'" class="category-lists">
-					<div v-if="post.pure_taxonomies.hasOwnProperty('activity')">
-						<span v-if="this.$route.params.lang == 'fr'">Faire dans les parcs:</span>
-						<span v-else>Do in parks:</span>
-						<ul>
-							<!-- <li v-if="this.$route.params.lang == 'fr'" v-for="category in post.all_lang_taxonomies.activity" :key="category.name">{{ category.activity_french[0] }} </li> -->
-							<li v-for="category in post.pure_taxonomies.activity" :key="category.name">{{ category.name }} </li>
-						</ul>
-					</div>
-					<div v-if="post.pure_taxonomies.hasOwnProperty('learn')">
-						<span v-if="this.$route.params.lang == 'fr'">Savoir les parcs:</span>
-						<span v-else>Know about parks:</span>
-						<ul>
-							<!-- <li v-if="this.$route.params.lang == 'fr'" v-for="category in post.all_lang_taxonomies.learn" :key="category.name">{{ category.learn_french[0] }}</li> -->
-							<li v-for="category in post.pure_taxonomies.learn" :key="category.name">{{ category.name }}</li>
-						</ul>
-					</div>
-				</div>
 
-				<p v-if="this.$route.params.lang == 'en'" class="meta"><span class="capitalize">{{ post.type }}</span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
-				<p v-else class="meta"><span class="capitalize">Ressource</span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
+				<h1 v-html="post.title.rendered" class="title"></h1>
 
-				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
+                <div v-html="post.excerpt.rendered"></div>
+                
+                <div v-if="post.meta_box._video_type == 'youtube' || post.meta_box._video_type == 'vimeo'" class="videoWrapper">
+                    <!-- In the backend just ask for unique ID code? -->
+                    <!-- Or do we find a way to programatically do so  -->
+                    <iframe v-if="post.meta_box._video_type == 'youtube'" width="560" height="349" :src="'http://www.youtube.com/embed/'+post.meta_box._video_raw_link+'?rel=0&hd=1'" frameborder="0" allowfullscreen></iframe>
+                    <iframe v-if="post.meta_box._video_type == 'vimeo'" :src="'//player.vimeo.com/video/'+post.meta_box._video_raw_link+'?byline=0&amp;portrait=0'" width="500" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                </div>
+			
 			</div>
 		</div>
 	</section>
-	
-	<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia')" style="width: 100%; object-fit: cover; height: 500px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
-	
-	<section class="section section__single-resource">
-		<div class="columns" >
-			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white;">
 
-				<div v-html="post.content.rendered" class="resource__content__copy"></div>
+	<div class="quote" v-if="post.meta_box._video_content_quote != ''">
+		<blockquote class="full-width-quote" v-html="post.meta_box._video_content_quote"></blockquote>
+		<cite>
+			<small v-html="post.meta_box._video_quote_name"></small>
+		</cite>
+	</div>
 
-				<ol class="resource__bullets">
-					<li v-for="item in post.meta_box._resource_list" :key="item['_resource_list_headline']">
-						<h2 class="resource__bullets__header">{{ item['_resource_list_headline'] }}</h2>
-						<div class="resource__bullets__content" v-html="item['_resource_list_content']"></div>
-					</li>
-				</ol>
-
-				<div v-if="post.meta_box._resource_content_takeaway != ''" class="resource__takeaways">
-					<h3 v-if="lang=='fr'">Résumé</h3>
-					<h3 v-else>Takeaways</h3>
-					<div v-html="post.meta_box._resource_content_takeaway" class="resource__takeaways__content"></div>
+	<section class="section video__summary" v-if="post.content.rendered != ''">
+		<div class="columns">
+			<div class="column is-three-fifths is-offset-one-fifth">
+					<div v-html="post.content.rendered"></div>
 				</div>
-
-				<div v-if="post.meta_box._resource_tips > 0" class="resource__tips">
-					<h3 v-if="lang=='fr'">Conseils et idées</h3>
-					<h3 v-else>Tips &amp; Bonus Ideas</h3>
-					<div>
-						<ul class="resource__tips__bullets">
-							<li v-for="tip in post.meta_box._resource_tips" :key="tip['_resource_tip_headline']">
-								<h4 v-html="tip['_resource_tip_headline']"></h4>
-								<div v-html="tip['_resource_tip_content']"></div>
-							</li>
-						</ul>
-					</div>
-				</div>
-
 			</div>
-		</div>
-		<div class="quote" v-if="post.meta_box._resource_quotation_body != undefined && post.meta_box._resource_quotation_body != ''">
-			<blockquote class="full-width-quote" v-html="post.meta_box._resource_quotation_body"></blockquote>
-			<cite>
-				<small v-html="post.meta_box._resource_quotation_name"></small>
-				<small v-html="post.meta_box._resource_quotation_group"></small>
-			</cite>
-		</div>
-		<div class="rec-link" v-if="post.meta_box.hasOwnProperty('_resource_links') && post.meta_box._resource_links.length > 0">
-			<h3 v-if="lang=='fr'">Liens recommandés</h3>
-			<h3 v-else>Recommended Links</h3>
-			<ul class="resource__rec-link__list">
-				<li v-for="link in post.meta_box._resource_links" :key="link['_resource_link_headline']">
-					<h4 v-html="link['_resource_link_headline']"></h4>
-					<!-- <p>{{ link['_resource_link_type'] }} | {{ link['_resource_link_author'] }}</p> -->
-					<p v-if="link['_resource_link_excerpt'] != undefined" v-html="link['_resource_link_excerpt']"></p>
-					<a v-if="link['_resource_link_file_upload'] != undefined" class="button button--ghost button--orange" :href="link['_resource_link_file_upload']" target="_blank">Click to download</a>
-					<a v-else class="button button--ghost button--orange" :href="link['_resource_link_url']" target="_blank"><span v-if="lang == 'fr'">Lis</span>
-					<span v-else>View</span></a>
-				</li>
-			</ul>
-		</div>
 	</section>
-	<section v-if="relatedPosts.length > 0" class="related-resources">
+
+	<div class="rec-link" v-if="post.meta_box.hasOwnProperty('_video_links') && post.meta_box._video_links.length > 0">
+		<h3 v-if="lang=='fr'">Liens recommandés</h3>
+		<h3 v-else>Recommended Links</h3>
+		<ul class="resource__rec-link__list">
+			<li v-for="link in post.meta_box._video_links" :key="link['_video_link_headline']">
+				<h4 v-html="link['_video_link_headline']"></h4>
+				<p class="rec-link__meta">{{ link['_video_link_type'] }} | {{ link['_video_link_author'] }}</p>
+				<p class="rec-link__excerpt" v-if="link['_video_link_excerpt'] != undefined && link['_video_link_excerpt'] != ''" v-html="link['_video_link_excerpt']"></p>
+				<a v-if="link['_video_link_file_upload'] != undefined" class="button button--ghost button--orange" :href="link['_video_link_file_upload']" target="_blank">
+					<span v-if="lang == 'fr'">Téléchargez</span>
+					<span v-else>Click to download</span>
+				</a>
+				<a v-else class="button button--ghost button--orange" :href="link['_video_link_url']" target="_blank">
+					<span v-if="lang == 'fr'">Lis</span>
+					<span v-else>View</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div v-if="post.pure_taxonomies.activity && lang=='fr'" class="research__activity-list">
+		<b>Faire dans les parcs: </b>
+		<ul>
+			<li v-for="tax in post.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0] | toUppercase }}</li>
+		</ul>
+	</div>
+	<div v-if="post.pure_taxonomies.learn && lang=='fr'"  class="research__learn-list">
+		<b>Savoir les parcs: </b>
+		<ul>
+			<li v-for="tax in post.all_lang_taxonomies.learn" :key="tax.name">{{ tax.learn_french[0] | toUppercase }}</li>
+		</ul>
+	</div>
+	<div v-if="post.pure_taxonomies.activity && lang=='en'" class="research__activity-list">
+		<b>Do in parks: </b>
+		<ul>
+			<li v-for="tax in post.pure_taxonomies.activity" :key="tax.name">{{ tax.name | toUppercase }}</li>
+		</ul>
+	</div>
+	<div v-if="post.pure_taxonomies.learn && lang=='en'"  class="research__learn-list">
+		<b>Know about parks: </b>
+		<ul>
+			<li v-for="tax in post.pure_taxonomies.learn" :key="tax.name">{{ tax.name | toUppercase }}</li>
+		</ul>
+	</div>
+
+	<section v-if="relatedPosts.length > 0" class="related-resources" style="margin-top: 50px;">
 		<h3 v-if="lang=='fr'">Ressources associées</h3>
 		<h3 v-else>Related Resources</h3>
 		<div class="columns is-multiline">
@@ -132,25 +123,9 @@
 					</div>
 					<div class="card-content">
 						<div class="content">
-							<!-- <small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
-							<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | removeHyphen | toTitleCase }}</small> -->
-
-							<router-link :to="'/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered" v-on:click="relatedClick"></h4></router-link >
-							<!-- <div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div> -->
-							<!-- <div v-if="related.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
-								<strong>Faire dans les parcs</strong>: <span v-for="tax in related.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
-							</div>
-							<div v-if="related.pure_taxonomies.activity && lang == 'en'" class="activity-list-container">
-								<strong>Do in parks</strong>: <span v-for="tax in related.pure_taxonomies.activity" :key="tax.name">{{ tax.name  }}</span>
-							</div>
-							<div v-if="related.pure_taxonomies.learn && lang == 'fr'" class="activity-list-container">
-								<strong>Savoir les parcs:</strong> <span v-for="tax in related.all_lang_taxonomies.learn" :key="tax.name">{{ tax.learn_french[0] }}</span>
-							</div>
-							<div v-if="related.pure_taxonomies.learn && lang == 'en'" class="activity-list-container">
-								<strong>Know about parks:</strong> <span v-for="tax in related.pure_taxonomies.learn" :key="tax.name">{{ tax.name }}</span>
-							</div> -->
+							<a :to="'/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
 							<small v-if="lang == 'fr'" class="card-type-label">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
-							<small v-else class="card-type-label"> {{ related.type | removeHyphen | toTitleCase }}</small>
+							<small v-else class="card-type-label"> {{ related.type | removeHyphen | toTitleCase }}</small> 
 						</div>
 					</div>
 				</a>
@@ -162,289 +137,315 @@
 </template>
 
 <script>
-import axios from 'axios';
-import moment from 'moment';
-import { mapState } from 'vuex'
-export default {
-	data() {
-		return {
-			authorName: '',
-			categories: [],
-			categoryIDs: [],
-			errors: [],
-			fullPath: this.$route.fullPath,
-			grantResource: false,
-			id: this.$route.params.id,
-			lang: this.$route.params.lang,
-			post: null,
-			relatedPosts: [],
-			showSocialShare: false,
-			slug: this.$route.params.slug,
-			translated: false,
-			translatedPost: []
-		}
-	},
-	filters: {
-		translatedType(type){
-			if (type == 'resource') {
-				return 'ressource'
-			} else if ( type == 'research') {
-				return 'recherche'
-			} else {
-				return 'étude de cas'
+	import axios from 'axios';
+	import moment from 'moment';
+	export default {
+		data() {
+			return {
+				authorName: '',
+				categories: [],
+				categoryIDs: [],
+				errors: [],
+				fullPath: this.$route.fullPath,
+				grantResource: false,
+				id: this.$route.params.id,
+				lang: this.$route.params.lang,
+				post: null,
+				relatedPosts: [],
+				showSocialShare: false,
+				slug: this.$route.params.slug,
+				translated: false,
+				translatedPost: []
 			}
 		},
-		removeHyphen(value){
-			return value.replace("-", ' ');
-		},
-		capitalizeFirstLetter(value) {
-			return value.charAt(0).toUpperCase() + value.slice(1);
-		},
-		toUppercase(value) {
-			return value.toUpperCase();
-		},
-		readMore(value, length, suffix) {
-			if (value.length < length) {
-				return value;
-			} else {	
-				return value.substring(0, length) + suffix;
+		methods: {
+			moment: () => {
+				return moment();
 			}
 		},
-		stripHTML(value) {
-			return value.replace(/(<([^>]+)>)/ig,"");
-		},
-		toTitleCase(value)
-			{
-    		return value.replace(/\w\S*/g, (txt) => {
-				return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-			});
-		}
-	},
-	methods: {
-		moment: () => {
-			return moment();
-		},
-		relatedClick() {
-			console.log('relatedclick');
-			this.$ga.event('category', 'action', 'label', 123)
-		}
-	},
-	created() {
-		// Reset store check values
-		this.$store.commit('SET_TRANSLATION_CHECK', false)
-
-		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + this.id + '?_embed')
-
-		.then(response => {
-			// Let's put data into post
-			this.post = response.data
-			console.log('THIS IS THE RESOURCE', this.post)
-			
-			// Let's get the categories
-			const tax1 = this.post.pure_taxonomies.activity
-			const tax2 = this.post.pure_taxonomies.learn
-
-			// Let's concat
-			let taxAll = [];
-			// const taxAll = tax1.concat(tax2)
-			if(typeof(tax1) != 'undefined'){
-				taxAll = tax1.concat(tax2)
-			} else if(typeof(tax2) != 'undefined') {
-				taxAll = tax2.concat(tax1)
-			} else {
-				return
-			}
-			
-			// Let's loop, skip over undefined and push
-			for(let i = 0; i < taxAll.length; i++) {
-				if(typeof(taxAll[i]) != 'undefined') {
-					this.categories.push(taxAll[i].name)
+		filters: {
+			translatedType(type){
+				if (type == 'resource') {
+					return 'ressource'
+				} else if ( type == 'research') {
+					return 'recherche'
+				} else {
+					return 'étude de cas'
 				}
+			},
+			removeHyphen(value){
+				return value.replace("-", ' ');
+			},
+			capitalizeFirstLetter(value) {
+				return value.charAt(0).toUpperCase() + value.slice(1);
+			},
+			toUppercase(value) {
+				return value.toUpperCase();
+			},
+			readMore(value, length, suffix) {
+				if (value.length < length) {
+					return value;
+				} else {	
+					return value.substring(0, length) + suffix;
+				}
+			},
+			stripHTML(value) {
+				return value.replace(/(<([^>]+)>)/ig,"");
+			},
+			toTitleCase(value)
+				{
+				return value.replace(/\w\S*/g, (txt) => {
+					return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+				});
 			}
+		},
+		created() {
+			// Reset store check values
+			this.$store.commit('SET_TRANSLATION_CHECK', false)
 
-			// Let's see if there's a translation
-			if (this.post.wpml_translations.length > 0) {
-				console.log('translation post', this.post)
-				console.log('translation exists', this.post.wpml_translations)
-				let translatedID = this.post.wpml_translations[0].id
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + translatedID + '?_embed') 
-				.then(response => {
-					console.log(response.data)
-					this.translatedPost = response.data
-					this.translated = true;
-					let langTag = ''
-					let transURL = ''
-					if (this.$route.params.lang == 'en') {
-						langTag = 'fr'
-						transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
-					} else {
-						langTag = 'en'
-						transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/video/' + this.id + '?_embed')
+
+			.then(response => {
+				// Let's put data into post
+				this.post = response.data
+				console.log('THIS IS THE RESEARCH', this.post)
+
+				// Let's get the categories
+				const tax1 = this.post.pure_taxonomies.activity
+				const tax2 = this.post.pure_taxonomies.learn
+
+				// Let's concat
+				let taxAll = [];
+				if(typeof(tax1) != 'undefined'){
+					taxAll = tax1.concat(tax2);
+				} else if(typeof(tax2) != 'undefined') {
+					taxAll = tax2.concat(tax1);
+				} else {
+					return;
+				}
+				
+				// Let's loop, skip over undefined and push
+				for(let i = 0; i < taxAll.length; i++) {
+					if(typeof(taxAll[i]) != 'undefined') {
+						this.categories.push(taxAll[i].name)
 					}
-					this.$store.commit('SET_TRANSLATION_CHECK', true)
-					this.$store.commit('SET_TRANSLATION_URL', transURL)
-					console.log(this.$store.state.translatedCheck)
+				}
+
+				// Let's see if there's a translation
+				if (this.post.wpml_translations.length >0) {
+					console.log('translation post', this.post)
+					console.log('translation exists', this.post.wpml_translations)
+					let translatedID = this.post.wpml_translations[0].id
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/video/' + translatedID + '?_embed') 
+					.then(response => {
+						console.log(response.data)
+						this.translatedPost = response.data
+						this.translated = true;
+						let langTag = ''
+						let transURL = ''
+						if (this.$route.params.lang == 'en') {
+							langTag = 'fr'
+							transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+						} else {
+							langTag = 'en'
+							transURL = '/'+langTag+'/'+response.data.type+'/'+response.data.id+'/'+response.data.slug;
+						}
+						console.log(transURL);
+						this.$store.commit('SET_TRANSLATION_CHECK', true)
+						this.$store.commit('SET_TRANSLATION_URL', transURL)
+						console.log(this.$store.state.translatedCheck)
+					})
+					.catch(error => {
+						if (error.response) {
+						// The request was made and the server responded with a status code
+						// that falls out of the range of 2xx
+						console.log('Translated Post Call', error.response.data);
+						console.log('Translated Post Call', error.response.status);
+						console.log('Translated Post Call', error.response.headers);
+						} else if (error.request) {
+						// The request was made but no response was received
+						// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+						// http.ClientRequest in node.js
+						console.log('Translated Post Call', error.request);
+						} else {
+						// Something happened in setting up the request that triggered an Error
+						console.log('Error Translated Post Call', error.message);
+						}
+						console.log('Translated Post Call', error.config);
+					})
+				} else {
+					console.log('no translation')
+				}
+
+				// Let's get the categories IDs
+				let taxID1 = this.post.activity
+				let taxID2 = this.post.learn
+
+				let stringID1 = "0"
+				if (taxID1.length > 0) {
+					stringID1 = taxID1.join(',')
+				}
+
+				let stringID2 = "0"
+				if (taxID2.length > 0) {
+					stringID2 = taxID2.join(',')
+				}
+				
+				console.log(stringID1, stringID2)
+
+				let langString = ''
+				if (this.lang == 'en'){
+					langString = ''
+				} else {
+					langString = '&lang=fr'
+				}
+
+				// Let's make a call to get related posts
+				axios.all([
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2+langString),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2+langString)
+				])
+				.then(axios.spread((response, response1, response2, response3, response4, response5) => {
+					
+					function removeDuplicates(myArr, prop) {
+						return myArr.filter((obj, pos, arr) => {
+							return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+						});
+					}
+
+					let allPosts  = response.data.concat(response1.data, response2.data, response3.data, response4.data, response5.data)
+
+					let noDups = removeDuplicates(allPosts, 'id')
+
+					noDups.sort(function(a,b){
+						return new Date(b.date) - new Date(a.date)
+					})	
+					
+					this.relatedPosts = noDups
+
+				}))
+				.catch(error => {
+					if (error.response) {
+					// The request was made and the server responded with a status code
+					// that falls out of the range of 2xx
+					console.log('219', error.response.data);
+					console.log('219', error.response.status);
+					console.log('219', error.response.headers);
+					} else if (error.request) {
+					// The request was made but no response was received
+					// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+					// http.ClientRequest in node.js
+					console.log('219', error.request);
+					} else {
+					// Something happened in setting up the request that triggered an Error
+					console.log('Error 219', error.message);
+					}
+					console.log('219', error.config);
+				})
+
+
+				// Let's make another API call to get author data by ID
+				const authorID = response.data.author
+				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/users/' + authorID) 
+				.then(response => {
+					//console.log(response.data)
+					this.authorName = response.data.name
 				})
 				.catch(error => {
 					if (error.response) {
 					// The request was made and the server responded with a status code
 					// that falls out of the range of 2xx
-					console.log('Translated Post Call', error.response.data);
-					console.log('Translated Post Call', error.response.status);
-					console.log('Translated Post Call', error.response.headers);
+					console.log('246', error.response.data);
+					console.log('246', error.response.status);
+					console.log('246', error.response.headers);
 					} else if (error.request) {
 					// The request was made but no response was received
 					// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
 					// http.ClientRequest in node.js
-					console.log('Translated Post Call', error.request);
+					console.log('246', error.request);
 					} else {
 					// Something happened in setting up the request that triggered an Error
-					console.log('Error Translated Post Call', error.message);
+					console.log('Error 246', error.message);
 					}
-					console.log('Translated Post Call', error.config);
+					console.log('246', error.config);
 				})
-			} else {
-				console.log('no translation')
-			}
-
-			// Let's get the categories IDs
-			let taxID1 = this.post.activity
-			let taxID2 = this.post.learn
-
-			let stringID1 = "0"
-			if (taxID1.length > 0) {
-				stringID1 = taxID1.join(',')
-			}
-
-			let stringID2 = "0"
-			if (taxID2.length > 0) {
-				stringID2 = taxID2.join(',')
-			}
-			
-			console.log(stringID1, stringID2)
-			
-			let langString = ''
-			if (this.lang == 'en'){
-				langString = ''
-			} else {
-				langString = '&lang=fr'
-			}
-
-			// Let's make a call to get related posts
-			axios.all([
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1+langString),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1+langString),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1+langString),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2+langString),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2+langString),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2+langString)
-			])
-			.then(axios.spread((response, response1, response2, response3, response4, response5) => {
-				
-				function removeDuplicates(myArr, prop) {
-					return myArr.filter((obj, pos, arr) => {
-						return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
-					});
-				}
-
-				let allPosts  = response.data.concat(response1.data, response2.data, response3.data, response4.data, response5.data)
-
-				console.log('all posts', allPosts)
-
-				let noDups = removeDuplicates(allPosts, 'id')
-
-				noDups.sort(function(a,b){
-					return new Date(b.date) - new Date(a.date)
-				})	
-				
-				this.relatedPosts = noDups
-
-			}))
-			.catch(error => {
-				if (error.response) {
-				// The request was made and the server responded with a status code
-				// that falls out of the range of 2xx
-				console.log('219', error.response.data);
-				console.log('219', error.response.status);
-				console.log('219', error.response.headers);
-				} else if (error.request) {
-				// The request was made but no response was received
-				// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-				// http.ClientRequest in node.js
-				console.log('219', error.request);
-				} else {
-				// Something happened in setting up the request that triggered an Error
-				console.log('Error 219', error.message);
-				}
-				console.log('219', error.config);
-			})
-
-
-			// Let's make another API call to get author data by ID
-			const authorID = response.data.author
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/users/' + authorID) 
-			.then(response => {
-				//console.log(response.data)
-				this.authorName = response.data.name
 			})
 			.catch(error => {
 				if (error.response) {
 				// The request was made and the server responded with a status code
 				// that falls out of the range of 2xx
-				console.log('246', error.response.data);
-				console.log('246', error.response.status);
-				console.log('246', error.response.headers);
+				console.log('265', error.response.data);
+				console.log('265', error.response.status);
+				console.log('265', error.response.headers);
 				} else if (error.request) {
 				// The request was made but no response was received
 				// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
 				// http.ClientRequest in node.js
-				console.log('246', error.request);
+				console.log('265', error.request);
 				} else {
 				// Something happened in setting up the request that triggered an Error
-				console.log('Error 246', error.message);
+				console.log('Error 265', error.message);
 				}
-				console.log('246', error.config);
+				console.log('265', error.config);
 			})
-		})
-		.catch(error => {
-			if (error.response) {
-			// The request was made and the server responded with a status code
-			// that falls out of the range of 2xx
-			console.log('265', error.response.data);
-			console.log('265', error.response.status);
-			console.log('265', error.response.headers);
-			} else if (error.request) {
-			// The request was made but no response was received
-			// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-			// http.ClientRequest in node.js
-			console.log('265', error.request);
-			} else {
-			// Something happened in setting up the request that triggered an Error
-			console.log('Error 265', error.message);
-			}
-			console.log('265', error.config);
-		})
-	},
-};
+		},
+	};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+div.heading {
+	position: relative;
+	z-index: -1;
+	margin-top: -60px;
+	height: 300px;
+	width: 100%;
+	object-fit:cover;
+  	object-position: 0 20%;
+	-webkit-clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+	clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+	clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
+	background-color: #fff3ed;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='24' viewBox='0 0 88 24'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='autumn' fill='%23ff7834' fill-opacity='0.22'%3E%3Cpath d='M10 0l30 15 2 1V2.18A10 10 0 0 0 41.76 0H39.7a8 8 0 0 1 .3 2.18v10.58L14.47 0H10zm31.76 24a10 10 0 0 0-5.29-6.76L4 1 2 0v13.82a10 10 0 0 0 5.53 8.94L10 24h4.47l-6.05-3.02A8 8 0 0 1 4 13.82V3.24l31.58 15.78A8 8 0 0 1 39.7 24h2.06zM78 24l2.47-1.24A10 10 0 0 0 86 13.82V0l-2 1-32.47 16.24A10 10 0 0 0 46.24 24h2.06a8 8 0 0 1 4.12-4.98L84 3.24v10.58a8 8 0 0 1-4.42 7.16L73.53 24H78zm0-24L48 15l-2 1V2.18A10 10 0 0 1 46.24 0h2.06a8 8 0 0 0-.3 2.18v10.58L73.53 0H78z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
 
 @import '../styles/variables.scss';
 
-.column {
-	@media #{$small-and-down} {
-        padding: 16px;
-    }
+.research__excerpt {
+	font-size: 0.8rem;
+	line-height: 1.5;
+	p {
+		font-size: 0.8rem;
+	line-height: 1.5;
+	}
 }
 
-.column.top-column {
-	padding: 72px 72px 0;
-	position: relative;
-	margin-bottom: 30px;
-	@media #{$small-and-down} {
-        padding: 72px 50px;
-    }
+.content a h4 {
+	color: rgba(30,177,242, 1);
+	font-size: 1.2rem;
+	line-height: 1.8rem;
+	font-weight: 700;
+
+	&:hover {
+		color: rgba(30,177,242,0.7);
+	}
 }
 
 h1 {
@@ -455,17 +456,16 @@ h1 {
 	font-weight: bold;
 }
 
-div.heading {
+img.heading {
 	position: relative;
 	z-index: -1;
 	margin-top: -60px;
 	height: 300px;
 	width: 100%;
-	// object-fit:cover;
-  	// object-position: 0 20%;
+	object-fit:cover;
+  	object-position: 0 20%;
 	-webkit-clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
-	clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
-	background-color: #fff3ed;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='24' viewBox='0 0 88 24'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='autumn' fill='%23ff7834' fill-opacity='0.22'%3E%3Cpath d='M10 0l30 15 2 1V2.18A10 10 0 0 0 41.76 0H39.7a8 8 0 0 1 .3 2.18v10.58L14.47 0H10zm31.76 24a10 10 0 0 0-5.29-6.76L4 1 2 0v13.82a10 10 0 0 0 5.53 8.94L10 24h4.47l-6.05-3.02A8 8 0 0 1 4 13.82V3.24l31.58 15.78A8 8 0 0 1 39.7 24h2.06zM78 24l2.47-1.24A10 10 0 0 0 86 13.82V0l-2 1-32.47 16.24A10 10 0 0 0 46.24 24h2.06a8 8 0 0 1 4.12-4.98L84 3.24v10.58a8 8 0 0 1-4.42 7.16L73.53 24H78zm0-24L48 15l-2 1V2.18A10 10 0 0 1 46.24 0h2.06a8 8 0 0 0-.3 2.18v10.58L73.53 0H78z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    clip-path: polygon(0 20%, 100% 0, 100% 80%, 0% 100%);
 }
 
 .type {
@@ -506,75 +506,28 @@ div.heading {
 }
 
 .rec-link {
-	padding: 80px 0 0;
-}
-
-ul.category {
-	list-style-type: none;
-	margin: 0 0 1.5rem 0;
-	li { 
-		color: rgba(0,0,0,0.5);
-		display: inline;
-		text-transform: uppercase;
-		font-weight: 700;
-		&:not(:last-child):after {
-			content: " / ";
-		}
+	margin-bottom: 50px;
+	.rec-link__excerpt {
+		font-size: 0.8rem;
+	}
+	.rec-link__meta {
+		margin-bottom: 8px;
 	}
 }
 
-ol.resource__bullets,
-ul.resource__tips__bullets {
-	list-style: none;
-	margin-top: 50px;
-	>li {
-		counter-increment: item;
-		margin-bottom: 5px;
-		position: relative;
-		padding-left: 70px;
-		padding-bottom: 30px;
-		margin-bottom: 50px;
-		h2 {
-			
-		}
-		h4 {
-			// font-size: 24px;
-			// // line-height: 35px;
-			// font-weight: bold;
-			// padding-top: 13px;
+.resource__rec-link__list {
+	@media #{$large-and-up} {
+        display: flex;
+		justify-content: center;
+		>li {
+			width: 30%;
+			margin: 0 1%;
 		}
 	}
-	>li:not(:last-child) {
-		border-bottom: 2px dashed $orange;
-	}
-	>li:before {
-		margin-right: 10px;
-		content: counter(item);
-		background: white;
-		border-radius: 100%;
-		border: 2px solid $orange;
-		color: $orange;
-		width: 50px;
-		height: 50px;
-		font-family: serif;
-		font-size: 30px;
-		font-style: italic;
+	h4 {
+		font-size: 32px;
 		font-weight: bold;
-		text-align: center;
-		padding-top: 9px;
-		// display: inline-block;
-		position: absolute;
-		top: 0;
-		left: 0px;
 	}
-}
-
-.card-image img {
-	object-fit: cover;
-}
-
-ul.resource__tips__bullets {
-	margin-top: 0;
 }
 
 .social-share-container {
@@ -662,55 +615,9 @@ ul.resource__tips__bullets {
 	}
 }
 
-.resource__takeaways,
-.resource__tips {
-	padding: 32px 0;
-}
 
-.resource__rec-link__list {
-	@media #{$large-and-up} {
-		margin-top: 32px;
-        display: flex;
-		justify-content: center;
-		>li {
-			width: 25%;
-			margin: 0 4%;
-		}
-	}
-	h4 {
-		font-size: 32px;
-		font-weight: bold;
-		@media #{$large-and-up} {
-			font-size: 1.2rem;
-			line-height: 1.5;
-		}
-	}
-}
-
-.button.button--ghost.button--orange {
-	border: 2px solid $orange;
-	border-radius: 50px;
-	padding: 1.2rem 1rem;
-	color: $orange;
-	font-size: 0.8rem;
-	font-weight: bold;
-	&:hover {
-		border: 2px solid $orange;
-		background: $orange;
-		color: $white;
-	}
-}
-
-.content a h4 {
-	color: rgba(30,177,242, 1);
-	font-size: 1.2rem;
-	line-height: 1.8rem;
-	font-weight: 700;
-	// line-height: 1.4;
-	
-	&:hover {
-		color: rgba(30,177,242,0.7);
-	}
+.card-image img {
+	object-fit: cover;
 }
 
 .content {
@@ -740,83 +647,184 @@ ul.resource__tips__bullets {
 	}
 }
 
-.resource__bullets__header {
-	font-size: 1.5rem;
-	line-height: 1.2;
-	font-weight: bold;
-	padding-top: 0.5rem;
+.social-share-buttons {
+	// display: none;
+	position: absolute;
+	opacity: 0;
+	// top: -100vh;
+	transition: all 0.5 ease;
+	span {
+		position: absolute;
+		display: block;
+		opacity: 0;
+		width: 35px;
+		height: 35px;
+		border-radius: 100%;
+		transition: all 0.5 ease;
+		top: 0;
+		left: 0;
+		&:hover {
+			cursor: pointer;
+		}
+		i {
+			color: $white;
+			padding-left: 10px;
+			padding-top: 8px;
+		}
+	}
+	
 }
 
-.resource__bullets__content,
-.resource__takeaways__content,
-.resource__content__copy {
-	h1,h2,h3,h4,h5,h6 {
-		color: $off-black;
-		font-weight: bold !important;
-		font-family: $family-sanserif;
+#social-share-trigger.social-menu-open {
+	opacity: 1;
+}
+
+#social-share-trigger.social-menu-open + .social-share-buttons {
+	// display: block;
+	top: 0;
+	left: 50px;
+	opacity: 1;
+	span {
+		opacity: 1;
 	}
-	h1 {
-		font-size: 2.8rem;
-		line-height:1.5;
-		margin-bottom: 1rem;
+	span:first-child {
+		background: orange;
+		top: -40px;
+		left: -10px;
 	}
-	h2 {
-		font-size: 2.4rem;
-		line-height:1.5;
+	span:nth-child(2) {
+		background: $blue;
+		top: 0px;
+		left: 20px;
 	}
+	span:nth-child(3) {
+		background: darken($blue, 30);
+		top: 50px;
+		left: 10px;
+	}
+	span:last-child {
+		background: darken($blue, 10);
+		top: 70px;
+		left: -40px;
+	}
+}
+
+.button.button--ghost.button--orange {
+	border: 2px solid $orange;
+	border-radius: 50px;
+	padding: 1.2rem 1rem;
+	color: $orange;
+	font-size: 0.8rem;
+	font-weight: bold;
+}
+
+.button.button--rounded.button--orange {
+	border: 2px solid $orange;
+	border-radius: 50px;
+	padding: 1.2rem 1rem;
+	color: $white;
+	background: $orange;
+	font-size: 0.8rem;
+	font-weight: bold;
+	&:hover {
+		background: darken($orange,5);
+		border: 2px solid darken($orange,5)
+	}
+	i {
+		color: $white;
+		margin-right: 5px;
+	}
+}
+
+.research__summary {
 	h3 {
-		font-size: 2rem;
-		line-height:1.5;
+		font-weight: bold;
 	}
-	// h4 {
-	// 	font-size: 1.8rem !important;
-	// 	line-height:1.5 !important;
-	// 	padding-top: 0 !important;
-	// }
-	// h5 {
-	// 	font-size: 1.5rem;
-	// 	line-height:1.5;
-	// }
-	// h6 {
-	// 	font-size: 1.2rem;
-	// 	line-height:1.5;
-	// }
-	h4 {
-		font-size: 1.3rem !important;
-		line-height:1.5 !important;
-		padding-top: 0 !important;
-	}
-	h5 {
+	div {
 		font-size: 1.2rem;
-		line-height:1.5;
-	}
-	h6 {
-		font-size: 1.1rem;
-		line-height:1.5;
+		line-height: 1.8rem;
 	}
 }
 
-.category-lists {
-	margin-bottom: 24px;
-	font-family: $family-sanserif;
-	font-weight: bold;
-	ul {
-		display: inline-block;
-		li {
-			display: inline-block;
-			color: rgba(0, 0, 0, 0.5);
-			text-transform: uppercase;
-			margin: 0 8px;
+.research__thumbnail {
+	img {
+		max-width: 90%;
+		height: auto;
+	}
+}
+
+.research__thumbnail.research__thumbnail--pdf {
+	>div {
+		text-align: center;
+		width: 90%;
+		height: 350px;
+		background: rgb(249, 249, 249);
+		position: relative;
+		border-bottom: 3px solid lightgrey;
+		&:after {
+			content:"";
+			position: absolute;
+			bottom: -12px;
+			left: 0;
+			margin-right: 2.5%;
+			margin-left: 2.5%;
+			background: rgb(249, 249, 249);
+			height: 9px;
+			width: 95%;
+			border-bottom: 3px solid lightgrey;
+		}
+		p {
+			padding-top: 35%;
+			font-weight: bold;
+		}
+		.pdf_pages {
+			position: absolute;
+			bottom: 16px;
+			font-size: 0.7rem;
+			width: 100%;
+			text-align: center;
+			margin: 0;
+			opacity: 0.5;
+		}
+		svg {
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			top: 8px;
+			right: 8px;
 		}
 	}
 }
 
-.meta {
-	font-size: 0.8rem;
+.research__learn-list {
+	margin-top: 50px;
 }
 
-.capitalize {
-	text-transform: capitalize;
+.research__activity-list,
+.research__learn-list {
+	text-align: center;
+	font-family: $family-sanserif;
+	font-weight: bold;
+	ul {
+		display: inline-block;
+
+	}
+	li, b {
+		font-family: $family-sanserif;
+	}
+	li {
+		display: inline-block;
+		text-transform: uppercase;
+		margin: 0 5px;
+		position: relative;
+		&:not(:last-child):after {
+			content: ',';
+			position: absolute;
+			bottom: 0;
+			right: -4px;
+			color: rgba(0,0,0,0.7) !important;
+		}
+	}
 }
 
 .activity-list-container,
@@ -844,45 +852,6 @@ ul.resource__tips__bullets {
 	margin-right: 0px;
 	&:after {
 		display: none;
-	}
-}
-
-.card {
-	border-radius: 8px;
-	background: $white;
-	transition: all .2s ease-in-out; 
-	&:hover {
-		transform: scale(1.01) rotate(1deg);
-		// -webkit-box-shadow: 0 4px 6px -6px #222;
-		// -moz-box-shadow: 0 4px 6px -6px #222;
-		box-shadow: 0 5px 10px rgba(10, 10, 10, 0.3), 0 0 0 1px rgba(10, 10, 10, 0.1);
-		h4 {
-			color: rgba(30, 177, 242, 0.7);
-		}
-	}
-	.card-image, .card-image figure img  {
-		border-top-left-radius: 8px;
-		border-top-right-radius: 8px;
-	}
-}
-
-.single-card:first-child {
-	transform: rotate(-2deg);
-}
-
-.single-card:nth-child(7n) {
-	transform: rotate(-2deg);
-}
-
-.single-card:nth-child(3n) {
-	transform: rotate(2deg);
-}
-
-.related-card {
-	display: block;
-	background: $white;
-	.card {
-		display: block;
 	}
 }
 

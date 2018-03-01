@@ -148,23 +148,7 @@
 					</div>
 					<div class="card-content">
 						<div class="content">
-							<!-- <small v-if="lang == 'fr'" style="font-family: 'Dosis';font-size: 12px;">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
-							<small v-else style="font-family: 'Dosis';font-size: 12px;"> {{ related.type | removeHyphen | toTitleCase }}</small> -->
-
 							<a :to="'/'+lang+'/'+related.type + '/' + related.id + '/' + related.slug"><h4 v-html="related.title.rendered"></h4></a>
-							<!-- <div v-html="$options.filters.readMore(related.excerpt.rendered, 100, '...')"></div> -->
-							<!-- <div v-if="related.pure_taxonomies.activity && lang == 'fr'" class="activity-list-container">
-								<strong>Faire dans les parcs:</strong>: <span v-for="tax in related.all_lang_taxonomies.activity" :key="tax.name">{{ tax.activity_french[0]  }}</span>
-							</div>
-							<div v-if="related.pure_taxonomies.activity && lang == 'en'" class="activity-list-container">
-								<strong>Do in parks:</strong>: <span v-for="tax in related.pure_taxonomies.activity" :key="tax.name">{{ tax.name  }}</span>
-							</div>
-							<div v-if="related.pure_taxonomies.learn && lang == 'fr'" class="activity-list-container">
-								<strong>Savoir les parcs:</strong> <span v-for="tax in related.all_lang_taxonomies.learn" :key="tax.name">{{ tax.learn_french[0] }}</span>
-							</div>
-							<div v-if="related.pure_taxonomies.learn && lang == 'en'" class="activity-list-container">
-								<strong>Know about parks:</strong> <span v-for="tax in related.pure_taxonomies.learn" :key="tax.name">{{ tax.name }}</span>
-							</div> -->
 							<small v-if="lang == 'fr'" class="card-type-label">{{ $options.filters.translatedType(related.type) | removeHyphen | toTitleCase }}</small>
 							<small v-else class="card-type-label"> {{ related.type | removeHyphen | toTitleCase }}</small> 
 						</div>
@@ -879,6 +863,46 @@ img.heading {
 	margin-right: 0px;
 	&:after {
 		display: none;
+	}
+}
+
+.card {
+	border-radius: 8px;
+	background: $white;
+	transition: all .2s ease-in-out; 
+	&:hover {
+		transform: scale(1.01) rotate(1deg);
+		// -webkit-box-shadow: 0 4px 6px -6px #222;
+		// -moz-box-shadow: 0 4px 6px -6px #222;
+		box-shadow: 0 5px 10px rgba(10, 10, 10, 0.3), 0 0 0 1px rgba(10, 10, 10, 0.1);
+		h4 {
+			color: rgba(30, 177, 242, 0.7);
+		}
+	}
+	.card-image, .card-image figure img  {
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+	}
+}
+
+
+.single-card:first-child {
+	transform: rotate(-2deg);
+}
+
+.single-card:nth-child(7n) {
+	transform: rotate(-2deg);
+}
+
+.single-card:nth-child(3n) {
+	transform: rotate(2deg);
+}
+
+.related-card {
+	display: block;
+	background: $white;
+	.card {
+		display: block;
 	}
 }
 
