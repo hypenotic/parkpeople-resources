@@ -337,6 +337,7 @@ h2 {
 	position: relative;
 	font-family: $handwritten;
 	color: $med-green;
+	text-align: right;
 	@media #{$medium-and-up} {
 		width: 20%;
 	}
@@ -358,7 +359,7 @@ h2 {
 	height: 120px;
 	width: auto;
 	position: absolute;
-	right: -12%;
+	right: -16%;
 	top: -10px;
 	opacity: 0.5;
 }

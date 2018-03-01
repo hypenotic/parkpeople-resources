@@ -1,17 +1,36 @@
 <template>
     <div class="column is-one-quarter single-card">
-        <router-link :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug">
+        <router-link v-if="this.$route.path == '/fr' || this.$route.path == '/en'" :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug">
         <a class="card">
             <div class="card-image">
                 <figure class="image is-2by1">
-                    <img v-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang != 'fr'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
-                    <img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && lang == 'fr'" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+                    <img v-if="post._embedded.hasOwnProperty('wp:featuredmedia') && post._embedded['wp:featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+                    <img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && post._embedded['wp:featuredmedia'][0].media_details.sizes.hasOwnProperty('full')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
                     <img v-else src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
                 </figure>
             </div>
             <div class="card-content">
                 <div class="content">
                     <router-link :to="lang+'/'+post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
+                    <p v-if="lang == 'fr'" class="card-type-label">{{ $options.filters.translatedType(post.type) }}</p>
+                    <p v-else class="card-type-label"> {{ post.type | removeHyphen | toTitleCase }}</p> 									
+                </div>
+            </div>
+        </a>
+        </router-link>
+        <!-- If we're not on the home page, we need a different path for the link -->
+        <router-link v-else :to="'/'+lang+'/'+post.type + '/' + post.id + '/' + post.slug">
+        <a class="card">
+            <div class="card-image">
+                <figure class="image is-2by1">
+                    <img v-if="post._embedded.hasOwnProperty('wp:featuredmedia') && post._embedded['wp:featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
+                    <img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && post._embedded['wp:featuredmedia'][0].media_details.sizes.hasOwnProperty('full')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
+                    <img v-else src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="content">
+                    <router-link :to="'/'+lang+'/'+post.type + '/' + post.id + '/' + post.slug"><h4 v-html="post.title.rendered"></h4></router-link>
                     <p v-if="lang == 'fr'" class="card-type-label">{{ $options.filters.translatedType(post.type) }}</p>
                     <p v-else class="card-type-label"> {{ post.type | removeHyphen | toTitleCase }}</p> 									
                 </div>
@@ -31,16 +50,21 @@
         },
         components: {
         },
+        created() {
+            console.log('Single card', this.post);
+        },
         filters: {
             translatedType(type){
                 if (type == 'resource') {
-                    return 'Ressource'
+                    return 'Ressource';
                 } else if ( type == 'research') {
-                    return 'Recherche'
-                } else if ('case-study') {
-                    return 'Ètude de cas'
+                    return 'Recherche';
+                } else if (type =='case-study') {
+                    return 'Ètude de cas';
+                } else if (type == 'video') {
+                    return 'Vidéo';
                 } else {
-                    return 'Ressource'
+                    return 'Ressource';
                 }
             },
             removeHyphen(value){
@@ -144,33 +168,6 @@ img {
 	}
 }
 
-.activity-list-container,
-.activity-list-container span,
-.activity-list-container strong {
-	font-size: 12px;
-	line-height: 1.5;
-	color: rgba(0,0,0,0.4) !important;
-}
-
-.activity-list-container span {
-	display:inline-block;
-	margin-right: 5px;
-	position: relative;
-	&:after {
-		content: ',';
-		position: absolute;
-		bottom: 0;
-		right: -2px;
-		color: rgba(0,0,0,0.4) !important;
-	}
-}
-
-.activity-list-container span:last-child {
-	margin-right: 0px;
-	&:after {
-		display: none;
-	}
-}
 
 .card-type-label {
 	color: rgba(0,0,0,0.5);

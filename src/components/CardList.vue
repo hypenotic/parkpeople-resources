@@ -10,7 +10,7 @@
 			<section class="section">
 			<div class="column">
 				 <div class="column is-4 is-offset-5">
-			<paginate-links for="postList" :async="true"></paginate-links>
+			<paginate-links for="postList" :async="true" :hide-single-page="true"></paginate-links>
 			</div>
 			</div>
 			</section>
@@ -41,19 +41,22 @@ export default {
 			errors: [],
 			lang: this.$route.params.lang,
 			posts: [],
+			activePosts: [],
 			paginate: ['postList']
 		}
 	},
 	filters: {
 		translatedType(type){
 			if (type == 'resource') {
-				return 'Ressource'
+				return 'Ressource';
 			} else if ( type == 'research') {
-				return 'Recherche'
-			} else if ('case-study') {
-				return 'Ètude de cas'
+				return 'Recherche';
+			} else if (type =='case-study') {
+				return 'Ètude de cas';
+			} else if (type == 'video') {
+				return 'Vidéo';
 			} else {
-				return 'Ressource'
+				return 'Ressource';
 			}
 		},
 		removeHyphen(value){
@@ -226,10 +229,11 @@ export default {
 				axios.all([
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100&lang=fr'),
 					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100&lang=fr'),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100&lang=fr')
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100&lang=fr'),
+					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/video/?_embed&per_page=100&lang=fr')
 				])
-				.then(axios.spread((response, response1, response2) => {
-					let allFRPosts  = response.data.concat(response1.data, response2.data)
+				.then(axios.spread((response, response1, response2, response3) => {
+					let allFRPosts  = response.data.concat(response1.data, response2.data, response3.data)
 					this.posts = allFRPosts
 					for(let j = 0; j < this.posts.length; j++) {
 						// if (j != 2 || j != 3 || j != 4) {
@@ -264,7 +268,6 @@ export default {
 
 .loading-panel {
 	min-height: 90vh;
-	// background: $white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
