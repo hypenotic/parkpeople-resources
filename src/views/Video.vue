@@ -41,7 +41,7 @@
                 <div v-if="post.meta_box._video_type == 'youtube' || post.meta_box._video_type == 'vimeo'" class="videoWrapper">
                     <!-- In the backend just ask for unique ID code? -->
                     <!-- Or do we find a way to programatically do so  -->
-                    <iframe v-if="post.meta_box._video_type == 'youtube'" width="560" height="349" :src="'http://www.youtube.com/embed/'+post.meta_box._video_raw_link+'?rel=0&hd=1'" frameborder="0" allowfullscreen></iframe>
+                    <iframe v-if="post.meta_box._video_type == 'youtube'" width="560" height="349" :src="'https://www.youtube.com/embed/'+post.meta_box._video_raw_link+'?rel=0&hd=1'" frameborder="0" allowfullscreen></iframe>
                     <iframe v-if="post.meta_box._video_type == 'vimeo'" :src="'//player.vimeo.com/video/'+post.meta_box._video_raw_link+'?byline=0&amp;portrait=0'" width="500" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
 			
