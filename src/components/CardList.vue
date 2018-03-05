@@ -10,7 +10,7 @@
 			<section class="section">
 			<div class="column">
 				 <div class="column is-4 is-offset-5">
-			<paginate-links for="postList" :async="true" :hide-single-page="true"></paginate-links>
+			<paginate-links for="postList" :async="true" :hide-single-page="true" @change="onPageChange"></paginate-links>
 			</div>
 			</div>
 			</section>
@@ -136,6 +136,9 @@ export default {
 		},
     },
 	methods: {
+		onPageChange: () => {
+            window.scrollTo(0, 0);
+        },
 		getDataAtt(post) {
 			/* 
 			getDataAtt() loops through category names of a loaded post and pushes them to a new array. 

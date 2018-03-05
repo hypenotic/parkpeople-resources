@@ -57,6 +57,15 @@ a {
     color: $blue;
 }
 
+ul.paginate-links  {
+	li.active {
+        background: $blue;
+        a {
+            color: white;
+        }
+    }
+}
+
 p {
     font-size: 1.1rem;
     line-height: 1.6;
@@ -371,11 +380,6 @@ footer {
     }
     h4 + p {
         margin-top: 0.5rem;
-    }
-    ul {
-        li {
-            // margin-bottom: 100px !important;
-        }
     }
     li {
         line-height: 1.5;

@@ -95,17 +95,19 @@ export default {
 			console.log('firing');
 			this.checkedCategories = [];
             if (event) event.preventDefault();
-			// let tabs = document.getElementsByClassName("tab-trigger");
-			// for(var i = 0; i < tabs.length; i++) {
-			// 	tabs[i].classList.remove("active-tab");
-			// }
-            // let activeTab = document.getElementById(slug);
-            // activeTab.classList.add("active-tab");
             this.$store.dispatch("updateTab", {'slug': slug, 'name': name, 'id': taxID, 'order': order, 'lang': lang});
         },
 		filterChange() {
-			this.$store.dispatch("filterChange", this.checkedCategories);
-			this.clearFilterCheck = [];
+			// Check if there are any active category buttons
+			if (this.checkedCategories.length > 0) {
+				this.$store.dispatch("filterChange", this.checkedCategories);
+				this.clearFilterCheck = [];
+			} else {
+				// if not, just reset everything
+				this.$store.dispatch("clearFilters", 'active');
+				this.checkedCategories = [];
+				this.clearFilterCheck = ['all'];
+			}
 		},
 		clearFilters(event) {
 			if (event.target.checked) {
