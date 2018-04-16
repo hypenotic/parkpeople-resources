@@ -699,6 +699,14 @@ ul.resource__tips__bullets {
 		font-size: 1.1rem;
 		line-height:1.5;
 	}
+	blockquote {
+		padding: 0 40px 24px;
+		font-family: "Merriweather", serif;
+		color: $green;
+		font-size: 1.1rem;
+		line-height: 1.2;
+		font-style: italic;
+	}
 }
 
 .category-lists {
