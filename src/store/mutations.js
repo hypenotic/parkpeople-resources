@@ -1,11 +1,4 @@
 import { state } from './state'
-// export const state = {
-    // resourceListEN: [],
-    // resourceListFR: [],
-    // singlePostCache: {},
-    // language: '',
-    // translated: false
-// }
 
 import { 
     SET_RESOURCES_EN, 
@@ -14,7 +7,12 @@ import {
     ADD_SINGLE_RESOURCE,
     SET_TRANSLATION_CHECK,
     SET_TRANSLATION_URL,
-    SET_GRANTS_CHECK  
+    SET_GRANTS_CHECK,
+    SET_ACTIVE_TAB,
+    SET_ACTIVE_LIST,
+    SET_FILTERED_LIST,
+    SET_CHECKED_LIST,
+    SET_FILTERS      
 } from './mutation-types'
 
 export const mutations = {
@@ -49,4 +47,29 @@ export const mutations = {
     SET_GRANTS_CHECK(state, check) {
         state.grantsCheck = check
     },
+    SET_ACTIVE_TAB(state, info) {
+        // Clear category list
+        state.categoryList = []
+        // Set new active tab info
+        state.activeTab = {'order': info.order, 'slug': info.slug, 'name': info.name, 'id': info.id}
+    },
+    SET_ACTIVE_LIST(state, active) {
+        console.log('SET_ACTIVE_LIST', active)
+        state.activeList = active
+        state.filteredList = active
+    },
+    SET_FILTERED_LIST(state, matches) {
+        console.log('SET_FILTERED_LIST')
+        state.filteredList = matches
+    },
+    SET_CHECKED_LIST(state, checked) {
+        console.log('SET_CHECKED_LIST')
+        state.checkedList = checked
+    },
+    SET_DISPLAYED_LIST(state, list) {
+        
+    },
+    SET_FILTERS(state, filters) {
+        state.filterButtons = filters
+    }
 }
