@@ -10,7 +10,7 @@
 					<div id="social-share-trigger" v-bind:class="{ 'social-menu-open': showSocialShare }" v-on:click="showSocialShare = !showSocialShare">
 						<i class="fa fa-share-alt" aria-hidden="true"></i>
 					</div>
-					<social-sharing :url="`https://parkpeople.ca${fullPath}`"
+					<social-sharing :url="`https://parkpeople.ca/resources${fullPath}`"
 					:title="post.title.rendered"
 					description=""
 					quote=""

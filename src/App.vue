@@ -405,4 +405,89 @@ footer {
         }
     }
 }
+
+.social-share-container {
+	position: absolute;
+	top: 24px;
+	right: 24px;
+}
+
+#social-share-trigger {
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	background: $main-accent;
+	&:hover {
+		cursor: pointer;
+	}
+	i {
+		padding-top: 8px;
+		padding-left: 8px;
+		color: $white;
+		font-size: 24px;
+		font-weight: 300;
+	}
+}
+
+.social-share-buttons {
+	// display: none;
+	position: absolute;
+	opacity: 0;
+	// top: -100vh;
+	transition: all 0.5 ease;
+	span {
+		position: absolute;
+		display: block;
+		opacity: 0;
+		width: 35px;
+		height: 35px;
+		border-radius: 100%;
+		transition: all 0.5 ease;
+		top: 0;
+		left: 0;
+		&:hover {
+			cursor: pointer;
+		}
+		i {
+			color: $white;
+			padding-left: 10px;
+			padding-top: 8px;
+		}
+	}
+	
+}
+
+#social-share-trigger.social-menu-open {
+	opacity: 1;
+}
+
+#social-share-trigger.social-menu-open + .social-share-buttons {
+	// display: block;
+	top: 0;
+	left: 50px;
+	opacity: 1;
+	span {
+		opacity: 1;
+	}
+	span:first-child {
+		background: orange;
+		top: -40px;
+		left: -10px;
+	}
+	span:nth-child(2) {
+		background: $blue;
+		top: 0px;
+		left: 20px;
+	}
+	span:nth-child(3) {
+		background: darken($blue, 30);
+		top: 50px;
+		left: 10px;
+	}
+	span:last-child {
+		background: darken($blue, 10);
+		top: 70px;
+		left: -40px;
+	}
+}
 </style>
