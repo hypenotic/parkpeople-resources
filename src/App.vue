@@ -156,8 +156,10 @@ small {
 
 ol.resource__bullets {
 	>li {
+        ul {
+            list-style-type: disc;
+        }
 		ul, ol {
-			list-style-type: disc;
 			margin-left: 24px;
             padding-left: 10px;
             margin-top: 16px;
