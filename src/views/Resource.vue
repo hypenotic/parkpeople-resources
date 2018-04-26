@@ -666,7 +666,7 @@ ul.resource__tips__bullets {
 }
 
 .resource__bullets__content {
-	white-space:pre-wrap;
+	// white-space:pre-wrap;
 	ul, ol {
 		white-space: normal;
 		li {
