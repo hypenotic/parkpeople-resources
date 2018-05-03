@@ -125,23 +125,27 @@ export const actions = {
             if(typeof(list[i].all_lang_taxonomies.activity) != 'undefined') {
                 const array = list[i].all_lang_taxonomies.activity;
                 for(let j = 0; j < array.length; j++) {
-                    // We have to make sure the EN and FR taxonomy names are in one object, so it's easy to toggle between the two
-                    // Create an object to hold the EN and FR taxonomy names
-                    let duo = {};
-                    // Add the key 'name' that hold the EN version
-                    duo.name = array[j].name;
-                    // Add the key 'fr' that holds the FR version
-                    if (array[j].hasOwnProperty('activity_french')) {
-                        duo.fr = array[j].activity_french[0];
-                    } else {
-                        duo.fr = '';
+                    // NTS: Why does the all_lang_taxonomies.activity contain LEARN taxonomies?
+                    if (array[j].taxonomy != "learn") {
+                        // We have to make sure the EN and FR taxonomy names are in one object, so it's easy to toggle between the two
+                        // Create an object to hold the EN and FR taxonomy names
+                        let duo = {};
+                        // Add the key 'name' that hold the EN version
+                        duo.name = array[j].name;
+                        // Add the key 'fr' that holds the FR version
+                        if (array[j].hasOwnProperty('activity_french')) {
+                            duo.fr = array[j].activity_french[0];
+                        } else {
+                            console.log('NO FR: ',array[j]);
+                            duo.fr = '';
+                        }
+                        duo.slug = array[j].slug;
+                        
+                        // Might be able to delete this...we can just pass 'duo' at this point...
+                        let category = duo;
+                        // 
+                        categories.push(category);
                     }
-                    duo.slug = array[j].slug;
-                    
-                    // Might be able to delete this...we can just pass 'duo' at this point...
-                    let category = duo;
-                    // 
-                    categories.push(category);
                 }
             }
         }
@@ -161,7 +165,7 @@ export const actions = {
                     if (array[j].hasOwnProperty('learn_french')) {
                         duo.fr = array[j].learn_french[0];
                     } else {
-                        duo.fr = '';
+                        duo.fr = 'TEST2';
                     }
                     duo.slug = array[j].slug;
 

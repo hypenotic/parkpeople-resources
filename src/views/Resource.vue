@@ -665,6 +665,16 @@ ul.resource__tips__bullets {
 	padding-top: 0.5rem;
 }
 
+.resource__bullets__content {
+	// white-space:pre-wrap;
+	ul, ol {
+		white-space: normal;
+		li {
+			margin-bottom: 24px !important;
+		}
+	}
+}
+
 .resource__bullets__content,
 .resource__takeaways__content,
 .resource__content__copy {
@@ -700,12 +710,19 @@ ul.resource__tips__bullets {
 		line-height:1.5;
 	}
 	blockquote {
-		padding: 0 40px 24px;
+		padding: 24px 40px 0;
 		font-family: "Merriweather", serif;
 		color: $green;
 		font-size: 1.1rem;
-		line-height: 1.2;
+		line-height: 1.5;
 		font-style: italic;
+	}
+}
+
+.resource__content__copy {
+	blockquote,
+	blockquote p {
+		color: $green;
 	}
 }
 
