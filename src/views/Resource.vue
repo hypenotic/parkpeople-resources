@@ -52,7 +52,7 @@
 					</div>
 				</div>
 
-				<p v-if="this.$route.params.lang == 'en'" class="meta"><span class="capitalize">{{ post.type }}</span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
+				<p v-if="this.$route.params.lang == 'en'" class="meta"><span class="capitalize">{{ post.type }}</span> | {{formatDate(post.date)}}</p>
 				<p v-else class="meta"><span class="capitalize">Ressource</span> | {{ moment(post.date).format('MMM, YYYY') }}</p>
 
 				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
@@ -178,7 +178,7 @@ export default {
     		return value.replace(/\w\S*/g, (txt) => {
 				return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 			});
-		}
+		},
 	},
 	methods: {
 		moment: () => {
@@ -187,6 +187,11 @@ export default {
 		relatedClick() {
 			console.log('relatedclick');
 			this.$ga.event('category', 'action', 'label', 123)
+		},
+		formatDate(theDate){
+			var dateTime = moment(theDate);
+            var ss = dateTime.format("MMM DD, YYYY");
+            return ss.toString();
 		}
 	},
 	created() {

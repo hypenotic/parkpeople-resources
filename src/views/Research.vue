@@ -153,6 +153,11 @@
 		methods: {
 			moment: () => {
 				return moment();
+			},
+			formatDate(theDate){
+				var dateTime = moment(theDate);
+				var ss = dateTime.format("MMM DD, YYYY");
+				return ss.toString();
 			}
 		},
 		filters: {

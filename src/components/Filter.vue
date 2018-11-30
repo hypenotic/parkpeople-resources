@@ -209,7 +209,7 @@ export default {
         text-align: center;
         padding: 16px 0;
         background: darken($dark-green, 3);
-        color: $med-green;
+        color: rgba(255,255,255,0.7);
         font-weight: bold;
 		font-size: 14px;
 		line-height: 1.3;

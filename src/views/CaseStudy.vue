@@ -50,7 +50,7 @@
 					</div>
 				</div>
 
-				<p class="meta"><span class="capitalize">{{ post.type }}</span> |  {{ moment(post.date).format('MMM, YYYY') }}</p>
+				<p class="meta"><span class="capitalize">{{ post.type }}</span> | {{formatDate(post.date)}}</p>
 
 				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 			</div>
@@ -157,6 +157,11 @@
 			moment: () => {
 				return moment();
 			},
+			formatDate(theDate){
+				var dateTime = moment(theDate);
+				var ss = dateTime.format("MMM DD, YYYY");
+				return ss.toString();
+			}
 		},
 		filters: {
 			removeHyphen(value){
