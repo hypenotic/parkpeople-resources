@@ -50,7 +50,7 @@
 					</div>
 				</div>
 
-				<p class="meta"><span class="capitalize">{{ post.type }}</span> | {{formatDate(post.date)}}</p>
+				<p class="meta"><span>Case Study</span> | {{formatDate(post.date)}}</p>
 
 				<div class="resource__excerpt" v-html="post.excerpt.rendered" style="margin: 0;"></div>
 			</div>

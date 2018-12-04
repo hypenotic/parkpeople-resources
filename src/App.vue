@@ -110,6 +110,15 @@ h6 {
     font-weight: bold;
 }
 
+ul {
+    list-style: disc;
+    padding-left: 40px;
+    margin-bottom: 1rem;
+    li +li {
+        margin-top: 1rem;
+    }
+}
+
 small {
     font-size: 0.815rem;
 }
