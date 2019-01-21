@@ -23,7 +23,7 @@ export const routes = [
 	{ path:'/:lang/video/:id/:slug', component: Video, props: true },
 	{ path:'/:lang', component: Home, props: true },
 	{ path:'/', redirect: '/en' },
-	{ path: '*', redirect: '/' }
+	{ path: '*', redirect: '/en' }
 	// { path:'/:lang', redirect: to => {
 	// 	// the function receives the target route as the argument
 	// 	// return redirect path/location here.
