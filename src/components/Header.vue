@@ -144,6 +144,9 @@ export default {
 nav {
     position: relative;
     z-index: 999999999999;
+    @media print {
+		display: none;
+	}
 }
 
 nav#scrolling {

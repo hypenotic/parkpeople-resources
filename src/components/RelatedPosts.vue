@@ -65,6 +65,9 @@ export default {
 @import '../styles/variables.scss';
 
 .related-resources {
+	@media print {
+		display: none;
+	}
 	h3 {
 		color: $green;
 		font-size: 40px;

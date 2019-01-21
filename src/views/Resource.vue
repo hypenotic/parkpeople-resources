@@ -60,7 +60,7 @@
 		</div>
 	</section>
 	
-	<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia')" style="width: 100%; object-fit: cover; height: 500px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
+	<img v-if="post._embedded.hasOwnProperty('wp:featuredmedia')" style="width: 100%; object-fit: cover; height: 500px; object-position: 0 30%;" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url" class="full-width-image">
 	
 	<section class="section section__single-resource">
 		<div class="columns" >
@@ -397,19 +397,59 @@ export default {
 
 @import '../styles/variables.scss';
 
+p {
+	@media print {
+		font-size: 18px;
+		line-height: 1.3;
+	}
+}
+
+.resource__bullets__content p {
+	@media print {
+		font-size: 18px;
+		line-height: 1.3;
+	}
+}
+
 .column {
 	@media #{$small-and-down} {
         padding: 16px;
     }
+	@media print {
+		&.is-three-fifths {
+			width: 100%;
+		}
+		&.is-offset-one-fifth {
+			margin-left: 0;
+		}
+	}
 }
 
 .column.top-column {
 	padding: 72px 72px 0;
 	position: relative;
 	margin-bottom: 30px;
+	@media print {
+		padding: 0 50px;
+	}
 	@media #{$small-and-down} {
         padding: 72px 50px;
     }
+}
+
+.resource__excerpt p {
+	@media print {
+		font-size: 18px;
+		line-height: 1.3;
+	}
+}
+
+.full-width-image {
+	@media print {
+		max-height: 400px;
+		height: auto;
+		margin: 0 auto;
+	}
 }
 
 h1 {
@@ -522,6 +562,9 @@ ul.resource__tips__bullets {
 	position: absolute;
 	top: 24px;
 	right: 24px;
+	@media print {
+		display: none;
+	}
 }
 
 #social-share-trigger {
@@ -735,6 +778,9 @@ ul.resource__tips__bullets {
 	margin-bottom: 24px;
 	font-family: $family-sanserif;
 	font-weight: bold;
+	@media print {
+		display: none;
+	}
 	ul {
 		display: inline-block;
 		li {
@@ -780,5 +826,9 @@ ul.resource__tips__bullets {
 	&:after {
 		display: none;
 	}
+}
+
+@media print {
+
 }
 </style>

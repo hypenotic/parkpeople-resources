@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="whole-footer">
         <section class="newsletter">
 			<div class="container">
 				<p v-if="this.$route.params.lang=='en'">Want to stay up-to-date on Park People news?</p>
@@ -110,6 +110,12 @@
 
     // Import Variables
     @import '../styles/variables.scss';
+
+    #whole-footer {
+        @media print {
+            display: none;
+        }
+    }
 
     .newsletter {
         padding: 50px 0;
