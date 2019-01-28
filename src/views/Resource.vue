@@ -411,6 +411,14 @@ p {
 	}
 }
 
+.resource__bullets__content li {
+	@media print {
+		font-size: 18px;
+		line-height: 1.3;
+		margin-bottom: 0 !important;
+	}
+}
+
 .column {
 	@media #{$small-and-down} {
         padding: 16px;
@@ -719,6 +727,18 @@ ul.resource__tips__bullets {
 		white-space: normal;
 		li {
 			margin-bottom: 24px !important;
+			@media print {
+				margin-bottom: 0px !important;
+				font-size: 18px;
+				line-height: 1.3;
+				margin-top: 10px !important;
+			}
+		}
+	}
+	ul + p,
+	ol + p {
+		@media print {
+			margin-top: 1rem !important;
 		}
 	}
 }

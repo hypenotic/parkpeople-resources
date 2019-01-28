@@ -402,6 +402,9 @@ footer {
     width: 100%;
     position: absolute;
     bottom: 0;
+    @media print {
+		display: none;
+	}
     p {
         margin: 0;
         font-size: 0.7rem;
