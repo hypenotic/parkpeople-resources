@@ -63,7 +63,8 @@
 		<div class="columns" >
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white;">
 
-				<h3>Context</h3>
+				<h3 v-if="this.$route.params.lang == 'fr'">Contexte</h3>
+				<h3 v-else>Context</h3>
 				<div class="case-study__context" v-html="post.meta_box._casestudy_content_context"></div>
 
 				<ol class="resource__bullets">
@@ -79,22 +80,27 @@
 				</div>
 
 				<div v-if="post.meta_box._casestudy_content_approach != ''" class="resource__takeaways">
-					<h3>Approach</h3>
+					<h3 v-if="this.$route.params.lang == 'fr'">Approche</h3>
+					<h3 v-else>Approach</h3>
 					<div v-html="post.meta_box._casestudy_content_approach"></div>
 				</div>	
 
 				<div v-if="post.meta_box._casestudy_content_impact != ''" class="resource__takeaways">
-					<h3>Impact</h3>
+					<h3 v-if="this.$route.params.lang == 'fr'">Incidence</h3>
+					<h3 v-else>Impact</h3>
 					<div v-html="post.meta_box._casestudy_content_impact"></div>
 				</div>		
 
 				<div v-if="post.meta_box._casestudy_content_takeaway != ''" class="resource__takeaways">
-					<h3>Takeaways</h3>
+					<h3 v-if="this.$route.params.lang == 'fr'">Points à retenir</h3>
+					<h3 v-else>Takeaways</h3>
 					<div v-html="post.meta_box._casestudy_content_takeaway"></div>
 				</div>		
 
 				<div v-if="post.meta_box._casestudy_tips.length > 0" class="resource__tips">
-					<h3>Tips &amp; Bonus Ideas</h3>
+					<h3 v-if="this.$route.params.lang == 'fr'">Conseils et idées de bonus</h3>
+					<h3 v-else>Tips &amp; Bonus Ideas</h3>
+
 					<div>
 						<ul class="resource__tips__bullets">
 							<li v-for="tip in post.meta_box._casestudy_tips" :key="tip['_casestudy_tip_headline']">

@@ -50,7 +50,7 @@
 	<section class="grant-sponsors">
 		<p>Made possible by a great collaboration:</p>
 		<ul>
-			<li v-for="sponsor in data.meta_box._page_grant_sponsors">
+			<li v-for="(sponsor,i) in data.meta_box._page_grant_sponsors" :key="'sponsor'+ i">
 				<img :src="sponsor['_page_g_sponsor_img']" alt="">
 				<!-- <span v-html="point['_page_eligibility_copy']"></span> -->
 			</li>
