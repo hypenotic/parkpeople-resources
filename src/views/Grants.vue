@@ -82,7 +82,7 @@
 								<div v-if="related.pure_taxonomies.learn" class="activity-list-container">
 									<b>Know about parks:</b>
 									<ul class="card__learn-list">
-										<li v-for="tax in related.pure_taxonomies.learn">{{ tax.name | toUppercase }}</li>
+										<li v-for="(tax, i) in related.pure_taxonomies.learn" :key="i">{{ tax.name | toUppercase }}</li>
 									</ul>
 								</div>
 								<small>{{ related.type | removeHyphen | toTitleCase }}</small>

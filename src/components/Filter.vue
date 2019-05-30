@@ -183,6 +183,14 @@ export default {
 			langString = '&lang=fr'
 		}
 
+		if (this.$route.query.tab == 'research' ) {
+			this.$store.commit('SET_ACTIVE_TAB', {'order': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 137, 'lang': this.lang});
+		} else if (this.$route.query.tab == 'researche') {
+			this.$store.commit('SET_ACTIVE_TAB', {'order': 3, 'slug': 'park-people-research', 'name': 'Park People Research', 'id': 137, 'lang': 'fr'});
+		} else {
+			return
+		}
+
 	}
 };
 </script>
