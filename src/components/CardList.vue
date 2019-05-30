@@ -20,7 +20,10 @@
 <div v-else class="loading-panel topography-background">
 	<div>
 		<img src="https://parkpeople.ca/listings/custom/uploads/2018/01/birdflying_pp_small.gif" alt="">
-		<p>Loading...</p>
+		<p>
+			<span v-if="lang=='fr'">En cours de chargement</span>
+			<span v-else>Loading...</span>
+		</p>
 	</div>
 </div>
 </template>

@@ -383,7 +383,7 @@ img {
 			margin: 0 24px;
 			img {
 				max-width: 100px;
-				height: auto;
+				height: 50px;
 			}
 		}
 	}
