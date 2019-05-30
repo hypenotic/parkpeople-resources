@@ -1,5 +1,5 @@
 <template>
-<div v-if="this.$store.state.filteredList = null">
+<div v-if="this.$store.state.filteredList != null">
 	<section class="section">
 		<div class="container">
 			<paginate name="postList" :list="this.$store.state.filteredList" :per="16" tag="div">
