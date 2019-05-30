@@ -1,5 +1,5 @@
 <template>
-<div v-if="this.$store.state.filteredList != null">
+<div v-if="this.$store.state.filteredList = null">
 	<section class="section">
 		<div class="container">
 			<paginate name="postList" :list="this.$store.state.filteredList" :per="16" tag="div">
@@ -21,7 +21,7 @@
 	<div>
 		<img src="https://parkpeople.ca/listings/custom/uploads/2018/01/birdflying_pp_small.gif" alt="">
 		<p>
-			<span v-if="lang=='fr'">En cours de chargement</span>
+			<span v-if="lang=='fr'">En cours de chargement...</span>
 			<span v-else>Loading...</span>
 		</p>
 	</div>
@@ -278,6 +278,13 @@ export default {
 	align-items: center;
 	justify-content: center;
 	font-weight: bold;
+	p {
+		text-align: center;
+	}
+	img {
+		display: block;
+		margin: 0 auto;
+	}
 }
 
 .topography-background {
