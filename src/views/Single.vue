@@ -36,7 +36,7 @@
 			</p>
 
 			<p><b>What kind of events will this grant fund? </b><br>
-			<b>A:</b> We hope that these events will help bring community members together and provide people with the opportunity to have fun and meet their neighbors. For example, your group could host a farmer’s market, picnic, nature walk, movie night or a pumpkin parade. You can find more ideas and guides on how to host events on Park People’s <a href="https://parkpeople.ca/start" target="_blank">resources</a> page and our <a href="https://parkpeople.ca/listings/" target="_blank">parks group and events</a> page. 
+			<b>A:</b> We hope that these events will help bring community members together and provide people with the opportunity to have fun and meet their neighbors. For example, your group could host a farmer’s market, picnic, nature walk, movie night or a pumpkin parade. You can find more ideas and guides on how to host events on Park People’s <a href="https://parkpeople.ca/start" target="_blank">resources</a> page and our <a href="https://parkpeople.ca/" target="_blank">parks group and events</a> page. 
 			</p>
 
 			<p><b>Can I combine this funding with funding from other sources?</b><br>
@@ -44,7 +44,7 @@
 			</p>
 
 			<p><b>We are not based in one of the five cities listed above. Can we still apply for the grant? </b><br>
-			<b>A:</b> Currently we are only accepting applications from community groups based in the selected cities (Toronto, Montreal, Vancouver, Ottawa, and Calgary). That said we hope to expand our program in subsequent years. The best way to keep up to date on changes in the TD Park People Grant program or other funding opportunities is to sign up for our newsletter and creating a <a href="https://parkpeople.ca/listings/member-login/" target="_blank">profile for your group</a> on our website.
+			<b>A:</b> Currently we are only accepting applications from community groups based in the selected cities (Toronto, Montreal, Vancouver, Ottawa, and Calgary). That said we hope to expand our program in subsequent years. The best way to keep up to date on changes in the TD Park People Grant program or other funding opportunities is to sign up for our newsletter and creating a <a href="https://parkpeople.ca/member-login/" target="_blank">profile for your group</a> on our website.
 			</p>
 
 			<p><b>How do we get a park permit and insurance? </b><br>
@@ -120,7 +120,7 @@ export default {
 		},
 	},
 	created() {
-		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/' + this.id + '?_embed')
+		axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/' + this.id + '?_embed')
 
 		.then(response => {
 			// Let's put data into post
@@ -170,12 +170,12 @@ export default {
 
 			// Let's make a call to get related posts
 			axios.all([
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2)
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1),
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1),
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1),
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2),
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2),
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2)
 			])
 			.then(axios.spread((response, response1, response2, response3, response4, response5) => {
 				
@@ -218,7 +218,7 @@ export default {
 
 			// Let's make another API call to get author data by ID
 			const authorID = response.data.author
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/users/' + authorID) 
+			axios.get('https://parkpeople.ca/wp-json/wp/v2/users/' + authorID) 
 			.then(response => {
 				//console.log(response.data)
 				this.authorName = response.data.name

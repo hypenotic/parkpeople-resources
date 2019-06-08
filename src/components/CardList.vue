@@ -19,7 +19,7 @@
 </div>
 <div v-else class="loading-panel topography-background">
 	<div>
-		<img src="https://parkpeople.ca/listings/custom/uploads/2018/01/birdflying_pp_small.gif" alt="">
+		<img src="https://parkpeople.ca/custom/uploads/2018/01/birdflying_pp_small.gif" alt="">
 		<p>
 			<span v-if="lang=='fr'">En cours de chargement...</span>
 			<span v-else>Loading...</span>
@@ -197,10 +197,10 @@ export default {
 				// Else, we have no data, so make the calls
 				console.log('EN - resourceList does not exists')
 				axios.all([
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100'),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100'),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100'),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/video/?_embed&per_page=100')
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=100'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=100'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=100'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=100')
 				])
 				.then(axios.spread((response, response1, response2, response3) => {
 					let allENPosts  = response.data.concat(response1.data, response2.data, response3.data)
@@ -233,10 +233,10 @@ export default {
 			} else {
 				// Else, we have no data, so make the calls
 				axios.all([
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=100&lang=fr'),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=100&lang=fr'),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=100&lang=fr'),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/video/?_embed&per_page=100&lang=fr')
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=100&lang=fr'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=100&lang=fr'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=100&lang=fr'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=100&lang=fr')
 				])
 				.then(axios.spread((response, response1, response2, response3) => {
 					let allFRPosts  = response.data.concat(response1.data, response2.data, response3.data)

@@ -2,10 +2,10 @@
     <nav v-if="scrolled == true" id="scrolling" class="navbar green">
         <div class="navbar-brand">
             <div v-if="this.$route.params.lang == 'fr'">
-            <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
+            <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
             </div>
             <div v-else>
-                <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
+                <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
             </div>
         </div>
         <div class="lang">
@@ -35,10 +35,10 @@
     <nav v-else class="navbar green">
         <div class="navbar-brand">
             <div v-if="this.$route.params.lang == 'fr'">
-            <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
+            <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
             </div>
             <div v-else>
-                <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/listings/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
+                <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
             </div>
         </div>
         <div class="lang">

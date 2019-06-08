@@ -170,7 +170,7 @@
 			// Reset store check values
 			this.$store.commit('SET_TRANSLATION_CHECK', false)
 
-			axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/video/' + this.id + '?_embed')
+			axios.get('https://parkpeople.ca/wp-json/wp/v2/video/' + this.id + '?_embed')
 
 			.then(response => {
 				// Let's put data into post
@@ -203,7 +203,7 @@
 					console.log('translation post', this.post)
 					console.log('translation exists', this.post.wpml_translations)
 					let translatedID = this.post.wpml_translations[0].id
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/video/' + translatedID + '?_embed') 
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/video/' + translatedID + '?_embed') 
 					.then(response => {
 						console.log(response.data)
 						this.translatedPost = response.data
@@ -269,12 +269,12 @@
 
 				// Let's make a call to get related posts
 				axios.all([
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1+langString),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1+langString),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1+langString),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2+langString),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2+langString),
-					axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2+langString)
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=4&activity='+stringID1+langString),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=4&learn='+stringID2+langString),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=4&learn='+stringID2+langString),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=4&learn='+stringID2+langString)
 				])
 				.then(axios.spread((response, response1, response2, response3, response4, response5) => {
 					
@@ -317,7 +317,7 @@
 
 				// Let's make another API call to get author data by ID
 				const authorID = response.data.author
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/users/' + authorID) 
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/users/' + authorID) 
 				.then(response => {
 					//console.log(response.data)
 					this.authorName = response.data.name

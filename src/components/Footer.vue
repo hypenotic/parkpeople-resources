@@ -17,7 +17,7 @@
                     <div class="column is-6">
                         <div class="is-centered">
                                 <p style="text-align: center;">Founding Sponsor</p>
-                                <img src="https://parkpeople.ca/listings/custom/uploads/2018/04/td_shield_logo.png">
+                                <img src="https://parkpeople.ca/custom/uploads/2018/04/td_shield_logo.png">
                         </div>
                     </div>
                     <div class="column is-6" style="background-color: green; color: white;">
@@ -56,7 +56,7 @@
                     <div class="column is-6">
                         <div class="is-centered">
                             <p style="text-align: center;">Sponsor fondateur</p>
-                            <img src="https://parkpeople.ca/listings/custom/uploads/2018/04/td_shield_logo_fr.png">
+                            <img src="https://parkpeople.ca/custom/uploads/2018/04/td_shield_logo_fr.png">
                         </div>
                     </div>
                     <div class="column is-6" style="background-color: green; color: white;">

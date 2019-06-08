@@ -6,7 +6,7 @@
                 <figure class="image is-2by1">
                     <img v-if="post._embedded.hasOwnProperty('wp:featuredmedia') && post._embedded['wp:featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
                     <img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && post._embedded['wp:featuredmedia'][0].media_details.sizes.hasOwnProperty('full')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
-                    <img v-else src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
+                    <img v-else src="https://parkpeople.ca/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
                 </figure>
             </div>
             <div class="card-content">
@@ -25,7 +25,7 @@
                 <figure class="image is-2by1">
                     <img v-if="post._embedded.hasOwnProperty('wp:featuredmedia') && post._embedded['wp:featuredmedia'][0].media_details.sizes.hasOwnProperty('medium')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url">
                     <img v-else-if="post._embedded.hasOwnProperty('wp:featuredmedia') && post._embedded['wp:featuredmedia'][0].media_details.sizes.hasOwnProperty('full')" :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url">
-                    <img v-else src="https://parkpeople.ca/listings/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
+                    <img v-else src="https://parkpeople.ca/custom/uploads/2018/01/placeimg_1000_500_nature2.jpg" alt="default park image">
                 </figure>
             </div>
             <div class="card-content">

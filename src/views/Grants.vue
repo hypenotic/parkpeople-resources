@@ -29,7 +29,7 @@
 	</section>
     <section class="grant-illustration">
 		<div class="main-animation">
-			<img src="https://parkpeople.ca/listings/custom/uploads/2018/01/parkparadepeople_paradelayer.gif" alt="Parade animation">
+			<img src="https://parkpeople.ca/custom/uploads/2018/01/parkparadepeople_paradelayer.gif" alt="Parade animation">
 		</div>
 		<div class="clouds">
 		</div>
@@ -146,14 +146,14 @@ export default {
 	},
 	created() {
 		// console.log(store.state.count)
-		axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/pages/630?_embed')
+		axios.get('https://parkpeople.ca/wp-json/wp/v2/pages/630?_embed')
 		.then(response => {
             console.log(response.data)
 			this.data = response.data
 			axios.all([
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/case-study/?_embed&categories=133&per_page=4'),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/research/?_embed&categories=133&per_page=4'),
-				axios.get('https://parkpeople.ca/listings/wp-json/wp/v2/resource/?_embed&categories=133&per_page=4')
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&categories=133&per_page=4'),
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&categories=133&per_page=4'),
+				axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&categories=133&per_page=4')
 			])
 			.then(axios.spread((response, response1, response2) => {
 				// console.log(response.data)
@@ -481,7 +481,7 @@ img {
 	}
 	.clouds {
 		position: absolute;
-		background: url('https://parkpeople.ca/listings/custom/uploads/2018/01/park_people_event_greenline_background_long.jpg') repeat 0 0;
+		background: url('https://parkpeople.ca/custom/uploads/2018/01/park_people_event_greenline_background_long.jpg') repeat 0 0;
 		width: 100%;
 		height: 500px;
 		background-size: cover;
@@ -501,7 +501,7 @@ img {
 #bird-anchor {
 	position: relative;
 	&:before {
-		content: url('https://parkpeople.ca/listings/custom/uploads/2018/01/birdflying_pp_small.gif');
+		content: url('https://parkpeople.ca/custom/uploads/2018/01/birdflying_pp_small.gif');
 		position: absolute;
 		width: 50px;
 		height: 50px;
@@ -513,7 +513,7 @@ img {
 	}
 	@media #{$xlarge-and-up} {
         &:before {
-			content: url('https://parkpeople.ca/listings/custom/uploads/2018/01/birdflying_pp_small.gif');
+			content: url('https://parkpeople.ca/custom/uploads/2018/01/birdflying_pp_small.gif');
 			position: absolute;
 			width: 50px;
 			height: 50px;

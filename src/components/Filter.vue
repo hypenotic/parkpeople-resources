@@ -39,7 +39,7 @@
 								<span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
 								<span v-else>Papers and reports we've published</span>
 							</p>
-							<img src="https://parkpeople.ca/listings/custom/uploads/2018/02/notation_original_grey.png" alt="accent" class="description-arrow">
+							<img src="https://parkpeople.ca/custom/uploads/2018/02/notation_original_grey.png" alt="accent" class="description-arrow">
 						</div>
 						<div class="filter-tabs" v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2">
 							<!-- <p>Filters:</p> -->
