@@ -25,6 +25,34 @@
 								<span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
 								<span v-else>Papers and reports we've published</span>
 							</p>
+
+							<div class="park-report" v-if="lang=='fr'">
+								<div class="inner-wrapper">
+									<div>
+										<h3 class="text--white">Le Rapport sur les parcs urbains du Canada</h3>
+										<span>Amis des parcs | juillet 2019</span>
+										<p class="text--white">Dégage les tendances, les défis et les pratiques dominantes dans 23 villes canadiennes afin d’inspirer l’action, de partager de l’information, et de suivre les progrès accomplis dans les parcs urbains d'un bout à l'autre du pays.</p>
+										<a class="report-button" href="">Voir le rapport!</a>
+									</div>
+									<div>
+										<img src="https://parkpeople.ca/custom/uploads/2019/06/whitenature.png" alt="">
+									</div>
+								</div>
+							</div>
+							<div class="park-report" v-else>
+								<div class="inner-wrapper">
+									<div>
+										<h3 class="text--white">The Canadian Cities Park Report</h3>
+										<span>Park People | July 2019</span>
+										<p class="text--white">Highlighting the trends, challenges, and leading practices in 23 Canadian cities to inspire action, share learning, and track progress in city parks across the country.</p>
+										<a class="report-button" href="">Check it out!</a>
+									</div>
+									<div>
+										<img src="https://parkpeople.ca/custom/uploads/2019/06/whitenature.png" alt="">
+									</div>
+								</div>
+							</div>
+
 						</div>
 						<div class="filter-description" v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2">
 							<p v-if="this.$store.state.activeTab.slug == 'activities-and-events'">
@@ -372,6 +400,60 @@ h2 {
 	right: -16%;
 	top: -10px;
 	opacity: 0.5;
+}
+
+.park-report {
+	width: 90%;
+	margin: 0 auto;
+	background: rgb(53, 155, 58);
+	padding: 3rem;
+	border-radius: 5px;
+	color: white;
+	text-align: left;
+	a.report-button {
+		background: $orange;
+		color: $white;
+		border-radius: 40px;
+		padding: 0.5rem 3rem;
+		display: inline-block;
+		font-weight: bold;
+		&:hover {
+		background: white;
+		color: $orange;
+		}
+	}
+	h3, p {
+		color: white;
+	}
+	h3 {
+		font-weight: bold;
+		@media #{$medium-and-down} {
+			font-size: 30px;
+		}
+	}
+	p{
+		margin-top: 1rem;
+	}
+	span {
+		color: rgb(175, 189, 0);
+		font-weight: bold;
+	}
+	.inner-wrapper {
+		@media #{$medium-and-up} {
+			display: flex;
+			justify-content: space-between;
+			>div {
+				width: 45%;
+			}
+		}
+		
+	}
+	img {
+		width: 100%;
+		height: auto;
+		transform: scale(-1.3,1.3);
+		margin-top: 50px;
+	}
 }
 
 </style>

@@ -6,7 +6,7 @@
 			<div class="column top-column is-three-fifths is-offset-one-fifth" style="background-color: white;">
 				<div class="social-share-container">
 					<div id="social-share-trigger" v-bind:class="{ 'social-menu-open': showSocialShare }" v-on:click="showSocialShare = !showSocialShare">
-						<i class="fa fa-share-alt" aria-hidden="true"></i>
+					<i class="fa fa-share-alt" aria-hidden="true"></i>
 					</div>
 					<social-sharing :url="`https://parkpeople.ca/resources${fullPath}`"
 					:title="post.title.rendered"
