@@ -30,7 +30,7 @@
 								<div class="inner-wrapper">
 									<div>
 										<h3 class="text--white">Le Rapport sur les parcs urbains du Canada</h3>
-										<span>Amis des parcs | juillet 2019</span>
+										<span>Amis des parcs | juin 2019</span>
 										<p class="text--white">Dégage les tendances, les défis et les pratiques dominantes dans 23 villes canadiennes afin d’inspirer l’action, de partager de l’information, et de suivre les progrès accomplis dans les parcs urbains d'un bout à l'autre du pays.</p>
 										<a class="report-button" href="https://cityparksreport.parkpeople.ca/" target="_blank">Voir le rapport!</a>
 									</div>
@@ -43,7 +43,7 @@
 								<div class="inner-wrapper">
 									<div>
 										<h3 class="text--white">The Canadian Cities Park Report</h3>
-										<span>Park People | July 2019</span>
+										<span>Park People | June 2019</span>
 										<p class="text--white">Highlighting the trends, challenges, and leading practices in 23 Canadian cities to inspire action, share learning, and track progress in city parks across the country.</p>
 										<a class="report-button" href="https://cityparksreport.parkpeople.ca/" target="_blank">Check it out!</a>
 									</div>
