@@ -12,4 +12,5 @@ export const state = {
     singlePostCache: {},
     translatedCheck: false,
     translatedURL: '',
+    loadingStatus: true,
 }

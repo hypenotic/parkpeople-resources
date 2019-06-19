@@ -71,5 +71,9 @@ export const mutations = {
     },
     SET_FILTERS(state, filters) {
         state.filterButtons = filters
-    }
+    },
+    SET_LOADING_STATUS(state, status) {
+        console.log('the loading status is:'+status);
+        state.loadingStatus = status
+    },
 }

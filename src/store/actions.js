@@ -15,7 +15,7 @@ export const actions = {
         } else {
             console.log('FRENCH');
             dispatch('renderList',{'type': 'tab-change', 'list': state.resourceListFR});
-        } 
+        }
     },
     renderList({commit, dispatch, context, state}, info) {
         console.log('renderList dispatched');
@@ -197,6 +197,7 @@ export const actions = {
         uniqueButtons.sort(compare);
 
         context.commit(types.SET_FILTERS, uniqueButtons);
+        context.commit('SET_LOADING_STATUS', false);
     },
     filterChange({commit, dispatch, context, state}, checkedCategories) {
         // commit(types.SET_FILTERS, state.activeList);
@@ -210,5 +211,8 @@ export const actions = {
             return
         }
         
+    },
+    changeLoadingStatus({context}, status) {
+        context.commit('SET_LOADING_STATUS', status);
     }
 }

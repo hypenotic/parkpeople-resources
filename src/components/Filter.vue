@@ -1,5 +1,5 @@
 <template>
-	<div v-if="this.$store.state.filteredList != null"> 
+	<div v-if="this.$store.state.filteredList != null && this.$store.state.loadingStatus == false"> 
 		<div class="main-tabs">
 			<!-- Change these to buttons -->
 			<a href="" :id="tabOne['slug']" v-on:click="updateActiveTab($event, tabOne['slug'], tabOne['name'], tabOne['id'], 1, lang)" class="tab-trigger" v-bind:class="{'active-tab': activeTabOneCheck}"> 
@@ -115,7 +115,7 @@ export default {
 			activity: [],
 			checkedCategories: [],
 			clearFilterCheck: ['all'],
-			lang: this.$route.params.lang,
+			lang: this.$route.params.lang
 		};
 	},
 	methods: {

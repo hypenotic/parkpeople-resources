@@ -1,5 +1,5 @@
 <template>
-<div v-if="this.$store.state.filteredList != null">
+<div v-if="this.$store.state.filteredList != null && this.$store.state.loadingStatus == false">
 	<section class="section">
 		<div class="container">
 			<paginate name="postList" :list="this.$store.state.filteredList" :per="16" tag="div">
@@ -177,6 +177,7 @@ export default {
 	created() {
 		// Set translation check to FALSE just incase someone presses the back button from a single resource instead of the home link
 		this.$store.commit('SET_TRANSLATION_CHECK', false);
+		this.$store.commit('SET_LOADING_STATUS', true);
 		if (this.lang == 'en') {
 			// Check if we have already made calls to get the EN resources
 			if(this.$store.state.resourceListEN.length > 0) {
