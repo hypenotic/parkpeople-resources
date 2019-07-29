@@ -42,7 +42,7 @@
 							<div class="park-report" v-else>
 								<div class="inner-wrapper">
 									<div>
-										<h3 class="text--white">The Canadian Cities Park Report</h3>
+										<h3 class="text--white">Canadian City Parks Report</h3>
 										<span>Park People | June 2019</span>
 										<p class="text--white">Highlighting the trends, challenges, and leading practices in 23 Canadian cities to inspire action, share learning, and track progress in city parks across the country.</p>
 										<a class="report-button" href="https://cityparksreport.parkpeople.ca/" target="_blank">Check it out!</a>
