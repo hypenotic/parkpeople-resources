@@ -62,8 +62,8 @@
 	<section class="section section__single-resource">
 		<div class="columns" >
 			<div class="column is-three-fifths is-offset-one-fifth" style="background-color: white;">
-
-				<h3 v-if="this.$route.params.lang == 'fr'">Contexte</h3>
+				<h3 v-if="post.meta_box._casestudy_context_heading != ''" v-html="post.meta_box._casestudy_context_heading"></h3>
+				<h3 v-else-if="this.$route.params.lang == 'fr'">Contexte</h3>
 				<h3 v-else>Context</h3>
 				<div class="case-study__context" v-html="post.meta_box._casestudy_content_context"></div>
 
@@ -75,24 +75,28 @@
 				</ol>
 
 				<div v-if="post.meta_box._casestudy_content_vision != ''" class="resource__takeaways">
-					<h3>Vision</h3>
+					<h3 v-if="post.meta_box._casestudy_vision_heading != ''" v-html="post.meta_box._casestudy_vision_heading"></h3>
+					<h3 v-else>Vision</h3>
 					<div v-html="post.meta_box._casestudy_content_vision"></div>
 				</div>
 
 				<div v-if="post.meta_box._casestudy_content_approach != ''" class="resource__takeaways">
-					<h3 v-if="this.$route.params.lang == 'fr'">Approche</h3>
+					<h3 v-if="post.meta_box._casestudy_approach_heading != ''" v-html="post.meta_box._casestudy_approach_heading"></h3>
+					<h3 v-else-if="this.$route.params.lang == 'fr'">Approche</h3>
 					<h3 v-else>Approach</h3>
 					<div v-html="post.meta_box._casestudy_content_approach"></div>
 				</div>	
 
 				<div v-if="post.meta_box._casestudy_content_impact != ''" class="resource__takeaways">
-					<h3 v-if="this.$route.params.lang == 'fr'">Incidence</h3>
+					<h3 v-if="post.meta_box._casestudy_impact_heading != ''" v-html="post.meta_box._casestudy_impact_heading"></h3>
+					<h3 v-else-if="this.$route.params.lang == 'fr'">Incidence</h3>
 					<h3 v-else>Impact</h3>
 					<div v-html="post.meta_box._casestudy_content_impact"></div>
 				</div>		
 
 				<div v-if="post.meta_box._casestudy_content_takeaway != ''" class="resource__takeaways">
-					<h3 v-if="this.$route.params.lang == 'fr'">Points à retenir</h3>
+					<h3 v-if="post.meta_box._casestudy_takeaway_heading != ''" v-html="post.meta_box._casestudy_takeaway_heading"></h3>
+					<h3 v-else-if="this.$route.params.lang == 'fr'">Points à retenir</h3>
 					<h3 v-else>Takeaways</h3>
 					<div v-html="post.meta_box._casestudy_content_takeaway"></div>
 				</div>		
