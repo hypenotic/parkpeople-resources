@@ -51,7 +51,7 @@ $ git clone https://github.com/hypenotic/parkpeople-resources.git .
 This site is attached to the WP backend of parkpeople.ca.
 ex. There's API calls to https://parkpeople.ca/wp-json/wp/v2/...
 
-### Nuxt
+### Vue.js
 
 ```bash
 # Go into the repository and the app dir
