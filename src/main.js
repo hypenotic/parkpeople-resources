@@ -11,7 +11,7 @@ import 'buefy/lib/buefy.css'
 var SocialSharing = require('vue-social-sharing');
 import VuePaginate from 'vue-paginate'
 
-
+Vue.config.devtools = true
 // export const  = new Vue();
 
 // Use

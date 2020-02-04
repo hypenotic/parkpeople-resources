@@ -22,14 +22,6 @@ export default {
         appHeader: Header,
         appFooter: Footer
     },
-    data() {
-		return {
-            
-		}
-	},
-    methods: {
-        
-    }
 }
 </script>
 
