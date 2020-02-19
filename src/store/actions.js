@@ -18,7 +18,7 @@ export const actions = {
         }
     },
     renderList({commit, dispatch, context, state}, info) {
-        console.log('renderList dispatched');
+        // console.log('renderList dispatched');
         if ( info.type == 'tab-change') {
             // When primary (main tab) filters are clicked
             dispatch('createActiveList', info.list);
@@ -27,18 +27,18 @@ export const actions = {
             dispatch('createFilteredList', {'checked': info.checked, 'list': info.list});
         } else if (info.type == 'back-button') {
             // If user presses back button and a tab either than the first one was active
-            console.log('back button');
+            // console.log('back button');
             dispatch('createActiveList', info.list);
         } else {
              // Initial load
-            console.log('Initial load');
+            // console.log('Initial load');
             dispatch('createActiveList', info.list);
         }
         // Dispatch the action to create the filters
         dispatch('renderFilters',{'type': 'initial-load', 'list': state.activeList});
     },
     createActiveList({commit, dispatch, context, state}, list) {
-        console.log('createActiveList dispatched');
+        // console.log('createActiveList dispatched');
         // Now we have to get the posts that fall under the active tab
         let active = [];
         // Grab the active section ID
@@ -49,7 +49,7 @@ export const actions = {
             if (list[i].hasOwnProperty("section")) {
                 // console.log('has section property')
                 if (list[i].section.includes(activeSectionID)) {
-                    console.log('has section id - ', activeSectionName);
+                    // console.log('has section id - ', activeSectionName);
                     // Add this posts to the active[]
                     active.push(list[i]);
                 }
@@ -58,7 +58,7 @@ export const actions = {
         commit(types.SET_ACTIVE_LIST, active)
     },
     createFilteredList({commit, dispatch, context, state}, info) {
-        console.log('createFilteredList dispatched',info);
+        // console.log('createFilteredList dispatched',info);
         let filterMatches = [];
         for(let i = 0; i < info.list.length; i++) {
     
@@ -109,7 +109,7 @@ export const actions = {
         
     },
     renderFilters(context, info) {
-        console.log('renderFilters dispatched', info.list);
+        // console.log('renderFilters dispatched', info.list);
         let list = info.list;
 
         // This function checks that two objects don't have the name values for a property
@@ -136,7 +136,7 @@ export const actions = {
                         if (array[j].hasOwnProperty('activity_french')) {
                             duo.fr = array[j].activity_french[0];
                         } else {
-                            console.log('NO FR: ',array[j]);
+                            // console.log('NO FR: ',array[j]);
                             duo.fr = '';
                         }
                         duo.slug = array[j].slug;

@@ -19,7 +19,7 @@
 		<section class="hero bg-filter">
 	    	<div class="container">
 				<div class="columns">
-					<div class="column is-12">
+					<div class="columns is-12">
 						<div class="filter-description filter-description--long" v-if="this.$store.state.activeTab.order == 3">
 							<p v-if="this.$store.state.activeTab.slug == 'park-people-research'">
 								<span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
@@ -120,7 +120,7 @@ export default {
 	},
 	methods: {
 		updateActiveTab(event, slug, name, taxID, order, lang) {
-			console.log('firing');
+			//console.log('firing');
 			this.checkedCategories = [];
             if (event) event.preventDefault();
             this.$store.dispatch("updateTab", {'slug': slug, 'name': name, 'id': taxID, 'order': order, 'lang': lang});
@@ -176,28 +176,20 @@ export default {
 			this.$store.commit('SET_ACTIVE_TAB', {'order': this.$store.state.activeTab['order'], 'slug': this.$store.state.activeTab['slug'], 'name': this.$store.state.activeTab['name'], 'id': this.$store.state.activeTab['id'], 'lang': this.lang});
 
 			if (this.lang == 'en') {
-				console.log('ENGLISH');
-				dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListEN});
+				this.$store.dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListEN});
 			} else {
-				console.log('FRENCH');
-				dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListFR});
+				this.$store.dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListFR});
 			} 
 		} else {
-			console.log('first load - 2');
-
-
 			this.$store.commit('SET_ACTIVE_TAB', {'order': 1, 'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'lang': this.lang});
-
 			
 			// let activeTab = document.getElementById('activities-and-events');
 			// activeTab.classList.add("active-tab");
 
 			if (this.lang == 'en') {
-				console.log('ENGLISH');
-				dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListEN});
+				this.$store.dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListEN});
 			} else {
-				console.log('FRENCH');
-				dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListFR});
+				this.$store.dispatch('renderList',{'type': 'tab-change', 'list': this.$store.state.resourceListFR});
 			} 
 			// this.updateActiveTab($event, 'activities-and-events', 'Activities and Events', 135, 1, this.lang);
 		}
@@ -384,7 +376,6 @@ h2 {
 		color: $med-green;
 		font-size: 1.2rem;
 		line-height: 1.3;
-		// font-weight: bold;
 	}
 }
 

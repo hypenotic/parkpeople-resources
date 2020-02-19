@@ -51,7 +51,7 @@
         components: {
         },
         created() {
-            console.log('Single card', this.post);
+            //console.log('Single card', this.post);
         },
         filters: {
             translatedType(type){

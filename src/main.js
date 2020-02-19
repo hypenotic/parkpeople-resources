@@ -6,32 +6,13 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import VueAnalytics from 'vue-analytics'
 import { routes } from './routes'
-import Buefy from 'buefy'
-import 'buefy/lib/buefy.css'
 var SocialSharing = require('vue-social-sharing');
 import VuePaginate from 'vue-paginate'
 
 Vue.config.devtools = true
-// export const  = new Vue();
-
-// Use
-Vue.use(Buefy);
 Vue.use(SocialSharing);
 Vue.use(VuePaginate);
-// Vue.use(Vuex);
-
-/* With the Vue Router imported 
-we can then tell the app to use it */
 Vue.use(VueRouter);
-
-// const store = new Vuex.Store({
-//   state: {
-//     resourceList: []
-//   },
-//   mutations: {
-    
-//   }
-// })
 
 const router = new VueRouter({
 	routes, // Have to pass an object where we setup the router. ES6 syntax (routes:routes)
@@ -48,18 +29,10 @@ const router = new VueRouter({
 
 Vue.use(VueAnalytics, {
 	id: 'UA-73699301-1',
-	// commands: {
-	// 	trackClick (name = 'unknown') {
-	// 	   $ga.track('Social Link', 'click', 'Social Account', name)
-	// 	}
-	// }
-	// debug: {
-	// 	enabled: true,
-	// 	trace: false,
-	// 	sendHitTask: true
-	// },
 	router
 });
+
+export const eventBus = new Vue();
 
 new Vue({
   el: '#app',

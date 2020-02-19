@@ -32,7 +32,7 @@
 
 <script>
 import axios from 'axios';
-// import { eventBus } from '../main.js';
+import { eventBus } from '../main.js';
 import Card from './Card.vue';
 export default {
 	components: {
@@ -183,20 +183,19 @@ export default {
 			if(this.$store.state.resourceListEN.length > 0) {
 				// If resourceList in the store (an array) has any items, just use the store data
 				// this.posts = this.$store.state.resourceListEN
-				console.log('EN - resourceList exists', this.posts);
+				// console.log('EN - resourceList exists', this.posts);
 				// this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListEN, 'lang': this.lang});
 
 				if (this.$store.state.activeTab['name'] != '') {
 					// updateActiveTab(event, 'activities-and-events', 'Activities and Events', 135, q, lang);
 					// this.$store.dispatch("updateTab", {'slug': 'activities-and-events', 'name': 'Activities and Events', 'id': 135, 'order': 1, 'lang': this.lang});
 					this.$store.dispatch("renderList", {'type': 'tab-change', 'list': this.$store.state.resourceListEN, 'lang': this.lang});
-					// return
 				} else {
 					this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListEN, 'lang': this.lang});
 				}
 			} else {
 				// Else, we have no data, so make the calls
-				console.log('EN - resourceList does not exists')
+				 //console.log('EN - resourceList does not exists')
 				axios.all([
 					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=100'),
 					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=100'),
@@ -221,7 +220,6 @@ export default {
 			if(this.$store.state.resourceListFR.length > 0) {
 				// If resourceList in the store (an array) has any items, just use the store data
 				this.posts = this.$store.state.resourceListFR
-				console.log('FR - resourceList exists', this.posts)
 				// this.$store.dispatch("renderList", {'type': 'initial-load', 'list': this.$store.state.resourceListFR, 'lang': this.lang})
 
 				if (this.$store.state.activeTab['name'] != '') {
@@ -249,7 +247,6 @@ export default {
 						console.log(j, this.posts[j].title.rendered, this.posts[j])
 					}
 					this.$store.commit('SET_RESOURCES_FR', allFRPosts)
-					console.log('FR - resourceList does not exists', this.posts)
 					// this.$store.commit('SET_ACTIVE_LIST', allENPosts)
 					this.$store.dispatch("renderList", {'type': 'initial-load', 'list': allFRPosts, 'lang': this.lang})
 				}))
@@ -304,7 +301,6 @@ export default {
 	font-weight: 700;
 	margin-bottom: 0.3rem;
 	margin-top: 0.3rem;
-	// line-height: 1.4;
 	&:hover {
 		color: rgba(30,177,242,0.7);
 	}

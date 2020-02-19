@@ -16,7 +16,6 @@
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
-
 export default {
     components: {
         appHeader: Header,
@@ -26,9 +25,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-// Import Bulma's core
-@import "~bulma/sass/utilities/_all";
 @import url('https://fonts.googleapis.com/css?family=Dosis:400,700,800|Comfortaa|Merriweather');
 // Import Variables
 @import './styles/variables.scss';

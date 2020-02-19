@@ -14,15 +14,14 @@
             <router-link v-if="this.$route.params.lang == 'fr' && this.$store.state.translatedCheck == true" to="/en" class="lang">EN</router-link>
             <router-link v-if="this.$route.params.lang == 'en' && this.$store.state.translatedCheck == true" to="/fr" class="lang">FR</router-link>
         </div>
-
         <div id="mobile-menu-trigger" v-on:click="showMobileMenu = !showMobileMenu">
             <i class="fa fa-bars" aria-hidden="true"></i>
         </div>
 
         <div id="navbarExampleTransparentExample" class="navbar-menu" v-bind:class="{ 'menu-open': showMobileMenu }">
             <div class="navbar-end">
-                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Home</a> 
-                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca" class="navbar-item">Page d'accueil</a>
+                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Hom</a> 
+                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/resources/fr" class="navbar-item">Page d'accueil</a>
                 <a v-if="this.$route.params.lang == 'fr' && this.$store.state.grantsCheck== true" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Bourses TD Park People</a>  
                 <a v-if="this.$route.params.lang == 'en' && this.$store.state.grantsCheck== true" href="https://parkpeople.ca/parkgrants" class="navbar-item" exact>TD Park People Grants</a>  
                 <!-- <a v-if="this.$route.params.lang == 'fr' && this.$route.path != '/fr'" href="/" class="navbar-item">Toutes les ressources</a>  
@@ -55,7 +54,7 @@
         <div id="navbarExampleTransparentExample" class="navbar-menu" v-bind:class="{ 'menu-open': showMobileMenu }">
             <div class="navbar-end">
                 <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Home</a> 
-                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca" class="navbar-item">Page d'accueil</a>
+                <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/resources/fr" class="navbar-item">Page d'accueil</a>
                 <a v-if="this.$route.params.lang == 'fr' && this.$route.query.bourses== 'true'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Bourses TD Park People</a>  
                 <a v-if="this.$route.params.lang == 'en' && this.$route.query.grants == 'true'" href="https://parkpeople.ca/parkgrants" class="navbar-item">TD Park People Grants</a> 
                 <!-- <a v-if="this.$route.params.lang == 'fr' && this.$route.path != '/fr'" href="/" class="navbar-item">Toutes les ressources</a>  
@@ -68,11 +67,9 @@
 </template>
 
 <script>
-// import { eventBus } from '../main.js';
 export default {
     data() {
         return {
-            // id: this.$route.params.id,
             lang: this.$route.params.lang,
             showMobileMenu: false,
             scrolled: false
@@ -106,7 +103,7 @@ export default {
         }
     },
     created: function () {
-        console.log('header check', this.$store.state.translatedCheck);
+        // console.log('header check', this.$store.state.translatedCheck);
         // window.addEventListener('scroll', this.handleScroll);
         if (window.addEventListener){
             // console.log('Option 1');

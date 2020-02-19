@@ -29,10 +29,10 @@ export const mutations = {
         let copy = state.singlePostCache
         // Check if key/post exist already
         if (copy.hasOwnProperty(id)) {
-            console.log('POST ALREADY IN STORE')
+            // console.log('POST ALREADY IN STORE')
             return
         } else {
-            console.log('ADDING POST TO STORE')
+            // console.log('ADDING POST TO STORE')
             copy[id] = post;
             state.singlePostCache = copy
         }
@@ -54,16 +54,16 @@ export const mutations = {
         state.activeTab = {'order': info.order, 'slug': info.slug, 'name': info.name, 'id': info.id}
     },
     SET_ACTIVE_LIST(state, active) {
-        console.log('SET_ACTIVE_LIST', active)
+        // console.log('SET_ACTIVE_LIST', active)
         state.activeList = active
         state.filteredList = active
     },
     SET_FILTERED_LIST(state, matches) {
-        console.log('SET_FILTERED_LIST')
+        // console.log('SET_FILTERED_LIST')
         state.filteredList = matches
     },
     SET_CHECKED_LIST(state, checked) {
-        console.log('SET_CHECKED_LIST')
+         //console.log('SET_CHECKED_LIST')
         state.checkedList = checked
     },
     SET_DISPLAYED_LIST(state, list) {
@@ -73,7 +73,7 @@ export const mutations = {
         state.filterButtons = filters
     },
     SET_LOADING_STATUS(state, status) {
-        console.log('the loading status is:'+status);
+        // console.log('the loading status is:'+status);
         state.loadingStatus = status
     },
 }

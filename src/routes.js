@@ -1,6 +1,3 @@
-/* need to import the components for the 
-route*/
-
 import Home 		from './views/Home.vue';
 import CaseStudy 	from './views/CaseStudy.vue';
 import Research 	from './views/Research.vue';
@@ -24,14 +21,4 @@ export const routes = [
 	{ path:'/:lang', component: Home, props: true },
 	{ path:'/', redirect: '/en' },
 	{ path: '*', redirect: '/en' }
-	// { path:'/:lang', redirect: to => {
-	// 	// the function receives the target route as the argument
-	// 	// return redirect path/location here.
-	// 	window.location = "https://parkpeople.ca"
-	//   } },
-	// { path:'/', redirect: to => {
-	// 	// the function receives the target route as the argument
-	// 	// return redirect path/location here.
-	// 	window.location = "https://parkpeople.ca"
-	// } }
 ]
