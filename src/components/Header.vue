@@ -2,7 +2,7 @@
     <nav v-if="scrolled == true" id="scrolling" class="navbar green">
         <div class="navbar-brand">
             <div v-if="this.$route.params.lang == 'fr'">
-            <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
+            <a href="https://parkpeople.ca/?lang=fr"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
             </div>
             <div v-else>
                 <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
@@ -20,7 +20,7 @@
 
         <div id="navbarExampleTransparentExample" class="navbar-menu" v-bind:class="{ 'menu-open': showMobileMenu }">
             <div class="navbar-end">
-                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Hom</a> 
+                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca/resources/en" class="navbar-item">Hom</a> 
                 <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/resources/fr" class="navbar-item">Page d'accueil</a>
                 <a v-if="this.$route.params.lang == 'fr' && this.$store.state.grantsCheck== true" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Bourses TD Park People</a>  
                 <a v-if="this.$route.params.lang == 'en' && this.$store.state.grantsCheck== true" href="https://parkpeople.ca/parkgrants" class="navbar-item" exact>TD Park People Grants</a>  
@@ -34,7 +34,7 @@
     <nav v-else class="navbar green">
         <div class="navbar-brand">
             <div v-if="this.$route.params.lang == 'fr'">
-            <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
+            <a href="https://parkpeople.ca/?lang=fr"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
             </div>
             <div v-else>
                 <a href="https://parkpeople.ca"><img src="https://parkpeople.ca/custom/uploads/2019/05/Logo_Bilingual_horizontal_white.png" style="width: auto; height: 50px;margin-left: 12px;margin-top: 5px;"></a>
@@ -53,7 +53,7 @@
 
         <div id="navbarExampleTransparentExample" class="navbar-menu" v-bind:class="{ 'menu-open': showMobileMenu }">
             <div class="navbar-end">
-                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca" class="navbar-item">Home</a> 
+                <a v-if="this.$route.params.lang == 'en'" href="https://parkpeople.ca/resources/en" class="navbar-item">Home</a> 
                 <a v-if="this.$route.params.lang == 'fr'" href="https://parkpeople.ca/resources/fr" class="navbar-item">Page d'accueil</a>
                 <a v-if="this.$route.params.lang == 'fr' && this.$route.query.bourses== 'true'" href="https://parkpeople.ca/boursesdeparc" class="navbar-item">Bourses TD Park People</a>  
                 <a v-if="this.$route.params.lang == 'en' && this.$route.query.grants == 'true'" href="https://parkpeople.ca/parkgrants" class="navbar-item">TD Park People Grants</a> 
