@@ -3,8 +3,8 @@
         <section class="newsletter">
 			<div class="container">
 				<p v-if="this.$route.params.lang=='en'">Want to stay up-to-date on Park People news?</p>
-                <p v-else>Vous voulez se tenir au courant de les nouvelles de Park People?</p>
-				<a v-if="this.$route.params.lang=='fr'" class="button" href="http://eepurl.com/dx3BWX" target="_blank">Recevez notre newsletter!</a>
+                <p v-else>Souhaitez-vous recevoir des nouvelles des Amis des parcs?</p>
+				<a v-if="this.$route.params.lang=='fr'" class="button" href="http://eepurl.com/dx3BWX" target="_blank">Inscrivez-vous à notre infolettre!</a>
                 <a v-else class="button" href="http://eepurl.com/dx3BWX" target="_blank">Get the Park People newsletter!</a>
 				<!-- <div>
 					<app-form skin="grants" button="Okay!"></app-form>
@@ -63,7 +63,7 @@
                         <div class="columns">
                             <div class="column is-6">
                                 <ul>
-                                    <li style="color: white;font-weight: bold;">Park People</li>
+                                    <li style="color: white;font-weight: bold;">Amis des parcs</li>
                                     <li>401, rue Richmond Ouest</li>
                                     <li>Studio 119, laboratoire de City Builder</li>
                                     <li>Toronto, ON M5V 3A8</li>
