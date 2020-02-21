@@ -17,9 +17,9 @@
 	    </div>
 		<transition name="fade">
 		<section class="hero bg-filter">
-	    	<div class="container">
+	    	<div class="containe">
 				<div class="columns">
-					<div class="columns is-12">
+					<div class="column is-10 is-offset-1">
 						<div class="filter-description filter-description--long" v-if="this.$store.state.activeTab.order == 3">
 							<p v-if="this.$store.state.activeTab.slug == 'park-people-research'">
 								<span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
