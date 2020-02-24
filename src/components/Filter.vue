@@ -1,5 +1,6 @@
 <template>
-	<div v-if="this.$store.state.filteredList != null && this.$store.state.loadingStatus == false"> 
+    <!--<div v-if="this.$store.state.filteredList != null && this.$store.state.loadingStatus == false"> -->
+    <div>
 		<div class="main-tabs">
 			<!-- Change these to buttons -->
 			<a href="" :id="tabOne['slug']" v-on:click="updateActiveTab($event, tabOne['slug'], tabOne['name'], tabOne['id'], 1, lang)" class="tab-trigger" v-bind:class="{'active-tab': activeTabOneCheck}"> 

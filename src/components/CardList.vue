@@ -1,5 +1,6 @@
 <template>
-    <div v-if="this.$store.state.filteredList != null && this.$store.state.loadingStatus == false">
+    <!-- <div v-if="this.$store.state.filteredList != null && this.$store.state.loadingStatus == false">-->
+    <div v-if="this.$store.state.filteredList.length != 0">
 	<section class="section">
 		<div class="container">
 			<paginate name="postList" :list="this.$store.state.filteredList" :per="16" tag="div">
@@ -32,7 +33,7 @@
 
 <script>
 import axios from 'axios';
-import { eventBus } from '../main.js';
+//import { eventBus } from '../main.js';
 import Card from './Card.vue';
 export default {
 	components: {
@@ -169,11 +170,11 @@ export default {
 			return categories;
 		},
 	},
-	mounted() {
+	/*mounted() {
 		eventBus.$on('checked', checkedCategories => {
 			this.categoryList = checkedCategories
 		})
-	},
+	},*/
 	created() {
 		// Set translation check to FALSE just incase someone presses the back button from a single resource instead of the home link
 		this.$store.commit('SET_TRANSLATION_CHECK', false);
@@ -195,21 +196,18 @@ export default {
 				}
 			} else {
 				// Else, we have no data, so make the calls
-				 //console.log('EN - resourceList does not exists')
 				axios.all([
-					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=100'),
-					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=100'),
-					axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=100'),
-					axios.get('https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=100')
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=10'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=20'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=50'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=12')
 				])
 				.then(axios.spread((response, response1, response2, response3) => {
 					let allENPosts  = response.data.concat(response1.data, response2.data, response3.data)
 					this.posts = allENPosts
 
 					this.$store.commit('SET_RESOURCES_EN', allENPosts)
-					// this.$store.commit('SET_ACTIVE_LIST', allENPosts)
 					this.$store.dispatch("renderList", {'type': 'initial-load', 'list': allENPosts, 'lang': this.lang})
-					// this.$store.dispatch("renderFilters", {'type': 'initial-load', 'list': allENPosts})
 				}))
 				.catch(e => {
 					this.errors.push(e)
@@ -232,22 +230,21 @@ export default {
 			} else {
 				// Else, we have no data, so make the calls
 				axios.all([
-					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=100&lang=fr'),
-					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=100&lang=fr'),
-					axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=100&lang=fr'),
-					axios.get('https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=100&lang=fr')
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=10&lang=fr'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=20&lang=fr'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=50&lang=fr'),
+					axios.get('https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=12&lang=fr')
 				])
 				.then(axios.spread((response, response1, response2, response3) => {
 					let allFRPosts  = response.data.concat(response1.data, response2.data, response3.data)
 					this.posts = allFRPosts
-					for(let j = 0; j < this.posts.length; j++) {
+					//for(let j = 0; j < this.posts.length; j++) {
 						// if (j != 2 || j != 3 || j != 4) {
 						// 	console.log(j, this.posts[j].title.rendered, this.posts[j]._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url)
 						// }
-						console.log(j, this.posts[j].title.rendered, this.posts[j])
-					}
+				//		console.log(j, this.posts[j].title.rendered, this.posts[j])
+				//	}
 					this.$store.commit('SET_RESOURCES_FR', allFRPosts)
-					// this.$store.commit('SET_ACTIVE_LIST', allENPosts)
 					this.$store.dispatch("renderList", {'type': 'initial-load', 'list': allFRPosts, 'lang': this.lang})
 				}))
 				.catch(e => {
