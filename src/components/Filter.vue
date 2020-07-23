@@ -33,6 +33,16 @@
         <span v-if="lang=='fr'">{{tabThree['frName']}}</span>
         <span v-else>{{tabThree['name']}}</span>
       </a>
+      <a
+        href
+        :id="tabFour['slug']"
+        class="tab-trigger"
+        v-bind:class="{'active-tab': activeTabFourCheck}"
+        v-on:click="updateActiveTab($event, tabFour['slug'], tabFour['name'], tabFour['id'], 4, lang)"
+      >
+        <span v-if="lang=='fr'">{{tabFour['frName']}}</span>
+        <span v-else>{{tabFour['name']}}</span>
+      </a>
     </div>
     <transition name="fade">
       <section class="hero bg-filter">
@@ -95,7 +105,7 @@
               </div>
               <div
                 class="filter-description"
-                v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2"
+                v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2 || this.$store.state.activeTab.order == 4"
               >
                 <p v-if="this.$store.state.activeTab.slug == 'activities-and-events'">
                   <span v-if="lang=='fr'">Guides pratiques pour l’animation des parcs</span>
@@ -111,6 +121,10 @@
                   <span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
                   <span v-else>Papers and reports we've published</span>
                 </p>
+                <p v-if="this.$store.state.activeTab.slug == 'covid'">
+                  <span v-if="lang=='fr'">Covid Filter description (FR)</span>
+                  <span v-else>Covid Filter description (EN)</span>
+                </p>
                 <img
                   src="https://parkpeople.ca/custom/uploads/2018/02/notation_original_grey.png"
                   alt="accent"
@@ -119,7 +133,7 @@
               </div>
               <div
                 class="filter-tabs"
-                v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2"
+                v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2 || this.$store.state.activeTab.order == 4"
               >
                 <!-- <p>Filters:</p> -->
                 <ul id="ck-button">
@@ -186,12 +200,20 @@ let tab3 = {
   id: 137,
   frName: "Recherche de Park People"
 };
+let tab4 = {
+  order: 4,
+  slug: "covid",
+  name: "Covid",
+  id: 547,
+  frName: "Covid"
+};
 export default {
   data() {
     return {
       tabOne: tab1,
       tabTwo: tab2,
       tabThree: tab3,
+      tabFour: tab4,
       errors: [],
       learn: [],
       activity: [],
@@ -251,6 +273,13 @@ export default {
     },
     activeTabThreeCheck() {
       if (this.$store.state.activeTab.slug == this.tabThree["slug"]) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    activeTabFourCheck() {
+      if (this.$store.state.activeTab.slug == this.tabFour["slug"]) {
         return true;
       } else {
         return false;
@@ -355,7 +384,7 @@ export default {
   margin: 0;
   > a {
     display: block;
-    width: 33.15%;
+    width: 25%;
     text-align: center;
     padding: 16px 0;
     background: darken($dark-green, 3);
@@ -369,13 +398,13 @@ export default {
       color: $white;
     }
     @media #{$medium-and-up} {
-      width: 33.15%;
+      width: 25%;
       font-size: 18px;
     }
     @media #{$large-and-up} {
-      width: 33.15%;
+      width: 25%;
       padding: 32px 0;
-      font-size: 24px;
+      font-size: 22px;
     }
   }
   > a.active-tab {
