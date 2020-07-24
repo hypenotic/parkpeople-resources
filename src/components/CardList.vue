@@ -228,9 +228,6 @@ export default {
             axios.get(
               "https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=12"
             )
-            /*axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/covid/?_embed&per_page=20"
-            )*/
           ])
           .then(
             axios.spread((response, response1, response2, response3) => {
