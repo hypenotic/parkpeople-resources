@@ -181,31 +181,31 @@ import { updateTab } from "../store/actions.js";
 import { createNamespacedHelpers } from "vuex";
 let tab1 = {
   order: 1,
+  slug: "covid",
+  name: "COVID",
+  id: 547,
+  frName: "COVID"
+};
+let tab2 = {
+  order: 2,
   slug: "activities-and-events",
   name: "Activities and Events",
   id: 135,
   frName: "Activités et événements"
 };
-let tab2 = {
-  order: 2,
+let tab3 = {
+  order: 3,
   slug: "organizational-planning",
   name: "Organizational Planning",
   id: 136,
   frName: "Planification organisationnelle"
 };
-let tab3 = {
-  order: 3,
+let tab4 = {
+  order: 4,
   slug: "park-people-research",
   name: "Park People Research",
   id: 137,
   frName: "Recherche de Park People"
-};
-let tab4 = {
-  order: 4,
-  slug: "covid",
-  name: "Covid",
-  id: 547,
-  frName: "Covid"
 };
 export default {
   data() {
@@ -312,9 +312,9 @@ export default {
     } else {
       this.$store.commit("SET_ACTIVE_TAB", {
         order: 1,
-        slug: "activities-and-events",
-        name: "Activities and Events",
-        id: 135,
+        slug: "covid",
+        name: "COVID",
+        id: 547,
         lang: this.lang
       });
 
