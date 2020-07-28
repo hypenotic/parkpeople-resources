@@ -46,9 +46,65 @@
     </div>
     <transition name="fade">
       <section class="hero bg-filter">
-        <div class="containe">
+        <!--<div class="container">-->
+        <div>
           <div class="columns">
             <div class="column is-10 is-offset-1">
+              <div
+                class="filter-description filter-description--long"
+                v-if="this.$store.state.activeTab.order == 1"
+              >
+                <div
+                  class="park-report"
+                  v-if="lang=='fr'"
+                  style="margin-bottom: 70px; background-color: #4678A7;"
+                >
+                  <div class="inner-wrapper">
+                    <div>
+                      <h3
+                        class="text--white"
+                      >7 questions: perspectives d'avenir pour les parcs et les lieux publics.</h3>
+                      <p class="text--white">Allez de l'avant ensemble</p>
+                      <!--<a
+                        class="report-button"
+                        href="https://cityparksreport.parkpeople.ca/"
+                        target="_blank"
+                      >Inscrivez-vous au prochain séminaire en ligne</a>-->
+                    </div>
+                    <div style="width: 35%; margin-right: 40px;">
+                      <img
+                        src="https://parkpeople.ca/custom/uploads/2020/07/covidresourcead_web_transparent_1000x1000.png"
+                        alt
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="park-report"
+                  style="margin-bottom: 70px; background-color: #4678A7;"
+                  v-else
+                >
+                  <div class="inner-wrapper">
+                    <div>
+                      <h3
+                        class="text--white"
+                      >7 Questions: Perspectives on the future of parks and public spaces.</h3>
+                      <p class="text--white">Moving Forward Together</p>
+                      <!--<a
+                        class="report-button"
+                        href="https://cityparksreport.parkpeople.ca/"
+                        target="_blank"
+                      >Register for the next webinar</a>-->
+                    </div>
+                    <div style="width: 35%; margin-right: 40px;">
+                      <img
+                        src="https://parkpeople.ca/custom/uploads/2020/07/covidresourcead_web_transparent_1000x1000.png"
+                        alt
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div
                 class="filter-description filter-description--long"
                 v-if="this.$store.state.activeTab.order == 3"
@@ -122,8 +178,8 @@
                   <span v-else>Papers and reports we've published</span>
                 </p>
                 <p v-if="this.$store.state.activeTab.slug == 'covid'">
-                  <span v-if="lang=='fr'">Covid Filter description (FR)</span>
-                  <span v-else>Covid Filter description (EN)</span>
+                  <span v-if="lang=='fr'">Les ressources sur la COVID-19 et les parcs urbains</span>
+                  <span v-else>Resources on COVID-19 and parks</span>
                 </p>
                 <img
                   src="https://parkpeople.ca/custom/uploads/2018/02/notation_original_grey.png"
@@ -182,9 +238,9 @@ import { createNamespacedHelpers } from "vuex";
 let tab1 = {
   order: 1,
   slug: "covid",
-  name: "COVID",
+  name: "COVID-19",
   id: 547,
-  frName: "COVID"
+  frName: "COVID-19"
 };
 let tab2 = {
   order: 2,
