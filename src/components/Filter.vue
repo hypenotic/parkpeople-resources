@@ -240,7 +240,7 @@ let tab1 = {
   slug: "covid",
   name: "COVID-19 & Parks",
   id: 547,
-  frName: "COVID-19 et nos parcs"
+  frName: "Les parcs et la COVID-19"
 };
 let tab2 = {
   order: 2,
