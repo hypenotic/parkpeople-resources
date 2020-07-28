@@ -238,9 +238,9 @@ import { createNamespacedHelpers } from "vuex";
 let tab1 = {
   order: 1,
   slug: "covid",
-  name: "COVID-19",
+  name: "COVID-19 & Parks",
   id: 547,
-  frName: "COVID-19"
+  frName: "COVID-19 et nos parcs"
 };
 let tab2 = {
   order: 2,
