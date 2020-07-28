@@ -61,10 +61,10 @@
                 >
                   <div class="inner-wrapper">
                     <div>
-                      <h3
+                      <h3 class="text--white">Les parcs et la COVID-19</h3>
+                      <p
                         class="text--white"
-                      >7 questions: perspectives d'avenir pour les parcs et les lieux publics.</h3>
-                      <p class="text--white">Allez de l'avant ensemble</p>
+                      >Des recherches, ressources, et réflexions pour ouvrir la voie</p>
                       <!--<a
                         class="report-button"
                         href="https://cityparksreport.parkpeople.ca/"
@@ -86,10 +86,10 @@
                 >
                   <div class="inner-wrapper">
                     <div>
-                      <h3
+                      <h3 class="text--white">COVID-19 and Parks</h3>
+                      <p
                         class="text--white"
-                      >7 Questions: Perspectives on the future of parks and public spaces.</h3>
-                      <p class="text--white">Moving Forward Together</p>
+                      >Research, Resources and Insights to Pave the Way Forward</p>
                       <!--<a
                         class="report-button"
                         href="https://cityparksreport.parkpeople.ca/"
