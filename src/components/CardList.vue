@@ -236,7 +236,10 @@ export default {
                 response2.data,
                 response3.data
               );
-              this.posts = allENPosts;
+              //this.posts = allENPosts;
+              allENPosts.sort(
+                (a, b) => Date.parse(b.date) - Date.parse(a.date)
+              );
 
               this.$store.commit("SET_RESOURCES_EN", allENPosts);
               this.$store.dispatch("renderList", {
@@ -299,7 +302,10 @@ export default {
                 response2.data,
                 response3.data
               );
-              this.posts = allFRPosts;
+              //this.posts = allFRPosts;
+              allFRPosts.sort(
+                (a, b) => Date.parse(b.date) - Date.parse(a.date)
+              );
               //for(let j = 0; j < this.posts.length; j++) {
               // if (j != 2 || j != 3 || j != 4) {
               // 	console.log(j, this.posts[j].title.rendered, this.posts[j]._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url)
