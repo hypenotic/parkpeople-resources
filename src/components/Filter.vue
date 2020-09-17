@@ -107,14 +107,14 @@
               </div>
               <div
                 class="filter-description filter-description--long"
-                v-if="this.$store.state.activeTab.order == 3"
+                v-if="this.$store.state.activeTab.order == 4"
               >
                 <p v-if="this.$store.state.activeTab.slug == 'park-people-research'">
                   <span v-if="lang=='fr'">Articles et rapports que nous avons publiés</span>
                   <span v-else>Papers and reports we've published</span>
                 </p>
 
-                <div class="park-report" v-if="lang=='fr'">
+                <div class="park-report" style="margin-bottom: 70px;" v-if="lang=='fr'">
                   <div class="inner-wrapper">
                     <div>
                       <h3 class="text--white">Le Rapport sur les parcs urbains du Canada</h3>
@@ -128,15 +128,16 @@
                         target="_blank"
                       >Voir le rapport!</a>
                     </div>
-                    <div>
-                      <img
+                     <div >
+
+                      <img 
                         src="https://parkpeople.ca/custom/uploads/2020/07/CCPR-fullcolour-illustrations-02-1.png"
                         alt
                       />
                     </div>
                   </div>
                 </div>
-                <div class="park-report" v-else>
+                <div class="park-report" style="margin-bottom: 70px;" v-else>
                   <div class="inner-wrapper">
                     <div>
                       <h3 class="text--white">Canadian City Parks Report</h3>
@@ -402,7 +403,7 @@ export default {
 
     if (this.$route.query.tab == "research") {
       this.$store.commit("SET_ACTIVE_TAB", {
-        order: 3,
+        order: 4,
         slug: "park-people-research",
         name: "Park People Research",
         id: 137,
@@ -410,7 +411,7 @@ export default {
       });
     } else if (this.$route.query.tab == "researche") {
       this.$store.commit("SET_ACTIVE_TAB", {
-        order: 3,
+        order: 4,
         slug: "park-people-research",
         name: "Park People Research",
         id: 137,
