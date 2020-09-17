@@ -3,12 +3,12 @@
         <h3 v-if="lang=='fr'">Liens recommandés</h3>
         <h3 v-else>Recommended Links</h3>
         <ul class="resource__rec-link__list">
-            <li v-for="link in recLinks" :key="link['_resource_link_headline']">
-                <h4 v-html="link['_resource_link_headline']"></h4>
-                <!-- <p>{{ link['_resource_link_type'] }} | {{ link['_resource_link_author'] }}</p> -->
-                <p v-if="link['_resource_link_excerpt'] != undefined" v-html="link['_resource_link_excerpt']"></p>
-                <a v-if="link['_resource_link_file_upload'] != undefined" class="button button--ghost button--orange" :href="link['_resource_link_file_upload']" target="_blank">Click to download</a>
-                <a v-else class="button button--ghost button--orange" :href="link['_resource_link_url']" target="_blank"><span v-if="lang == 'fr'">Lis</span>
+            <li v-for="recLink in recLinks" :key="recLink['_resource_link_headline']">
+				<h4 v-html="recLink['_research_link_headline']"></h4>
+                <!-- <p>{{ link['_research_link_type'] }} | {{ link['_research_link_author'] }}</p> -->
+                <p v-if="recLink['_research_link_excerpt'] != undefined" v-html="recLink['_research_link_excerpt']"></p>
+                <a v-if="recLink['_research_link_file_upload'] != undefined" class="button button--ghost button--orange" :href="recLink['_research_link_file_upload']" target="_blank">Click to download</a>
+                <a v-else class="button button--ghost button--orange" :href="recLink['_research_link_url']" target="_blank"><span v-if="lang == 'fr'">Lis</span>
                 <span v-else>View</span></a>
             </li>
         </ul>

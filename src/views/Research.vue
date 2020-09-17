@@ -89,7 +89,7 @@
 			</div>
 	</section>
 
-	<app-rec-links class="rec-link" v-if="post.meta_box.hasOwnProperty('_research_links') && post.meta_box._research_links.length > 0" :rec-links="post.meta_box._research_links">
+	<app-rec-links class="rec-link" v-if="post.meta_box.hasOwnProperty('_research_links') && post.meta_box._research_links.length > 0" :recLinks="post.meta_box._research_links">
 	</app-rec-links>
 
 	<div v-if="post.pure_taxonomies.activity && lang=='fr'" class="research__activity-list">
