@@ -217,16 +217,16 @@ export default {
         axios
           .all([
             axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=10"
+              "https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=100"
             ),
             axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=20"
+              "https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=100"
             ),
             axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=50"
+              "https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=100"
             ),
             axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=12"
+              "https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=100"
             )
           ])
           .then(
@@ -280,16 +280,16 @@ export default {
         axios
           .all([
             axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=10&lang=fr"
+              "https://parkpeople.ca/wp-json/wp/v2/case-study/?_embed&per_page=100&lang=fr"
             ),
             axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=20&lang=fr"
+              "https://parkpeople.ca/wp-json/wp/v2/research/?_embed&per_page=100&lang=fr"
             ),
             axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=50&lang=fr"
+              "https://parkpeople.ca/wp-json/wp/v2/resource/?_embed&per_page=100&lang=fr"
             ),
             axios.get(
-              "https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=12&lang=fr"
+              "https://parkpeople.ca/wp-json/wp/v2/video/?_embed&per_page=100&lang=fr"
             )
             /*axios.get(
               "https://parkpeople.ca/wp-json/wp/v2/covid/?_embed&per_page=20&lang=fr"
