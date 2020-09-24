@@ -105,7 +105,7 @@
 			</cite>
 		</div>
 
-		<app-rec-links class="rec-link" v-if="post.meta_box.hasOwnProperty('_resource_links') && post.meta_box._resource_links.length > 0" :rec-links="post.meta_box._resource_links">
+		<app-rec-links class="rec-link" v-if="post.meta_box.hasOwnProperty('_resource_links') && post.meta_box._resource_links.length > 0" :recLinks="post.meta_box._resource_links">
 		</app-rec-links>
 
 	</section>
