@@ -1,5 +1,4 @@
 <template>
-  <!--<div v-if="this.$store.state.filteredList != null && this.$store.state.loadingStatus == false"> -->
   <div>
     <div class="main-tabs">
       <!-- Change these to buttons -->
@@ -46,7 +45,6 @@
     </div>
     <transition name="fade">
       <section class="hero bg-filter">
-        <!--<div class="container">-->
         <div>
           <div class="columns">
             <div class="column is-10 is-offset-1">
@@ -65,11 +63,6 @@
                       <p
                         class="text--white"
                       >Des recherches, ressources, et réflexions pour ouvrir la voie</p>
-                      <!--<a
-                        class="report-button"
-                        href="https://cityparksreport.parkpeople.ca/"
-                        target="_blank"
-                      >Inscrivez-vous au prochain séminaire en ligne</a>-->
                     </div>
                     <div style="width: 35%; margin-right: 40px;">
                       <img
@@ -90,11 +83,6 @@
                       <p
                         class="text--white"
                       >Research, Resources and Insights to Pave the Way Forward</p>
-                      <!--<a
-                        class="report-button"
-                        href="https://cityparksreport.parkpeople.ca/"
-                        target="_blank"
-                      >Register for the next webinar</a>-->
                     </div>
                     <div style="width: 35%; margin-right: 40px;">
                       <img
@@ -161,9 +149,7 @@
                 </div>
               </div>
               <div
-                class="filter-description"
-                v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2 || this.$store.state.activeTab.order == 4"
-              >
+                class="filter-description">
                 <p v-if="this.$store.state.activeTab.slug == 'activities-and-events'">
                   <span v-if="lang=='fr'">Guides pratiques pour l’animation des parcs</span>
                   <span v-else>How-to guides for activating parks</span>
@@ -188,10 +174,7 @@
                   class="description-arrow"
                 />
               </div>
-              <div
-                class="filter-tabs"
-                v-if="this.$store.state.activeTab.order == 1 || this.$store.state.activeTab.order == 2 || this.$store.state.activeTab.order == 4"
-              >
+              <div class="filter-tabs">
                 <!-- <p>Filters:</p> -->
                 <ul id="ck-button">
                   <li>
@@ -233,7 +216,6 @@
 
 <script>
 import axios from "axios";
-// import { eventBus } from '../main.js';
 import { updateTab } from "../store/actions.js";
 import { createNamespacedHelpers } from "vuex";
 let tab1 = {
