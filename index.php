@@ -29,7 +29,7 @@
 <body>
   <div id="app"></div>
   <!-- LIVE -->
-  <script src="https://parkpeople.ca/resources/dist/build-2021-06-01.js"></script>
+  <script src="https://parkpeople.ca/resources/dist/build.js?v=<?php time() ?>"></script>
 
   <!-- HYPELABS -->
   <!--<script src="https://hypelabs.ca/parkpeople-resources/dist/build.js"></script>-->
