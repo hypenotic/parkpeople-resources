@@ -112,7 +112,7 @@
                       >Dégage les tendances, les défis et les pratiques dominantes dans 27 villes canadiennes afin d’inspirer l’action, de partager de l’information, et de suivre les progrès accomplis dans les parcs urbains d'un bout à l'autre du pays.</p>
                       <a
                         class="report-button"
-                        href="https://cityparksreport.parkpeople.ca/"
+                        href="https://ccpr.parkpeople.ca/"
                         target="_blank"
                       >Voir le rapport!</a>
                     </div>
@@ -135,7 +135,7 @@
                       >Highlighting the trends, challenges, and leading practices in 27 Canadian cities to inspire action, share learning, and track progress in city parks across the country.</p>
                       <a
                         class="report-button"
-                        href="https://cityparksreport.parkpeople.ca/"
+                        href="https://ccpr.parkpeople.ca/"
                         target="_blank"
                       >Check it out!</a>
                     </div>
