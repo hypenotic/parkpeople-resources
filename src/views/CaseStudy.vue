@@ -81,7 +81,7 @@
           </div>
 
           <p class="meta">
-            <span v-if="this.$route.params.lang == 'fr'">Ètude de cas</span
+            <span v-if="this.$route.params.lang == 'fr'">Étude de cas</span
             ><span v-else>Case Study</span> |
             {{ formatDate(post.date) }}
           </p>
