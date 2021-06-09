@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: "parkpeople-resources"
+  publicPath: "/parkpeople-resources"
 };
