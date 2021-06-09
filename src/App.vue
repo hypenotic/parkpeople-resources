@@ -17,7 +17,6 @@
   </div>
 </template>
 
-
 <script>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
@@ -207,6 +206,22 @@ ol.resource__bullets {
         font-size: 1.3rem;
         line-height: 1.5;
       }
+    }
+  }
+}
+
+blockquote {
+  padding-left: 40px;
+  padding-right: 15%;
+  p {
+    font-family: $serif;
+    color: $green;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+    font-style: italic;
+    @media #{$small-and-down} {
+      font-size: 1.3rem;
+      line-height: 1.5;
     }
   }
 }

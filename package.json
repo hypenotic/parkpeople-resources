@@ -1,43 +1,29 @@
 {
-  "name": "vue-cli",
-  "description": "A Vue.js project",
-  "version": "1.0.0",
-  "author": "Lionel Mann <lionelmann@gmail.com>",
-  "license": "MIT",
+  "name": "hello-world",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
-    "axios": "^0.17.1",
-    "moment": "^2.24.0",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "moment": "^2.29.1",
     "vue": "^2.6.11",
-    "vue-axios": "^2.1.5",
+    "vue-axios": "^3.2.4",
     "vue-paginate": "^3.6.0",
-    "vue-router": "^3.1.5",
-    "vue-social-sharing": "^2.4.7",
-    "vuex": "^3.1.2"
+    "vue-router": "^3.2.0",
+    "vue-social-sharing": "^3.0.8",
+    "vuex": "^3.4.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-3": "^6.24.1",
-    "cross-env": "^5.2.1",
-    "css-loader": "^0.28.11",
-    "file-loader": "^1.1.11",
-    "node-sass": "^4.13.1",
-    "sass-loader": "^6.0.7",
-    "vue-analytics": "^5.22.1",
-    "vue-loader": "^15.9.0",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^3.12.0",
-    "webpack-dev-server": "^2.11.5"
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
   }
 }
