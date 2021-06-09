@@ -57,7 +57,10 @@
               </ul>
             </div>
             <div v-if="post.pure_taxonomies.hasOwnProperty('learn')">
-              <span>Know about parks:</span>
+              <span v-if="this.$route.params.lang == 'fr'"
+                >En savoir plus sur les parcs:</span
+              >
+              <span v-else>Know about parks:</span>
               <ul v-if="this.$route.params.lang == 'fr'">
                 <li
                   v-for="category in post.all_lang_taxonomies.learn"
