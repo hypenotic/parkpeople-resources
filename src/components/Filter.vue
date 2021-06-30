@@ -106,10 +106,10 @@
                   <div class="inner-wrapper">
                     <div>
                       <h3 class="text--white">Le Rapport sur les parcs urbains du Canada</h3>
-                      <span>Amis des parcs | juillet 2020</span>
+                      <span>Amis des parcs | juillet 2021</span>
                       <p
                         class="text--white"
-                      >Dégage les tendances, les défis et les pratiques dominantes dans 27 villes canadiennes afin d’inspirer l’action, de partager de l’information, et de suivre les progrès accomplis dans les parcs urbains d'un bout à l'autre du pays.</p>
+                      >Dégage les tendances, les défis et les pratiques dominantes dans 32 villes canadiennes afin d’inspirer l’action, de partager de l’information, et de suivre les progrès accomplis dans les parcs urbains d'un bout à l'autre du pays.</p>
                       <a
                         class="report-button"
                         href="https://ccpr.parkpeople.ca/"
@@ -129,10 +129,10 @@
                   <div class="inner-wrapper">
                     <div>
                       <h3 class="text--white">Canadian City Parks Report</h3>
-                      <span>Park People | July 2020</span>
+                      <span>Park People | July 2021</span>
                       <p
                         class="text--white"
-                      >Highlighting the trends, challenges, and leading practices in 27 Canadian cities to inspire action, share learning, and track progress in city parks across the country.</p>
+                      >Highlighting the trends, challenges, and leading practices in 32 Canadian cities to inspire action, share learning, and track progress in city parks across the country.</p>
                       <a
                         class="report-button"
                         href="https://ccpr.parkpeople.ca/"
